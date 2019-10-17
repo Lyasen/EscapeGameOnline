@@ -19,12 +19,12 @@ public class Main {
          * Generate a secret number with 4 digits
          */
         final int NB_DIGITS_COMBINATION = 4;
-        final int secret[] = new int[NB_DIGITS_COMBINATION];
+        final int[] secret = new int[NB_DIGITS_COMBINATION];
         String board = "";
         int minValue = 1000, maxValue = 9999, i;
 
         Random hazard = new Random();
-        for (i = 0; i < NB_DIGITS_COMBINATION; i++){
+        for (i = 0; i < NB_DIGITS_COMBINATION; i++) {
             secret[i] = minValue + hazard.nextInt(maxValue - minValue);
             board = new String(String.valueOf(secret[i]));
         }
@@ -33,37 +33,43 @@ public class Main {
         /**
          * Enter a combination of 4 digits by the player
          */
-        final int MAX_TRY = 2;
-        int answer[] = new int[NB_DIGITS_COMBINATION];
+        final int MAX_TRY = 3;
+        int[] answer = new int[NB_DIGITS_COMBINATION];
         String secondBoard = "";
         int counter = 1;
-        char symbole[] = new char[' '];
+        String[] symbole = new String[NB_DIGITS_COMBINATION];
 
         System.out.print("\rPlease enter your proposition : ");
         do {
             int proposition = scan.nextInt();
-            for (int j = 0; j < NB_DIGITS_COMBINATION; j++){
+            for (int j = 0; j < NB_DIGITS_COMBINATION; j++) {
                 answer[j] = proposition;
                 secondBoard = new String(String.valueOf(answer[j]));
             }
             System.out.println("Your proposition is : " + secondBoard);
+
             /**
              * Compare the board and the second board
              * Find the combination and win
              * or try 10 times and lose
              */
-            for (int a = 0; a < answer.length; a++){
-                for (int s = 0; s < secret.length; s++){
-                    if (answer[a] > secret[s]){
-
-                    } else if (answer[a] < secret[s]){
-
-                    } else {
-
+            if (!board.equals(secondBoard)) {
+                for (int a = 0, len = board.length(); a < len; a++) {
+                    for (int b = 0, sLen = secondBoard.length(); b < sLen; b++) {
+                        if (secret[a] > answer[b]) {
+                            symbole[a] = "+";
+                        } else if (secret[a] < answer[b])
+                            symbole[a] = "-";
+                        else if (secret[a] == answer[b])
+                            symbole[a] = "=";
                     }
                 }
+                System.out.println(Arrays.toString(symbole));
+                counter++;
+            } else {
+                System.out.println("Bravo ! Vous êtes le MasteMind !");
+                break;
             }
-            counter++;
         } while (board != secondBoard && counter <= MAX_TRY);
     }
 }
