@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Home {
     static Scanner scan = new Scanner(System.in);
 
-    protected void menu() {
+    void menu() {
         System.out.println("Welcome on EscapeGame Online" +
                 "\nPlease choose your game mode : " +
                 "\n1- Challenger" +
@@ -25,19 +25,19 @@ public class Home {
             response = scan.nextInt();
             switch (response) {
                 case 1:
-                    System.out.println("You have choice the game mode : Challenger\n" +
-                            "Find the secret number\r");
+                    System.out.println("You have choice the game mode : Challenger");
+                    System.out.println("Find the secret number");
                     break;
                 case 2:
-                    System.out.println("You have choice the game mode : Defender\n" +
-                            "Will the computer regain your secret combination ?\r");
+                    System.out.println("You have choice the game mode : Defender");
+                    System.out.println("Will the computer regain your secret combination ?");
                     break;
                 case 3:
-                    System.out.println("You have choice the game mode : Duel\n" +
-                            "Challenge the computer\r");
+                    System.out.println("You have choice the game mode : Duel");
+                    System.out.println("Challenge the computer");
                     break;
                 default:
-                    System.out.println("Your choice doesn't correspond to the choices offered\r");
+                    System.out.println("Your choice doesn't correspond to the choices offered");
             }
         } while (!(1 <= response && response <= 3));
     }
