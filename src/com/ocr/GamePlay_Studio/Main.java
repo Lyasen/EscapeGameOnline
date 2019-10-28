@@ -1,3 +1,6 @@
+/**
+ * Game mode "Challenger"
+ */
 package com.ocr.GamePlay_Studio;
 
 import java.util.Arrays;
@@ -12,21 +15,30 @@ public class Main {
         home.menu();
 
         final int NB_DIGITS_COMBINATION = 4;
+
+        /**
+         * Secret number randomized
+         */
         int[] secret = new int[NB_DIGITS_COMBINATION];
         Random hazard = new Random();
-        int minValue = 0, maxValue = 9, counter = 10;
-
+        int minValue = 0, maxValue = 9, counter = 2;
         for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
             secret[i] = minValue + hazard.nextInt(maxValue - minValue + 1);
         }
-        System.out.println(Arrays.toString(secret));
+        for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
+            secret[i] = Integer.parseInt(String.valueOf(secret[i]));
+        }
+        //System.out.println(Arrays.toString(secret));
 
+        /**
+         * Player's proposition until he find the secret number or lose
+         */
         int[] answer = new int[NB_DIGITS_COMBINATION];
-        System.out.printf("Are you ready !! You have " + counter + " trials\n");
+        System.out.printf("Are you ready !! You have %s tries\n", counter);
         do {
             System.out.println("\nDo your proposition : ");
             int proposition = scan.nextInt();
-            String[] digits = String.valueOf(proposition).split("");
+            String[] digits = String.format("%0" + NB_DIGITS_COMBINATION + "d", proposition).split("");
 
             System.out.println("\nYour answer is : " + Arrays.toString(digits));
 
@@ -36,11 +48,10 @@ public class Main {
 
             /**
              * Compare the board and the second board
-             * Find the combination and win
-             * or try 10 times and lose
+             * Find the combination in 10 times
              */
-            System.out.print("\rThe clues are  : ");
-            char[] symbol = new char[' '];
+
+            char[] symbol = new char[NB_DIGITS_COMBINATION];
             if (!Arrays.equals(answer, secret)) {
                 for (int s = 0, len = secret.length; s < len; s++) {
                     if (secret[s] > answer[s])
@@ -50,16 +61,20 @@ public class Main {
                     else if (secret[s] == answer[s])
                         symbol[s] = '=';
                 }
-                System.out.println(Arrays.toString(symbol));
+                System.out.println("\rThe clues are  : " + Arrays.toString(symbol));
                 counter--;
-                System.out.println("One trial less ! Be careful, you have " + counter  + " attempts left");
+
+                if (counter == 0) {
+                    System.out.println("Sorry, you have used your tries ! The secret number was : " + Arrays.toString(secret) + " ! Try next time !");
+                    break;
+                } else {
+                    System.out.printf("%s tries left", counter);
+                }
+
             } else {
-                System.out.println("Welldone ! You are the MasterMind !");
+                System.out.println("Well done ! You are the MasterMind !");
                 break;
             }
-
-            if (counter == 0)
-                System.out.println("You have not enough trials ! Try next time !");
-        } while (answer != secret && counter > 0);
+        } while (true);
     }
 }
