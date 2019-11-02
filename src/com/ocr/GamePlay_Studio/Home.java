@@ -1,14 +1,14 @@
-/**
- * Game Menu
- */
 package com.ocr.GamePlay_Studio;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Home {
-    static Scanner scan = new Scanner(System.in);
+class Home {
+    private static Scanner scan = new Scanner(System.in);
 
+    /**
+     * Home of the game and setting up different game modes
+     */
     void menu() {
         System.out.println("Welcome on EscapeGame Online" +
                 "\nPlease choose your game mode : " +
@@ -17,11 +17,11 @@ public class Home {
                 "\n3- Duel");
 
         int response = 0;
-        boolean condition = false;
+        boolean condition = false;  //  Condition in case of Exceptions
 
-        /**
+        /*
          * Choice of different game modes
-         * As long as the answer isn't between 1 & 3, reask the question
+         * As long as the answer isn't between 1 & 3, re-ask the question
          */
         while (!condition) {
             try {
@@ -52,7 +52,7 @@ public class Home {
                         "\n2- defender" +
                         "\n3- Duel" +
                         "\nPlease try again : ");
-                scan.nextLine();
+                scan.nextLine();    //  dump the variable otherwise infinite loop
             }
         }
     }
