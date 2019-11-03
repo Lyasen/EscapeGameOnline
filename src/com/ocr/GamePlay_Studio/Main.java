@@ -24,7 +24,7 @@ public class Main {
          */
         int[] secret = new int[NB_DIGITS_COMBINATION];
         Random hazard = new Random();
-        int minValue = 0, maxValue = 9, counter = 2;
+        int minValue = 0, maxValue = 9, counter = 3;
         for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
             secret[i] = minValue + hazard.nextInt(maxValue - minValue + 1);
         }
