@@ -1,5 +1,7 @@
 package com.ocr.GamePlay_Studio;
 
+import java.io.Console;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -46,7 +48,12 @@ public class Main {
                     System.out.println("\nDo your proposition : ");
                     int proposition = scan.nextInt();
                     String[] digits = String.format("%0" + NB_DIGITS_COMBINATION + "d", proposition).split("");
-                    System.out.println("\nYour answer is : " + Arrays.toString(digits));
+                    if (digits.length > NB_DIGITS_COMBINATION) {
+                        System.out.println("What a pity ! You have lost one try ! Please respect the number of digits in the combination !");
+                        scan.nextLine();
+                    } else {
+                        System.out.println("\nYour answer is : " + Arrays.toString(digits));
+                    }
 
                     for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
                         answer[i] = Integer.parseInt(digits[i]);
@@ -83,6 +90,9 @@ public class Main {
                 condition = true;
             } catch (InputMismatchException e) {
                 System.out.println("Please enter a 4 number combination");
+                scan.nextLine();    //  dump the variable otherwise infinite loop
+            } catch (NumberFormatException n){
+                System.out.println("Please enter only positive numbers");
                 scan.nextLine();    //  dump the variable otherwise infinite loop
             }
         }
