@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class SecondMain {
-    static Scanner scan = new Scanner(System.in);
+    private static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
         Home home = new Home();
@@ -26,10 +26,15 @@ public class SecondMain {
             try {
                 System.out.print("\nPlayer, enter your proposition : ");
                 int proposition = scan.nextInt();
-                scan.nextLine();    //  Vidage de la ligne int proposition
+                scan.nextLine();    //  Emptying the line proposition
                 digits = String.format("%0" + NB_DIGITS_COMBINATION + "d", proposition).split("");
-                System.out.print("\nYour proposition is : " + Arrays.toString(digits));
-                condition = true;
+                if (digits.length > NB_DIGITS_COMBINATION || proposition < 0) {
+                    System.out.println("Please only write a combination with " + NB_DIGITS_COMBINATION + " positive numbers !");
+                    scan.nextLine();
+                } else {
+                    System.out.print("\nYour proposition is : " + Arrays.toString(digits));
+                    condition = true;
+                }
             } catch (InputMismatchException e) {
                 System.out.println("Please enter a combination with " + NB_DIGITS_COMBINATION + " numbers");
                 scan.nextLine();
@@ -50,13 +55,22 @@ public class SecondMain {
                 computerProposition[i] = String.valueOf(minValue + hazard.nextInt(maxValue - minValue + 1));
             }
             System.out.println("AI proposition : " + Arrays.toString(computerProposition));
+
             if (counter > 1) {
                 System.out.println("Give the clues for helping AI :  ");
                 String clue = scan.nextLine();
+                while (!(clue.contains("+")) && !(clue.contains("-"))) {
+                    System.out.println("Please only write positive or negative operators, try again : ");
+                    scan.nextLine();
+                }
                 String[] clues = String.format("%" + NB_DIGITS_COMBINATION + "s", clue).split("");
-                System.out.print("The clues are :  " + Arrays.toString(clues) + "\n");
+                if (clues.length > NB_DIGITS_COMBINATION){
+                    System.out.println("I see you contribute to help the IA but it's a bit excessive, isn't it ?");
+                    scan.nextLine();
+                } else {
+                    System.out.print("The clues are :  " + Arrays.toString(clues) + "\n");
+                }
             }
-
             counter--;
             System.out.printf("\n%s tries left\n\n", counter);
 
