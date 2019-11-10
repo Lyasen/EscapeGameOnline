@@ -16,16 +16,17 @@ class Home {
                 "\n2- defender" +
                 "\n3- Duel");
         int response = 0;
-        /*
-         * Choice of different game modes
-         * As long as the answer isn't between 1 & 3, re-ask the question
-         */
+
         do {
            response = userChoice();
            printUserChoice(response);
         } while (!(1 <= response && response <= 3));
     }
 
+    /**
+     * Choice of different game modes
+     * As long as the answer isn't between 1 & 3, re-ask the question
+     */
     private int userChoice(){
         try {
             return scan.nextInt();
@@ -40,6 +41,10 @@ class Home {
         return userChoice();
     }
 
+    /**
+     * Different mode games chosen
+     * @param response : return the response of the player
+     */
     private void printUserChoice(int response){
         switch (response) {
             case 1:

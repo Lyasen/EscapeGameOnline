@@ -1,7 +1,5 @@
 package com.ocr.GamePlay_Studio;
 
-import java.io.Console;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -43,10 +41,11 @@ public class Main {
         System.out.printf("Are you ready !! You have %s tries\n", counter);
 
         while (!condition) {
-            try {
-                do {
-                    System.out.println("\nDo your proposition : ");
+            do {
+                System.out.println("\nDo your proposition : ");
+                try {
                     int proposition = scan.nextInt();
+
                     String[] digits = String.format("%0" + NB_DIGITS_COMBINATION + "d", proposition).split("");
                     if (digits.length > NB_DIGITS_COMBINATION) {
                         System.out.println("What a pity ! You have lost one try ! Please respect the number of digits in the combination !");
@@ -58,43 +57,44 @@ public class Main {
                     for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
                         answer[i] = Integer.parseInt(digits[i]);
                     }
-                    /*
-                     * Compare the board and the second board
-                     * Find the combination in 10 times
-                     */
-                    char[] symbol = new char[NB_DIGITS_COMBINATION];
-                    if (!Arrays.equals(answer, secret)) {
-                        for (int s = 0, len = secret.length; s < len; s++) {
-                            if (secret[s] > answer[s])
-                                symbol[s] = '+';
-                            else if (secret[s] < answer[s])
-                                symbol[s] = '-';
-                            else if (secret[s] == answer[s])
-                                symbol[s] = '=';
-                        }
-                        System.out.println("\rThe clues are  : " + Arrays.toString(symbol));
-                        counter--;
-
-                        if (counter == 0) {
-                            System.out.println("Sorry, you have used your tries ! The secret number was : " + Arrays.toString(secret) + " ! Try next time !");
-                            break;
-                        } else {
-                            System.out.printf("%s tries left", counter);
-                        }
-
-                    } else {
-                        System.out.println("Well done ! You are the MasterMind !");
-                        break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Please enter a 4 number combination");
+                    scan.nextLine();    //  dump the variable otherwise infinite loop
+                } catch (NumberFormatException n) {
+                    System.out.println("Please enter only positive numbers");
+                    scan.nextLine();    //  dump the variable otherwise infinite loop
+                }
+                /*
+                 * Compare the board and the second board
+                 * Find the combination in 10 times
+                 */
+                char[] symbol = new char[NB_DIGITS_COMBINATION];
+                if (!Arrays.equals(answer, secret)) {
+                    for (int s = 0, len = secret.length; s < len; s++) {
+                        if (secret[s] > answer[s])
+                            symbol[s] = '+';
+                        else if (secret[s] < answer[s])
+                            symbol[s] = '-';
+                        else if (secret[s] == answer[s])
+                            symbol[s] = '=';
                     }
-                } while (true);
-                condition = true;
-            } catch (InputMismatchException e) {
-                System.out.println("Please enter a 4 number combination");
-                scan.nextLine();    //  dump the variable otherwise infinite loop
-            } catch (NumberFormatException n){
-                System.out.println("Please enter only positive numbers");
-                scan.nextLine();    //  dump the variable otherwise infinite loop
-            }
+                    if (counter > 1)
+                        System.out.println("\rThe clues are  : " + Arrays.toString(symbol));
+                    counter--;
+
+                    if (counter == 0) {
+                        System.out.println("Sorry, you have used your tries ! The secret number was : " + Arrays.toString(secret) + " ! Try next time !");
+                        break;
+                    } else {
+                        System.out.printf("%s tries left", counter);
+                    }
+
+                } else {
+                    System.out.println("Well done ! You are the MasterMind !");
+                    break;
+                }
+            } while (true);
+            condition = true;
         }
     }
 }
