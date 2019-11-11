@@ -23,8 +23,9 @@ public class SecondMain {
          * generation of a secret number from the player
          */
         while (!condition) {
-            try {
+
                 System.out.print("\nPlayer, enter your proposition : ");
+            try {
                 int proposition = scan.nextInt();
                 scan.nextLine();    //  Emptying the line proposition
                 digits = String.format("%0" + NB_DIGITS_COMBINATION + "d", proposition).split("");
@@ -48,9 +49,8 @@ public class SecondMain {
         int minValue = 0, maxValue = 9, counter = 3;
 
         System.out.printf("\n\nThe AI have %s tries\n", counter);
-
+        Random hazard = new Random();
         do {
-            Random hazard = new Random();
             for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
                 computerProposition[i] = String.valueOf(minValue + hazard.nextInt(maxValue - minValue + 1));
             }
