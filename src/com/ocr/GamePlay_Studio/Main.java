@@ -24,7 +24,7 @@ public class Main {
          */
         int[] secret = new int[NB_DIGITS_COMBINATION];
         Random hazard = new Random();
-        int minValue = 0, maxValue = 9, counter = 3;
+        int minValue = 0, maxValue = 9, counter = 5;
         for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
             secret[i] = minValue + hazard.nextInt(maxValue - minValue + 1);
         }
@@ -54,7 +54,7 @@ public class Main {
                         System.out.println("\nYour answer is : " + Arrays.toString(digits));
                     }
 
-                    for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
+                    for (int i = 0; i < NB_DIGITS_COMBINATION; i++) {
                         answer[i] = Integer.parseInt(digits[i]);
                     }
                 } catch (InputMismatchException e) {
@@ -71,13 +71,14 @@ public class Main {
                 char[] symbol = new char[NB_DIGITS_COMBINATION];
                 if (!Arrays.equals(answer, secret)) {
                     for (int s = 0, len = secret.length; s < len; s++) {
-                        if (secret[s] > answer[s])
-                            symbol[s] = '+';
-                        else if (secret[s] < answer[s])
+                        if (answer[s] > secret[s])
                             symbol[s] = '-';
-                        else if (secret[s] == answer[s])
+                        else if (answer[s] < secret[s])
+                            symbol[s] = '+';
+                        else if (answer[s] == secret[s])
                             symbol[s] = '=';
                     }
+
                     if (counter > 1)
                         System.out.println("\rThe clues are  : " + Arrays.toString(symbol));
                     counter--;
@@ -86,7 +87,7 @@ public class Main {
                         System.out.println("Sorry, you have used your tries ! The secret number was : " + Arrays.toString(secret) + " ! Try next time !");
                         break;
                     } else {
-                        System.out.printf("%s tries left", counter);
+                        System.out.printf("There are %s tries left", counter);
                     }
 
                 } else {

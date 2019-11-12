@@ -14,10 +14,11 @@ public class MainBis {
 
     /**
      * Setting up the challenger mode
+     *
      * @param args
      */
     public static void main(String[] args) {
-        int counter = 3;
+        int counter = 5;
 
         Home home = new Home();
         home.menu();
@@ -39,7 +40,7 @@ public class MainBis {
                     System.out.println("Sorry, you have used your tries ! The secret number was : " + Arrays.toString(secret) + " ! Try next time !");
                     break;
                 } else {
-                    System.out.printf("%s tries left", counter);
+                    System.out.printf("There are %s tries left", counter);
                 }
             } while (true);
             condition = true;
@@ -75,14 +76,14 @@ public class MainBis {
                 System.out.println("\nYour answer is : " + Arrays.toString(digits));
             }
 
-            for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
+            for (int i = 0; i < NB_DIGITS_COMBINATION; i++) {
                 answer[i] = Integer.parseInt(digits[i]);
             }
         } catch (InputMismatchException e) {
-            System.out.println("Please enter a 4 number combination");
+            System.out.println("Wow ! What was that ? Please enter a 4 number combination, that's all dude !");
             scan.nextLine();    //  dump the variable otherwise infinite loop
         } catch (NumberFormatException n) {
-            System.out.println("Please enter only positive numbers");
+            System.out.println("OK ! you were so enthusiastic that you loose one try  ! Please enter only positive numbers !");
             scan.nextLine();    //  dump the variable otherwise infinite loop
         }
     }
@@ -103,6 +104,7 @@ public class MainBis {
             }
         } else {
             System.out.println("Well done ! You are the MasterMind !");
+            System.exit(0);
         }
     }
 }
