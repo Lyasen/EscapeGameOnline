@@ -31,7 +31,7 @@ public class Main {
         for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
             secret[i] = Integer.parseInt(String.valueOf(secret[i]));
         }
-        //System.out.println(Arrays.toString(secret));  =>  Display for test
+        System.out.println(Arrays.toString(secret)); // =>  Display for test
 
         /*
          * Player's proposition until he find the secret number or lose
@@ -54,8 +54,8 @@ public class Main {
                         System.out.println("\nYour answer is : " + Arrays.toString(digits));
                     }
 
-                    for (int i = 0; i < NB_DIGITS_COMBINATION; i++) {
-                        answer[i] = Integer.parseInt(digits[i]);
+                    for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
+                        answer[i] = Integer.parseInt(String.valueOf(digits[i]));
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Please enter a 4 number combination");
