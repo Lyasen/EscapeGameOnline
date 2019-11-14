@@ -76,7 +76,7 @@ public class MainBis {
                 System.out.println("\nYour answer is : " + Arrays.toString(digits));
             }
 
-            for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
+            for (int i = 0; i < NB_DIGITS_COMBINATION; i++) {
                 answer[i] = Integer.parseInt(String.valueOf(digits[i]));
             }
         } catch (InputMismatchException e) {

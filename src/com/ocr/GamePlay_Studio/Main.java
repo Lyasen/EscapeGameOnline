@@ -10,8 +10,7 @@ public class Main {
 
     /**
      * Setting up the challenger mode
-     *
-     * @param args
+     * @param args : yep
      */
     public static void main(String[] args) {
         Home home = new Home();
@@ -25,13 +24,13 @@ public class Main {
         int[] secret = new int[NB_DIGITS_COMBINATION];
         Random hazard = new Random();
         int minValue = 0, maxValue = 9, counter = 5;
-        for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
+        for (int i = 0; i < NB_DIGITS_COMBINATION; i++) {
             secret[i] = minValue + hazard.nextInt(maxValue - minValue + 1);
         }
         for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
             secret[i] = Integer.parseInt(String.valueOf(secret[i]));
         }
-        System.out.println(Arrays.toString(secret)); // =>  Display for test
+       // System.out.println(Arrays.toString(secret));  =>  Display for test
 
         /*
          * Player's proposition until he find the secret number or lose
@@ -54,7 +53,7 @@ public class Main {
                         System.out.println("\nYour answer is : " + Arrays.toString(digits));
                     }
 
-                    for (int i = 0; i <= NB_DIGITS_COMBINATION - 1; i++) {
+                    for (int i = 0; i < NB_DIGITS_COMBINATION; i++) {
                         answer[i] = Integer.parseInt(String.valueOf(digits[i]));
                     }
                 } catch (InputMismatchException e) {
