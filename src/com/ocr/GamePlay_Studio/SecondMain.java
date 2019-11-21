@@ -1,11 +1,14 @@
 package com.ocr.GamePlay_Studio;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Scanner;
 
-/**
- * Game mode "Défenseur"
- */
 public class SecondMain {
+    /**
+     * Game mode "Défenseur"
+     */
     private static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -20,7 +23,7 @@ public class SecondMain {
          * generation of a secret number from the player
          */
         while (!condition) {
-                System.out.print("\nPlayer, enter your proposition : ");
+            System.out.print("\nPlayer, enter your proposition : ");
             try {
                 int proposition = scan.nextInt();
                 scan.nextLine();    //  Emptying the line proposition
@@ -62,7 +65,7 @@ public class SecondMain {
                     clue = scan.nextLine();
                 }
                 String[] clues = String.format("%" + NB_DIGITS_COMBINATION + "s", clue).split("");
-                if (clues.length > NB_DIGITS_COMBINATION){
+                if (clues.length > NB_DIGITS_COMBINATION) {
                     System.out.println("I see you contribute to help the IA but it's a bit excessive, isn't it ?");
                     scan.nextLine();
                 } else {

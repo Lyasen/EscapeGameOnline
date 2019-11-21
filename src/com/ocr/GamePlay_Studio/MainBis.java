@@ -8,9 +8,6 @@ import java.util.Scanner;
 public class MainBis {
     private static Scanner scan = new Scanner(System.in);
     private final static int NB_DIGITS_COMBINATION = 4;
-    private static int[] secret = new int[NB_DIGITS_COMBINATION];
-    private static int[] answer = new int[NB_DIGITS_COMBINATION];
-    private static char[] symbol = new char[NB_DIGITS_COMBINATION];
 
     /**
      * Setting up the challenger mode
@@ -19,38 +16,48 @@ public class MainBis {
      */
     public static void main(String[] args) {
         int counter = 5;
+        int[] combination = randomSecret();
 
         Home home = new Home();
         home.menu();
-        randomNumber();
 
         System.out.printf("Are you ready !! You have %s tries\n", counter);
 
-        boolean condition = false;
-        while (!condition) {
-            do {
-                propositionPlayer();
-                compareResult();
+        do {
+            int[] combiPlayer = propositionPlayer();
+            String[] comparison = compareResult(combiPlayer, combination);
 
-                if (counter > 1)
-                    System.out.println("\rThe clues are  : " + Arrays.toString(symbol));
-                counter--;
+            if (counter > 1)
+                System.out.println("\rThe clues are  : " + Arrays.toString(comparison));
+            counter--;
 
-                if (counter == 0) {
-                    System.out.println("Sorry, you have used your tries ! The secret number was : " + Arrays.toString(secret) + " ! Try next time !");
-                    break;
-                } else {
-                    System.out.printf("There are %s tries left", counter);
-                }
-            } while (true);
-            condition = true;
+            if (isWin(comparison)) {
+                System.out.println("Well done ! You're the mastermind !");
+                break;
+            } else if (counter == 0) {
+                System.out.println("Sorry, you have used your tries ! The secret number was : " + Arrays.toString(combination) + " ! Try next time !");
+                break;
+            } else {
+                System.out.printf("There are %s tries left", counter);
+            }
+        } while (true);
+    }
+
+    private static boolean isWin(String[] comparison) {
+        for (String operator : comparison) {
+            if (!operator.equals("="))
+                return false;
         }
+        return true;
     }
 
     /**
      * Secret number randomized
+     *
+     * @return secret : return a secret combination
      */
-    private static void randomNumber() {
+    private static int[] randomSecret() {
+        int[] secret = new int[NB_DIGITS_COMBINATION];
         Random hazard = new Random();
         int minValue = 0, maxValue = 9;
 
@@ -58,12 +65,14 @@ public class MainBis {
             secret[i] = minValue + hazard.nextInt(maxValue - minValue + 1);
         }
         /* System.out.println(Arrays.toString(secret)); => Display the result */
+        return secret;
     }
 
     /**
      * Player's proposition
      */
-    private static void propositionPlayer() {
+    private static int[] propositionPlayer() {
+        int[] answer = new int[NB_DIGITS_COMBINATION];
         System.out.println("\nDo your proposition : ");
         try {
             int proposition = scan.nextInt();
@@ -86,25 +95,24 @@ public class MainBis {
             System.out.println("OK ! you were so enthusiastic that you loose one try  ! Please enter only positive numbers !");
             scan.nextLine();    //  dump the variable otherwise infinite loop
         }
+        return answer;
     }
 
     /*
      * Compare the board and the second board
      * Find the combination in 10 times
      */
-    private static void compareResult() {
-        if (!Arrays.equals(answer, secret)) {
-            for (int s = 0, len = secret.length; s < len; s++) {
-                if (secret[s] > answer[s])
-                    symbol[s] = '+';
-                else if (secret[s] < answer[s])
-                    symbol[s] = '-';
-                else if (secret[s] == answer[s])
-                    symbol[s] = '=';
-            }
-        } else {
-            System.out.println("Well done ! You are the MasterMind !");
-            System.exit(0);
+    private static String[] compareResult(int[] combiPlayer, int[] combination) {
+        String[] symbol = new String[NB_DIGITS_COMBINATION];
+
+        for (int s = 0, len = combination.length; s < len; s++) {
+            if (combination[s] > combiPlayer[s])
+                symbol[s] = "+";
+            else if (combination[s] < combiPlayer[s])
+                symbol[s] = "-";
+            else if (combination[s] == combiPlayer[s])
+                symbol[s] = "=";
         }
+        return symbol;
     }
 }
