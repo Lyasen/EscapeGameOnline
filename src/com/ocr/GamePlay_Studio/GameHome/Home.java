@@ -1,15 +1,15 @@
-package com.ocr.GamePlay_Studio;
+package com.ocr.GamePlay_Studio.GameHome;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-class Home {
+public class Home {
     private static Scanner scan = new Scanner(System.in);
 
     /**
      * Home of the game and setting up different game modes
      */
-    void menu() {
+    public void menu() {
         System.out.println("Welcome on EscapeGame Online" +
                 "\nPlease choose your game mode : " +
                 "\n1- Challenger" +
