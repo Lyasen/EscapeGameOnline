@@ -5,7 +5,7 @@ import java.util.Random;
 public class RandomS {
     private static DigitsCombination digitsCombination = DigitsCombination.NB_DIGITS_COMBINATION;
 
-    protected static int[] randomS() {
+    public static int[] randomS() {
 
         int[] secret = new int[digitsCombination.getDigits()];
         Random hazard = new Random();

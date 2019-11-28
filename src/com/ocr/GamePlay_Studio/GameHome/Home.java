@@ -1,5 +1,9 @@
 package com.ocr.GamePlay_Studio.GameHome;
 
+import com.ocr.GamePlay_Studio.GameMode.ChallengerMode;
+import com.ocr.GamePlay_Studio.GameMode.DefenderMode;
+import com.ocr.GamePlay_Studio.exceptions.TooManyNumbers;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,7 +13,7 @@ public class Home {
     /**
      * Home of the game and setting up different game modes
      */
-    public void menu() {
+    public void menu() throws TooManyNumbers {
         System.out.println("Welcome on EscapeGame Online" +
                 "\nPlease choose your game mode : " +
                 "\n1- Challenger" +
@@ -20,6 +24,23 @@ public class Home {
         do {
            response = userChoice();
            printUserChoice(response);
+
+            switch (response) {
+                case 1:
+                    new ChallengerMode();
+                    ChallengerMode.challenger();
+                    break;
+                case 2:
+                    new DefenderMode();
+                    DefenderMode.defender();
+                    break;
+                case 3:
+//                    new DuelMode();
+//                    DuelMode.duel();
+                    break;
+                default:
+                    System.out.println("your choice does not correspond to a choice of the menu");
+            }
         } while (!(1 <= response && response <= 3));
     }
 
