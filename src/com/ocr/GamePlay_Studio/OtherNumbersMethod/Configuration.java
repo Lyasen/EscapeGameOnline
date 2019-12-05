@@ -2,6 +2,9 @@ package com.ocr.GamePlay_Studio.OtherNumbersMethod;
 
 import java.util.Arrays;
 
+/**
+ * Files configuration for the game
+ */
 public class Configuration {
     public static final int digitsCombination = 4;
     public static final int maxTries = 10;

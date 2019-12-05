@@ -10,7 +10,8 @@ public class Home {
     private static Scanner scan = new Scanner(System.in);
 
     /**
-     * Home of the game and setting up different game modes
+     * Home of the game
+     * Setting up different game modes
      */
     public static void menu() {
         System.out.println("Welcome on EscapeGame Online" +

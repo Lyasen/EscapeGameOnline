@@ -6,8 +6,11 @@ import static com.ocr.GamePlay_Studio.OtherNumbersMethod.Configuration.*;
 
 public class RandomS {
 
+    /**
+     * A random combination played by the AI
+     * @return : A random combination
+     */
     public static int[] randomS() {
-
         int[] secret = new int[digitsCombination];
         Random hazard = new Random();
         Configuration.setMinValue();

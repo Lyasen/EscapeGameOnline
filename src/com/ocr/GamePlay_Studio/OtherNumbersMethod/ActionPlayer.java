@@ -9,6 +9,10 @@ import static com.ocr.GamePlay_Studio.OtherNumbersMethod.Configuration.digitsCom
 public class ActionPlayer {
     private static Scanner scan = new Scanner(System.in);
 
+    /**
+     * Proposition made by the player
+     * @return : Answer of the player
+     */
     public static int[] propositionPlayer() {
         Scanner scan = new Scanner(System.in);
         do {
@@ -36,6 +40,10 @@ public class ActionPlayer {
         } while (true);
     }
 
+    /**
+     * Clues to help finding the good secret number
+     * @return : clues
+     */
     public static String[] giveClues() {
         System.out.println("Please, give the clues for the computer : ");
         String clue = scan.nextLine();
