@@ -1,5 +1,8 @@
 package com.ocr.GamePlay_Studio.OtherNumbersMethod;
 
+import com.ocr.GamePlay_Studio.HandlingException.NumberOfCluesException;
+import com.ocr.GamePlay_Studio.HandlingException.StyleOfCluesException;
+
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -44,11 +47,18 @@ public class ActionPlayer {
      * Clues to help finding the good secret number
      * @return : clues
      */
-    public static String[] giveClues() {
+    public static String[] giveClues() throws NumberOfCluesException, StyleOfCluesException {
         System.out.println("Please, give the clues for the computer : ");
         String clue = scan.nextLine();
         String[] clues = String.format("%" + digitsCombination + "s", clue).split("");
-        System.out.println("My clues are : " + Arrays.toString(clues));
+
+        if (clues.length > digitsCombination)
+            throw new NumberOfCluesException();
+        else if (!clue.contains("=") && (!clue.contains("-"))&& (!clue.contains("+")))
+            throw new StyleOfCluesException();
+        else
+            System.out.println("My clues are : " + Arrays.toString(clues));
+
         return clues;
     }
 }
