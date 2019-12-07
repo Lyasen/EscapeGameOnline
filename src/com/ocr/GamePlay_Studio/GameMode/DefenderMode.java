@@ -12,6 +12,9 @@ import static com.ocr.GamePlay_Studio.OtherNumbersMethod.Configuration.*;
 import static com.ocr.GamePlay_Studio.OtherNumbersMethod.RandomS.randomS;
 
 public class DefenderMode {
+    /**
+     * Setting up the defender mode
+     */
     public static void defender() {
         int counter = maxTries;
         int[] proposition = propositionPlayer();

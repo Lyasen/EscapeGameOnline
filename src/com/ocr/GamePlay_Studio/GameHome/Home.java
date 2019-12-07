@@ -2,6 +2,7 @@ package com.ocr.GamePlay_Studio.GameHome;
 
 import com.ocr.GamePlay_Studio.GameMode.ChallengerMode;
 import com.ocr.GamePlay_Studio.GameMode.DefenderMode;
+import com.ocr.GamePlay_Studio.GameMode.DuelMode;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -38,7 +39,7 @@ public class Home {
                     case 3:
                         System.out.println("You have choice the game mode : Duel");
                         System.out.println("Challenge the computer");
-//                    DuelMode.duel();
+                        DuelMode.duel();
                         break;
                     default:
                         System.out.println("your choice does not correspond to a choice of the menu");
