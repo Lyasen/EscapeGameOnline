@@ -1,5 +1,6 @@
 package com.ocr.GamePlay_Studio.GameMode;
 
+import com.ocr.GamePlay_Studio.GameHome.PlayAgain;
 import com.ocr.GamePlay_Studio.HandlingException.NumberOfCluesException;
 import com.ocr.GamePlay_Studio.HandlingException.StyleOfCluesException;
 import com.ocr.GamePlay_Studio.OtherNumbersMethod.ActionPlayer;
@@ -39,5 +40,7 @@ public class DefenderMode {
                 e.getMessage();
             }
         } while (true);
+
+        PlayAgain.Play();
     }
 }

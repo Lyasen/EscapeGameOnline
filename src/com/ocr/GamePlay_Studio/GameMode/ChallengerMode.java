@@ -1,5 +1,6 @@
 package com.ocr.GamePlay_Studio.GameMode;
 
+import com.ocr.GamePlay_Studio.GameHome.PlayAgain;
 import com.ocr.GamePlay_Studio.OtherNumbersMethod.*;
 
 import java.util.Arrays;
@@ -34,5 +35,7 @@ public class ChallengerMode {
                 System.out.printf("There are %s tries left", counter);
             }
         } while (true);
+
+        PlayAgain.Play();
     }
 }

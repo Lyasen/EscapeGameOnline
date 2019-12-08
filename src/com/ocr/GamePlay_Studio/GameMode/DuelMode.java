@@ -1,5 +1,6 @@
 package com.ocr.GamePlay_Studio.GameMode;
 
+import com.ocr.GamePlay_Studio.GameHome.PlayAgain;
 import com.ocr.GamePlay_Studio.OtherNumbersMethod.CompareResult;
 import com.ocr.GamePlay_Studio.OtherNumbersMethod.IsWin;
 
@@ -59,5 +60,7 @@ public class DuelMode {
                 System.out.printf("\nWell ! You'll have played one time each other, it stays %d tries", counter);
             }
         } while (true);
+
+        PlayAgain.Play();
     }
 }
