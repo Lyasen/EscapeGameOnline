@@ -15,8 +15,7 @@ public class Home {
      * Setting up different game modes
      */
     public static void menu() {
-        System.out.println("Welcome on EscapeGame Online" +
-                "\nPlease choose your game mode : " +
+        System.out.println("\nPlease choose your game mode : " +
                 "\n1- Challenger" +
                 "\n2- defender" +
                 "\n3- Duel");

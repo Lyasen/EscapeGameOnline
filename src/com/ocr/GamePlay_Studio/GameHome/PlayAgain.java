@@ -9,7 +9,7 @@ public class PlayAgain {
 
         System.out.println("\nThis is the end of the game, what do you want to do ?" +
                 "\n1 - Play again" +
-                "\n2 - I go swim now, see next time !");
+                "\n2 - I go swim now, see you next time !");
 
         int choice = 0;
 

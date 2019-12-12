@@ -1,7 +1,9 @@
 package com.ocr.GamePlay_Studio;
 
 import com.ocr.GamePlay_Studio.GameHome.Home;
-import com.ocr.GamePlay_Studio.OtherNumbersMethod.ActionPlayer;
+import com.ocr.GamePlay_Studio.Domain.Config;
+
+import java.io.IOException;
 
 public class Main {
 
@@ -10,6 +12,11 @@ public class Main {
      * @param args : A welcome menu
      */
     public static void main(String[] args) {
+        try {
+            Config.configGame();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Home.menu();
     }
 }
