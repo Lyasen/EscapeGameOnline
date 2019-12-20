@@ -1,9 +1,8 @@
 package com.ocr.GamePlay_Studio.OtherNumbersMethod;
 
-import java.util.Arrays;
-import java.util.Random;
+import com.ocr.GamePlay_Studio.Domain.Config;
 
-import static com.ocr.GamePlay_Studio.OtherNumbersMethod.Configuration.*;
+import java.util.Random;
 
 public class RandomS {
 
@@ -12,13 +11,12 @@ public class RandomS {
      * @return : A random combination
      */
     public static int[] randomS() {
-        int[] secret = new int[digitsCombination];
+        int[] secret = new int[Config.getDigitsCombination()];
         Random hazard = new Random();
-        Configuration.setMinValue();
-        Configuration.setMaxValue();
+        int minValue = 0, maxValue = 9;
 
-        for (int i = 0; i < digitsCombination; i++) {
-            secret[i] = setMinValue() + hazard.nextInt(setMaxValue() - setMinValue() + 1);
+        for (int i = 0; i < Config.getDigitsCombination(); i++) {
+            secret[i] = minValue + hazard.nextInt(maxValue - minValue + 1);
         }
         //System.out.println(Arrays.toString(secret)); // Display the result
         return secret;

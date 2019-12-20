@@ -1,5 +1,6 @@
 package com.ocr.GamePlay_Studio.GameMode;
 
+import com.ocr.GamePlay_Studio.Domain.Config;
 import com.ocr.GamePlay_Studio.GameHome.PlayAgain;
 import com.ocr.GamePlay_Studio.OtherNumbersMethod.*;
 
@@ -13,7 +14,7 @@ public class ChallengerMode {
      * Setting up the challenger mode
      */
     public static void challenger() {
-        int counter = Configuration.maxTries;
+        int counter = Config.getMaxTries();
         int[] combination = randomS();
         System.out.printf("Now ! You have %s tries\n", counter);
 

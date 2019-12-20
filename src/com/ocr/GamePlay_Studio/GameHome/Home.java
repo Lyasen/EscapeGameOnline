@@ -19,7 +19,7 @@ public class Home {
                 "\n1- Challenger" +
                 "\n2- defender" +
                 "\n3- Duel");
-        int response = 0;
+        int response;
         do {
             try {
                 response = scan.nextInt();
@@ -44,7 +44,7 @@ public class Home {
                         System.out.println("your choice does not correspond to a choice of the menu");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Please enter a valid number's menu");
+                System.err.println("Please enter a valid number's menu");
                 break;
             }
         } while (!(1 <= response && response <= 3));

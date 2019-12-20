@@ -1,5 +1,6 @@
 package com.ocr.GamePlay_Studio.GameMode;
 
+import com.ocr.GamePlay_Studio.Domain.Config;
 import com.ocr.GamePlay_Studio.GameHome.PlayAgain;
 import com.ocr.GamePlay_Studio.OtherNumbersMethod.CompareResult;
 import com.ocr.GamePlay_Studio.OtherNumbersMethod.IsWin;
@@ -7,7 +8,6 @@ import com.ocr.GamePlay_Studio.OtherNumbersMethod.IsWin;
 import java.util.Arrays;
 
 import static com.ocr.GamePlay_Studio.OtherNumbersMethod.ActionPlayer.propositionPlayer;
-import static com.ocr.GamePlay_Studio.OtherNumbersMethod.Configuration.*;
 import static com.ocr.GamePlay_Studio.OtherNumbersMethod.DichotomousSearch.dichoSearch;
 import static com.ocr.GamePlay_Studio.OtherNumbersMethod.RandomS.randomS;
 
@@ -16,11 +16,11 @@ public class DuelMode {
      * Setting up the duel mode
      */
     public static void duel() {
-        int counter = maxTries;
+        int counter = Config.getMaxTries();
 
         int[] combination = randomS();
         System.out.println("Now, computer and human deliver a real fight !" +
-                "\nYou'll have " + maxTries + " tries");
+                "\nYou'll have " + Config.getMaxTries() + " tries");
 
         do {
             /*
@@ -40,7 +40,7 @@ public class DuelMode {
             /*
              *  AI's proposition
              */
-            int[] dicho = dichoSearch(combinationPlayer, comparePlayer, minValue, maxValue);
+            int[] dicho = dichoSearch(combinationPlayer, comparePlayer, Config.getMinValue(), Config.getMaxValue());
             System.out.println("\nNew AI's proposition : " + Arrays.toString(dicho));
             String[] compareAi = CompareResult.compare(dicho, combination);
             if (counter > 1)

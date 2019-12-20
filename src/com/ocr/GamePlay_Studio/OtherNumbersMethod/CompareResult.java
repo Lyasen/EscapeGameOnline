@@ -1,5 +1,7 @@
 package com.ocr.GamePlay_Studio.OtherNumbersMethod;
 
+import com.ocr.GamePlay_Studio.Domain.Config;
+
 public class CompareResult {
     /**
      * Compare the result between the secret number and the combination played by the gamer
@@ -8,7 +10,7 @@ public class CompareResult {
      * @return : the result of comparing the two combinations
      */
     public static String[] compare(int[] combinationPlayer, int[] combination) {
-        String[] symbol = new String[Configuration.digitsCombination];
+        String[] symbol = new String[Config.getDigitsCombination()];
 
         for (int s = 0, len = combination.length; s < len; s++) {
             if (combination[s] > combinationPlayer[s])
