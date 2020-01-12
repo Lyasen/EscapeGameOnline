@@ -1,5 +1,7 @@
 package gameHome;
 
+import HandlingException.NumberOfCluesException;
+import HandlingException.StyleOfCluesException;
 import domaine.properties.ConfigurationGame;
 import gameMode.ChallengerMode;
 import gameMode.DefenderMode;
@@ -43,6 +45,8 @@ public class Home {
             } catch (InputMismatchException e) {
                 System.out.println("You have won the relaunch of the game ! I find this very funny");
                 break;
+            } catch (NumberOfCluesException | StyleOfCluesException e) {
+                e.getMessage();
             }
         } while (!(1 <= getResponse() && getResponse() <= 3));
     }
