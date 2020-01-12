@@ -1,5 +1,5 @@
 import domaine.properties.ConfigurationGame;
-import gameMode.ChallengerMode;
+import gameHome.Home;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,6 +7,11 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class Main {
+    /**
+     * Used the main to launch the game mode
+     *
+     * @param args : A welcome menu
+     */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to Escape Game Online");
@@ -19,7 +24,7 @@ public class Main {
         ConfigurationGame config = new ConfigurationGame(properties);
         config.configGame(properties);
 
-        ChallengerMode challenge = new ChallengerMode();
-        challenge.challenge(scan, config);
+        Home choice = new Home();
+        choice.menu(scan, config);
     }
 }
