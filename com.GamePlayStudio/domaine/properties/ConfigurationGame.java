@@ -1,35 +1,48 @@
 package domaine.properties;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigurationGame {
-    String result = "";
-    InputStream inputStream;
+    private final int digitsCombination, maxTries, minValue, maxValue;
+    private final boolean devMode;
 
-    public void configGame() {
-        try {
-            Properties properties = new Properties();
-            String propertiesFileName = "config.properties";
+    public ConfigurationGame(Properties properties) {
+        digitsCombination = Integer.parseInt(properties.getProperty("digitsCombination", "4"));
+        maxTries = Integer.parseInt(properties.getProperty("maxTries", "10"));
+        minValue = Integer.parseInt(properties.getProperty("minValue", "0"));
+        maxValue = Integer.parseInt(properties.getProperty("maxValue", "9"));
+        devMode = Boolean.parseBoolean(properties.getProperty("devMode", "false"));
+    }
 
-            inputStream = getClass().getClassLoader().getResourceAsStream(propertiesFileName);
+    public int getDigitsCombination() {
+        return digitsCombination;
+    }
 
-            if (inputStream != null)
-                properties.load(inputStream);
-            else
-                throw new FileNotFoundException("Property file '" + propertiesFileName + "' not found in the classpath");
+    public int getMaxTries() {
+        return maxTries;
+    }
 
-            //  get the property value and print it out
-            String digitsCombination = properties.getProperty("digitsCombination", "4");
-            String maxTries = properties.getProperty("maxTries", "10");
-            String devMode = properties.getProperty("devmode", "false");
+    public int getMinValue() {
+        return minValue;
+    }
 
-            System.out.println(result = "Number of digits in the combination : " + digitsCombination +
-                    "\nNumber of tries for a game : " + maxTries +
-                    "\nDeveloper mode active : " + devMode);
-        } catch (Exception e) {
-            System.out.println("Exception : " + e);
-        }
+    public int getMaxValue() {
+        return maxValue;
+    }
+
+    public boolean isDevMode() {
+        return devMode;
+    }
+
+    public void configGame(Properties properties) {
+        //  get the property value and print it out
+        System.out.println("Here are the rules to play ! Good Luck !");
+        String digitsCombination = properties.getProperty("digitsCombination", "4");
+        String maxTries = properties.getProperty("maxTries", "10");
+        String devMode = properties.getProperty("devmode", "false");
+
+        System.out.println("Number of digits in the combination : " + digitsCombination +
+                "\nNumber of tries for a game : " + maxTries +
+                "\nDeveloper mode active : " + devMode);
     }
 }
