@@ -1,7 +1,5 @@
 package utils;
 
-import HandlingException.NumberOfCluesException;
-import HandlingException.StyleOfCluesException;
 import domaine.properties.ConfigurationGame;
 
 import java.util.Arrays;
@@ -11,18 +9,19 @@ public class GiveClues {
     /**
      * Clues to help finding the good secret number
      *
+     * @return clues : The array of clues
      */
-    public void giveClues(Scanner scan, ConfigurationGame config) throws NumberOfCluesException, StyleOfCluesException {
+    public String[] giveClues(Scanner scan, ConfigurationGame config) {
         System.out.println("Please, give the clues for the computer : ");
-        scan.nextLine();    //  Empty the combination's number line
         String clue = scan.nextLine();
         String[] clues = String.format("%" + config.getDigitsCombination() + "s", clue).split("");
+        System.out.println("My clues are : " + Arrays.toString(clues));
 
         if (clues.length > config.getDigitsCombination())
-            throw new NumberOfCluesException();
+            System.out.println("Hep hep hep ! Too many symbols in your clues ! Try again !");
         else if (!clue.contains("=") && (!clue.contains("-")) && (!clue.contains("+")))
-            throw new StyleOfCluesException();
-        else
-            System.out.println("My clues are : " + Arrays.toString(clues));
+            System.out.println("What sort of clues is that ? Please enter only the real symbols !");
+
+        return clues;
     }
 }

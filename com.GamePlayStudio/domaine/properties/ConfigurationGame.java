@@ -3,7 +3,8 @@ package domaine.properties;
 import java.util.Properties;
 
 public class ConfigurationGame {
-    private final int digitsCombination, maxTries, minValue, maxValue;
+    private final int digitsCombination, maxTries;
+    private int minValue, maxValue;
     private final boolean devMode;
 
     public ConfigurationGame(Properties properties) {
@@ -40,8 +41,11 @@ public class ConfigurationGame {
         String digitsCombination = properties.getProperty("digitsCombination", "4");
         String maxTries = properties.getProperty("maxTries", "10");
         String devMode = properties.getProperty("devmode", "false");
+        String min = properties.getProperty("minValue", "0");
+        String max = properties.getProperty("maxValue", "9");
 
         System.out.println("Number of digits in the combination : " + digitsCombination +
+                "\nEach number of the combination is between " + min + " and " + max +
                 "\nNumber of tries for a game : " + maxTries +
                 "\nDeveloper mode active : " + devMode);
     }
