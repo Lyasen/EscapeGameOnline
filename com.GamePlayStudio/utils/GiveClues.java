@@ -13,15 +13,19 @@ public class GiveClues {
      */
     public String[] giveClues(Scanner scan, ConfigurationGame config) {
         System.out.println("Please, give the clues for the computer : ");
-        String clue = scan.nextLine();
-        String[] clues = String.format("%" + config.getDigitsCombination() + "s", clue).split("");
+        String clue;
+        String[] clues;
+        do {
+            clue = scan.nextLine();
+            clues = String.format("%" + config.getDigitsCombination() + "s", clue).split("");
+
+            if (clues.length > config.getDigitsCombination())
+                System.out.println("Hep hep hep ! Too many symbols in your clues ! Try again !");
+            else if (!(clue.contains("=")) && !(clue.contains("-")) && !(clue.contains("+")))
+                System.out.println("What sort of clues is that ? Please enter only the real symbols !");
+        } while (clues.length > config.getDigitsCombination() || !(clue.contains("=")) && !(clue.contains("-")) && !(clue.contains("+")));
+
         System.out.println("My clues are : " + Arrays.toString(clues));
-
-        if (clues.length > config.getDigitsCombination())
-            System.out.println("Hep hep hep ! Too many symbols in your clues ! Try again !");
-        else if (!clue.contains("=") && (!clue.contains("-")) && (!clue.contains("+")))
-            System.out.println("What sort of clues is that ? Please enter only the real symbols !");
-
         return clues;
     }
 }
