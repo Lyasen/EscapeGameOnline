@@ -1,10 +1,9 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import player.PropositionPlayer;
-import utils.CompareResult;
+import player.HumanPlayer;
+import player.IAPlayer;
 import utils.IsWin;
-import utils.RandomNumber;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -13,25 +12,22 @@ public class ChallengerMode {
     /**
      * Player suggest combinations
      * IA give clues in order to help player finding the secret combination
-     * @param scan : input numbers for combination
-     * @param config : settings to play
      */
-    public void challenge(Scanner scan, ConfigurationGame config){
-        RandomNumber random = new RandomNumber();
-        PropositionPlayer play = new PropositionPlayer();
-        CompareResult compare = new CompareResult();
+    public void challenge(ConfigurationGame config, Scanner scan) {
+        IAPlayer IAPlay = new IAPlayer(config, scan);
+        HumanPlayer humanPlay = new HumanPlayer(config, scan);
 
         int counter = config.getMaxTries();
-        int[] combinationAi = random.randomSecret(config);
+        int[] combinationAi = IAPlay.randomResearch();
         int[] combinationPlayer;
         do {
-            combinationPlayer = play.propositionPlayer(scan, config);
-            String[] clew =  compare.compareDigits(combinationPlayer, combinationAi, config);
+            combinationPlayer = humanPlay.research();
+            String[] clew = IAPlay.compareResult(combinationPlayer, combinationAi);
 
             if (counter > 1) {
                 System.out.println("\rThe clues are  : " + Arrays.toString(clew));
                 counter--;
-            } else if (counter == 1){
+            } else if (counter == 1) {
                 System.out.print("It was the last time to find the secret number, Soooo...");
                 counter--;
             }
@@ -45,6 +41,6 @@ public class ChallengerMode {
             } else {
                 System.out.printf("There are %s tries left", counter);
             }
-        } while(counter > 0 || combinationAi == combinationPlayer);
+        } while (counter > 0 || combinationAi == combinationPlayer);
     }
 }

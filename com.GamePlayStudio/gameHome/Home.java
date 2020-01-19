@@ -32,7 +32,7 @@ public class Home {
                     case 1:
                         System.out.println("You have choice the game mode : Challenger" +
                                 "\nTry to find the secret number !");
-                        new ChallengerMode().challenge(scan, config);
+                        new ChallengerMode().challenge(config, scan);
                         break;
                     case 2:
                         System.out.println("You have choice the game mode : Defender");
