@@ -10,6 +10,12 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class ChallengerMode {
+    /**
+     * Player suggest combinations
+     * IA give clues in order to help player finding the secret combination
+     * @param scan : input numbers for combination
+     * @param config : settings to play
+     */
     public void challenge(Scanner scan, ConfigurationGame config){
         RandomNumber random = new RandomNumber();
         PropositionPlayer play = new PropositionPlayer();

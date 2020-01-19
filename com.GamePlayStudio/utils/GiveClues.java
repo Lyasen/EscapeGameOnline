@@ -15,14 +15,17 @@ public class GiveClues {
         System.out.println("Please, give the clues for the computer : ");
         String clue;
         String[] clues;
+        //  TODO: a regex to have a strictly combination with only +, -, =
         do {
             clue = scan.nextLine();
             clues = String.format("%" + config.getDigitsCombination() + "s", clue).split("");
 
             if (clues.length > config.getDigitsCombination())
                 System.out.println("Hep hep hep ! Too many symbols in your clues ! Try again !");
-            else if (!(clue.contains("=")) && !(clue.contains("-")) && !(clue.contains("+")))
-                System.out.println("What sort of clues is that ? Please enter only the real symbols !");
+            else if(!(clue.contains("=")) && !(clue.contains("-")) && !(clue.contains("+")))
+                System.out.println("What was that ? You're afraid to loose or something ! Please enter only real symbols or leave !");
+            else
+                break;
         } while (clues.length > config.getDigitsCombination() || !(clue.contains("=")) && !(clue.contains("-")) && !(clue.contains("+")));
 
         System.out.println("My clues are : " + Arrays.toString(clues));

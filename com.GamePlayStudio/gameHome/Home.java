@@ -1,6 +1,7 @@
 package gameHome;
 
 import domaine.properties.ConfigurationGame;
+import gameMode.BonusMode;
 import gameMode.ChallengerMode;
 import gameMode.DefenderMode;
 import gameMode.DuelMode;
@@ -17,8 +18,13 @@ public class Home {
         return response;
     }
 
+    /**
+     * Display the different games mode
+     * @param scan : the answer of the users
+     * @param config : settings to play
+     */
     public void menu(Scanner scan, ConfigurationGame config) {
-        System.out.println("\nPlease choose your game mode : " + "\n1- Challenger" + "\n2- defender" + "\n3- Duel");
+        System.out.println("\nPlease choose your game mode : " + "\n1- Challenger" + "\n2- defender" + "\n3- Duel" + "\n4- Bonus mode");
         do {
             try {
                 response = scan.nextInt();
@@ -35,14 +41,19 @@ public class Home {
                         break;
                     case 3:
                         System.out.println("You have choice the game mode : Duel");
-                        System.out.println("Challenge the computer");
+                        System.out.println("who will be faster to find each other’s secret combination ?");
                         new DuelMode().duel(scan, config);
                         break;
+                    case 4:
+                        System.out.println("You have choice the game mode : Bonus mode");
+                        System.out.println("Challenge the computer");
+                        new BonusMode().bonus(scan, config);
+                        break;
                     default:
-                        System.out.println("Please have a choice between this three menus : ");
+                        System.out.println("Please have a choice between this four menus : ");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("You have won the relaunch of the game ! I find this very funny");
+                System.err.println("You have won the relaunch of the game ! I find this very funny");
                 break;
             }
         } while (!(1 <= getResponse() && getResponse() <= 3));

@@ -2,6 +2,9 @@ package utils;
 
 import domaine.properties.ConfigurationGame;
 
+/**
+ * Compare results between two combinations in order to display clues for the player
+ */
 public class CompareResult {
     public String[] compareDigits(int[] combinationPlayer, int[] combinationAi, ConfigurationGame config){
         System.out.print("Now let's see ! ");

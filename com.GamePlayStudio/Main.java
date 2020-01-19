@@ -19,7 +19,7 @@ public class Main {
         try {
             properties.load(new FileReader("config.properties"));
         } catch (IOException e) {
-            System.out.println("File not found in classpath");
+            System.err.println("File not found in classpath");
         }
         ConfigurationGame config = new ConfigurationGame(properties);
         config.configGame(properties);

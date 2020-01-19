@@ -11,7 +11,10 @@ import java.util.Scanner;
 
 public class DefenderMode {
     /**
-     * Setting up the defender mode
+     * Player suggest a secret combination
+     * IA try to find the secret number
+     * @param scan : input data
+     * @param config : settings to play
      */
     public void defender(Scanner scan, ConfigurationGame config) {
         PropositionPlayer combinationPlayer = new PropositionPlayer();
@@ -25,14 +28,14 @@ public class DefenderMode {
         int counter = config.getMaxTries();
         System.out.println("\nAi have " + counter + " tries");
 
-        int[] aiRandomProposition = combinationAi.randomSecret(config);
+        int[] IARandomProposition = combinationAi.randomSecret(config);
         scan.nextLine();
-        System.out.println("\nAi's proposition : " + Arrays.toString(aiRandomProposition));
+        System.out.println("\nAi's proposition : " + Arrays.toString(IARandomProposition));
 
         int[] searching;
         do {
             String[] index = clues.giveClues(scan, config);
-            searching = search.AiSearch(aiRandomProposition, index, mini, maxi);
+            searching = search.IASearch(IARandomProposition, index, mini, maxi);
             System.out.println("\nNew AI's proposition : " + Arrays.toString(searching));
             counter--;
 

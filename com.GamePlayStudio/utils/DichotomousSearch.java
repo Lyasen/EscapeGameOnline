@@ -5,23 +5,23 @@ public class DichotomousSearch {
      * A dichotomous searching for helping the AI to find the good secret number
      * @return : A new combination to play
      */
-    public int[] AiSearch(int[] combinationAi, String[] clues, int[] min, int[] max) {
+    public int[] IASearch(int[] IACombination, String[] clues, int[] min, int[] max) {
 
-        for (int i = 0, len = combinationAi.length; i < len; i++) {
+        for (int i = 0, len = IACombination.length; i < len; i++) {
             switch (clues[i]) {
                 case "+":
-                    min[i] = combinationAi[i] + 1;
+                    min[i] = IACombination[i] + 1;
                     break;
                 case "-":
-                    max[i] = combinationAi[i] - 1;
+                    max[i] = IACombination[i] - 1;
                     break;
                 case "=":
-                    min[i] = combinationAi[i];
-                    max[i] = combinationAi[i];
+                    min[i] = IACombination[i];
+                    max[i] = IACombination[i];
                     break;
             }
-            combinationAi[i] = (min[i] + max[i]) / 2;
+            IACombination[i] = (min[i] + max[i]) / 2;
         }
-        return combinationAi;
+        return IACombination;
     }
 }

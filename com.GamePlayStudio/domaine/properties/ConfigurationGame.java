@@ -35,18 +35,15 @@ public class ConfigurationGame {
         return devMode;
     }
 
+    /**
+     * Display after the welcome message to establish the rules in order to play
+      */
     public void configGame(Properties properties) {
         //  get the property value and print it out
         System.out.println("Here are the rules to play ! Good Luck !");
-        String digitsCombination = properties.getProperty("digitsCombination", "4");
-        String maxTries = properties.getProperty("maxTries", "10");
-        String devMode = properties.getProperty("devmode", "false");
-        String min = properties.getProperty("minValue", "0");
-        String max = properties.getProperty("maxValue", "9");
-
-        System.out.println("Number of digits in the combination : " + digitsCombination +
-                "\nEach number of the combination is between " + min + " and " + max +
-                "\nNumber of tries for a game : " + maxTries +
-                "\nDeveloper mode active : " + devMode);
+        System.out.println("Number of digits in the combination : " + getDigitsCombination() +
+                "\nEach number in the combination is between " + getMinValue() + " and " + getMaxValue() +
+                "\nNumber of tries for a game : " + getMaxTries() +
+                "\nDeveloper mode active : " + isDevMode());
     }
 }

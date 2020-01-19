@@ -7,9 +7,15 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PropositionPlayer {
+    /**
+     * Display a combination suggest by the player
+     * @param scan : input numbers for a combination
+     * @param config : settings to play
+     * @return : proposition of the player
+     */
     public int[] propositionPlayer(Scanner scan, ConfigurationGame config) {
         do {
-            System.out.println("\nPlayer, do your proposition : ");
+            System.out.println("Do your proposition : ");
             try {
                 int proposition = scan.nextInt();
                 String[] digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
