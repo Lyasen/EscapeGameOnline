@@ -3,6 +3,7 @@ package gameMode;
 import domaine.properties.ConfigurationGame;
 import player.HumanPlayer;
 import player.IAPlayer;
+import player.Player;
 import utils.IsWin;
 
 import java.util.Arrays;
@@ -14,15 +15,15 @@ public class ChallengerMode {
      * IA give clues in order to help player finding the secret combination
      */
     public void challenge(ConfigurationGame config, Scanner scan) {
-        IAPlayer IAPlay = new IAPlayer(config, scan);
-        HumanPlayer humanPlay = new HumanPlayer(config, scan);
+        IAPlayer IAPlay = new IAPlayer(config);
+        Player humanPlay = new HumanPlayer(config, scan);
 
         int counter = config.getMaxTries();
-        int[] combinationAi = IAPlay.randomResearch();
+        int[] combinationAi = IAPlay.random();
         int[] combinationPlayer;
         do {
-            combinationPlayer = humanPlay.research();
-            String[] clew = IAPlay.compareResult(combinationPlayer, combinationAi);
+            combinationPlayer = humanPlay.propositionPlayer();
+            String[] clew = IAPlay.compare_result(combinationPlayer, combinationAi);
 
             if (counter > 1) {
                 System.out.println("\rThe clues are  : " + Arrays.toString(clew));

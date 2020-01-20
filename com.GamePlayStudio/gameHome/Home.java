@@ -12,8 +12,6 @@ import java.util.Scanner;
 public class Home {
     private int response;
 
-    public Home() {}
-
     public int getResponse() {
         return response;
     }

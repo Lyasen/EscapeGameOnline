@@ -1,14 +1,12 @@
 package player;
 
 import domaine.properties.ConfigurationGame;
-import utils.GivingClues;
-import utils.PlayerProposition;
 
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class HumanPlayer extends Player implements PlayerProposition, GivingClues {
+public class HumanPlayer extends Player {
     public HumanPlayer(ConfigurationGame config, Scanner scan){
         this.config = config;
         this.scan = scan;
@@ -20,9 +18,9 @@ public class HumanPlayer extends Player implements PlayerProposition, GivingClue
      * @return : proposition of the player
      */
     @Override
-    public int[] research() {
+    public int[] propositionPlayer() {
         do {
-            System.out.println("\nDo your proposition : ");
+            System.out.println("Do your proposition : ");
             try {
                 int proposition = scan.nextInt();
                 String[] digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
@@ -71,5 +69,15 @@ public class HumanPlayer extends Player implements PlayerProposition, GivingClue
 
         System.out.println("My clues are : " + Arrays.toString(clues));
         return clues;
+    }
+
+    @Override
+    public String[] compare_result(int[] combinationPlayer, int[] combinationAi) {
+        return null;
+    }
+
+    @Override
+    public int[] dichotomousResearch(int[] IACombination, String[] clues, int[] min, int[] max) {
+        return null;
     }
 }

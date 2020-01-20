@@ -1,10 +1,8 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import player.PropositionPlayer;
-import utils.DichotomousSearch;
-import utils.GiveClues;
-import utils.RandomNumber;
+import player.HumanPlayer;
+import player.IAPlayer;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -17,25 +15,26 @@ public class DefenderMode {
      * @param config : settings to play
      */
     public void defender(Scanner scan, ConfigurationGame config) {
-        PropositionPlayer combinationPlayer = new PropositionPlayer();
-        RandomNumber combinationAi = new RandomNumber();
-        GiveClues clues = new GiveClues();
-        DichotomousSearch search = new DichotomousSearch();
+        HumanPlayer humanPlay = new HumanPlayer(config, scan);
+        IAPlayer IAplay = new IAPlayer(config);
         int[] mini = new int[config.getDigitsCombination()];
         int[] maxi = new int[config.getDigitsCombination()];
 
-        int[] playerProposition = combinationPlayer.propositionPlayer(scan, config);
+        int[] playerProposition = humanPlay.propositionPlayer();
         int counter = config.getMaxTries();
         System.out.println("\nAi have " + counter + " tries");
 
-        int[] IARandomProposition = combinationAi.randomSecret(config);
+        int[] IARandomProposition = IAplay.random();
         scan.nextLine();
         System.out.println("\nAi's proposition : " + Arrays.toString(IARandomProposition));
+        String[] index = humanPlay.clues();
+        int[] searching = IAplay.dichotomousResearch(IARandomProposition, index, mini, maxi);
+        System.out.println("\nNew AI's proposition : " + Arrays.toString(searching));
+        counter--;
 
-        int[] searching;
         do {
-            String[] index = clues.giveClues(scan, config);
-            searching = search.IASearch(IARandomProposition, index, mini, maxi);
+            index = humanPlay.clues();
+            searching = IAplay.dichotomousResearch(searching, index, mini, maxi);
             System.out.println("\nNew AI's proposition : " + Arrays.toString(searching));
             counter--;
 

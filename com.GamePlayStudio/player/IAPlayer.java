@@ -1,17 +1,12 @@
 package player;
 
 import domaine.properties.ConfigurationGame;
-import utils.IADichotomousResearch;
-import utils.RandomCombination;
-import utils.compareResult;
 
 import java.util.Random;
-import java.util.Scanner;
 
-public class IAPlayer extends Player implements compareResult, IADichotomousResearch, RandomCombination {
-    public IAPlayer(ConfigurationGame config, Scanner scan) {
+public class IAPlayer extends Player {
+    public IAPlayer(ConfigurationGame config) {
         this.config = config;
-        this.scan = scan;
     }
 
     /**
@@ -19,8 +14,7 @@ public class IAPlayer extends Player implements compareResult, IADichotomousRese
      *
      * @return the secret number
      */
-    @Override
-    public int[] randomResearch() {
+    public int[] random() {
         int[] secret = new int[config.getDigitsCombination()];
         Random hazard = new Random();
 
@@ -59,7 +53,7 @@ public class IAPlayer extends Player implements compareResult, IADichotomousRese
      * Compare results between two combinations in order to display clues for the player
      */
     @Override
-    public String[] compareResult(int[] combinationPlayer, int[] combinationAi) {
+    public String[] compare_result(int[] combinationPlayer, int[] combinationAi) {
         System.out.print("Now let's see ! ");
         String[] symbol = new String[config.getDigitsCombination()];
 
@@ -72,5 +66,15 @@ public class IAPlayer extends Player implements compareResult, IADichotomousRese
                 symbol[i] = "=";
         }
         return symbol;
+    }
+
+    @Override
+    public int[] propositionPlayer() {
+        return null;
+    }
+
+    @Override
+    public String[] clues() {
+        return null;
     }
 }
