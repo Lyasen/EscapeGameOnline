@@ -25,6 +25,6 @@ public class Main {
         config.configGame(properties);
 
         Home choice = new Home();
-        choice.menu(scan, config);
+        choice.menu(scan);
     }
 }

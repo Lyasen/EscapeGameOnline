@@ -1,6 +1,5 @@
 package gameHome;
 
-import domaine.properties.ConfigurationGame;
 import gameMode.BonusMode;
 import gameMode.ChallengerMode;
 import gameMode.DefenderMode;
@@ -19,9 +18,8 @@ public class Home {
     /**
      * Display the different games mode
      * @param scan : the answer of the users
-     * @param config : settings to play
      */
-    public void menu(Scanner scan, ConfigurationGame config) {
+    public void menu(Scanner scan) {
         System.out.println("\nPlease choose your game mode : " + "\n1- Challenger" + "\n2- defender" + "\n3- Duel" + "\n4- Bonus mode");
         do {
             try {
@@ -30,22 +28,22 @@ public class Home {
                     case 1:
                         System.out.println("You have choice the game mode : Challenger" +
                                 "\nTry to find the secret number !");
-                        new ChallengerMode().challenge(config, scan);
+                        new ChallengerMode().challenge();
                         break;
                     case 2:
                         System.out.println("You have choice the game mode : Defender");
                         System.out.println("Will the computer regain your secret combination ?");
-                        new DefenderMode().defender(scan, config);
+                        new DefenderMode().defender();
                         break;
                     case 3:
                         System.out.println("You have choice the game mode : Duel");
                         System.out.println("who will be faster to find each other’s secret combination ?");
-                        new DuelMode().duel(scan, config);
+                        new DuelMode().duel();
                         break;
                     case 4:
                         System.out.println("You have choice the game mode : Bonus mode");
                         System.out.println("Challenge the computer");
-                        new BonusMode().bonus(scan, config);
+                        new BonusMode().bonus();
                         break;
                     default:
                         System.out.println("Please have a choice between this four menus : ");

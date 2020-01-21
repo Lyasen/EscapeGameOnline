@@ -1,5 +1,10 @@
 package gameMode;
 
+import domaine.properties.ConfigurationGame;
+
+import java.util.Scanner;
+
 public abstract class Mode {
-    protected abstract void playWithTwoPlayers(String player_1, String player_2);
+    protected ConfigurationGame config;
+    protected Scanner scan;
 }

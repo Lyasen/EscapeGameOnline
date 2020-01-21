@@ -1,20 +1,16 @@
 package gameMode;
 
-import domaine.properties.ConfigurationGame;
 import player.HumanPlayer;
 import player.IAPlayer;
 import utils.IsWin;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
-public class BonusMode {
+public class BonusMode extends Mode {
     /**
      * A special mode where player and IA try to find the secret combination of the computer
-     * @param scan : input data
-     * @param config : settings to play
      */
-    public void bonus(Scanner scan, ConfigurationGame config) {
+    public void bonus() {
         HumanPlayer humanPlay = new HumanPlayer(config, scan);
         IAPlayer IAplay = new IAPlayer(config);
         int[] mini = new int[config.getDigitsCombination()];
@@ -63,5 +59,4 @@ public class BonusMode {
             }
         } while (counter > 0 || Arrays.equals(combinationPlayer, hazard) || Arrays.equals(combinationAi, hazard));
     }
-
 }

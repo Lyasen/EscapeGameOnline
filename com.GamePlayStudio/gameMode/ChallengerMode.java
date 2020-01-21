@@ -1,20 +1,19 @@
 package gameMode;
 
-import domaine.properties.ConfigurationGame;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
 import utils.IsWin;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
-public class ChallengerMode {
+public class ChallengerMode extends Mode {
+
     /**
      * Player suggest combinations
      * IA give clues in order to help player finding the secret combination
      */
-    public void challenge(ConfigurationGame config, Scanner scan) {
+    public void challenge() {
         IAPlayer IAPlay = new IAPlayer(config);
         Player humanPlay = new HumanPlayer(config, scan);
 

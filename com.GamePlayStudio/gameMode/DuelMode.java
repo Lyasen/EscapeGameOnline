@@ -1,21 +1,17 @@
 package gameMode;
 
-import domaine.properties.ConfigurationGame;
 import player.HumanPlayer;
 import player.IAPlayer;
-import utils.*;
+import utils.IsWin;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
-public class DuelMode {
+public class DuelMode extends Mode {
     /**
      * Player have a secret number and try to find the AI's secret combination
      * IA have a secret number too and try to find the player's secret combination. No really ! He does all the same, it's really a copier !
-     * @param scan : input data
-     * @param config: settings to play
      */
-    public void duel(Scanner scan, ConfigurationGame config) {
+    public void duel() {
         HumanPlayer humanPlay = new HumanPlayer(config, scan);
         IAPlayer IAplay = new IAPlayer(config);
         int[] combinationPlayer = new int[config.getDigitsCombination()], dichotomousCombinationIA = new int[config.getDigitsCombination()];

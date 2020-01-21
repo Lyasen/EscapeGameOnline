@@ -1,20 +1,16 @@
 package gameMode;
 
-import domaine.properties.ConfigurationGame;
 import player.HumanPlayer;
 import player.IAPlayer;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
-public class DefenderMode {
+public class DefenderMode extends Mode{
     /**
      * Player suggest a secret combination
      * IA try to find the secret number
-     * @param scan : input data
-     * @param config : settings to play
      */
-    public void defender(Scanner scan, ConfigurationGame config) {
+    public void defender() {
         HumanPlayer humanPlay = new HumanPlayer(config, scan);
         IAPlayer IAplay = new IAPlayer(config);
         int[] mini = new int[config.getDigitsCombination()];
