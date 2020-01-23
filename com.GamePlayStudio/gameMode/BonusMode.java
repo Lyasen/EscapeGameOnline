@@ -1,33 +1,39 @@
 package gameMode;
 
+import domaine.properties.ConfigurationGame;
+import gameHome.PlayAgain;
 import player.HumanPlayer;
 import player.IAPlayer;
 import utils.IsWin;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class BonusMode extends Mode {
+    public BonusMode(ConfigurationGame config, Scanner scan) {
+        super(config, scan);
+    }
+
     /**
      * A special mode where player and IA try to find the secret combination of the computer
      */
     public void bonus() {
         HumanPlayer humanPlay = new HumanPlayer(config, scan);
-        IAPlayer IAplay = new IAPlayer(config);
+        IAPlayer IAPlay = new IAPlayer(config, scan);
         int[] mini = new int[config.getDigitsCombination()];
         int[] maxi = new int[config.getDigitsCombination()];
         int counter = config.getMaxTries();
 
-        System.out.println("Now, computer and human deliver a real fight !" +
-                "\nYou'll have " + config.getMaxTries() + " tries");
-        int[] hazard = IAplay.random();
+        System.out.println("Now, computer and human deliver a real fight !\nYou'll have " + config.getMaxTries() + " tries");
+        int[] hazard = IAPlay.random();
         int[] combinationPlayer;
-        int[] combinationAi;
+        int[] combinationIA;
         do {
             /*
              * Player's proposition
              */
             combinationPlayer = humanPlay.propositionPlayer();
-            String[] compareCombinations = IAplay.compare_result(combinationPlayer, hazard);
+            String[] compareCombinations = IAPlay.compare_result(combinationPlayer, hazard);
             if (counter > 1)
                 System.out.println("The clues are  : " + Arrays.toString(compareCombinations));
 
@@ -39,24 +45,25 @@ public class BonusMode extends Mode {
             /*
              * AI's proposition
              */
-            combinationAi = IAplay.dichotomousResearch(combinationPlayer, compareCombinations, mini, maxi);
-            System.out.println("\n\nAI's proposition : " + Arrays.toString(combinationAi));
-            compareCombinations = IAplay.compare_result(combinationPlayer, hazard);
+            combinationIA = IAPlay.dichotomousResearch(hazard, compareCombinations, mini, maxi);
+            System.out.println("\n\nIA's proposition : " + Arrays.toString(combinationIA));
+            String[] secondCompareCombinations = IAPlay.compare_result(combinationPlayer, combinationIA);
             if (counter > 1)
-                System.out.println("\rThe clues are  : " + Arrays.toString(compareCombinations));
+                System.out.println("\rThe clues are  : " + Arrays.toString(secondCompareCombinations));
             counter--;
             System.out.printf("It stays %d tries", counter);
 
-            if (IsWin.winIf(compareCombinations)) {
-                System.out.println("\nWell done ! AI win !");
+            if (IsWin.winIf(secondCompareCombinations)) {
+                System.out.println("\nWell done ! IA wins !");
                 break;
-            }
-
-            if (counter < 0) {
+            } else if (counter == 0){
                 System.out.println("\nSorry, no more tries ! The secret number was : "
                         + Arrays.toString(combinationPlayer) + " ! Try next time !");
                 break;
             }
-        } while (counter > 0 || Arrays.equals(combinationPlayer, hazard) || Arrays.equals(combinationAi, hazard));
+        } while (counter > 0 || Arrays.equals(combinationPlayer, hazard) || Arrays.equals(combinationIA, hazard));
+
+        new PlayAgain(config).playOneMore(scan);
+        System.exit(0);
     }
 }

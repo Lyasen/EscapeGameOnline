@@ -1,20 +1,27 @@
 package gameMode;
 
+import domaine.properties.ConfigurationGame;
+import gameHome.PlayAgain;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
 import utils.IsWin;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class ChallengerMode extends Mode {
+
+    public ChallengerMode(ConfigurationGame config, Scanner scan) {
+        super(config, scan);
+    }
 
     /**
      * Player suggest combinations
      * IA give clues in order to help player finding the secret combination
      */
     public void challenge() {
-        IAPlayer IAPlay = new IAPlayer(config);
+        IAPlayer IAPlay = new IAPlayer(config, scan);
         Player humanPlay = new HumanPlayer(config, scan);
 
         int counter = config.getMaxTries();
@@ -42,5 +49,7 @@ public class ChallengerMode extends Mode {
                 System.out.printf("There are %s tries left", counter);
             }
         } while (counter > 0 || combinationAi == combinationPlayer);
+
+        new PlayAgain(config).playOneMore(scan);
     }
 }

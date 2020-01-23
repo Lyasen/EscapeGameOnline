@@ -3,14 +3,15 @@ package player;
 import domaine.properties.ConfigurationGame;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class IAPlayer extends Player {
-    public IAPlayer(ConfigurationGame config) {
-        this.config = config;
+    public IAPlayer(ConfigurationGame config, Scanner scan) {
+        super(config, scan);
     }
 
     /**
-     * A random combination played by the AI
+     * A random combination played by the IA
      *
      * @return the secret number
      */
@@ -26,12 +27,12 @@ public class IAPlayer extends Player {
     }
 
     /**
-     * A dichotomous searching for helping the AI to find the good secret number
+     * A dichotomous searching for helping the IA to find the good secret number
      * @return : A new combination to play
      */
     @Override
     public int[] dichotomousResearch(int[] IACombination, String[] clues, int[] min, int[] max) {
-        for (int i = 0, len = IACombination.length; i < len; i++) {
+        for (int i = config.getMinValue(), len = IACombination.length; i < len; i++) {
             switch (clues[i]) {
                 case "+":
                     min[i] = IACombination[i] + 1;

@@ -8,8 +8,7 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player {
     public HumanPlayer(ConfigurationGame config, Scanner scan){
-        this.config = config;
-        this.scan = scan;
+        super(config, scan);
     }
 
     /**
@@ -20,7 +19,7 @@ public class HumanPlayer extends Player {
     @Override
     public int[] propositionPlayer() {
         do {
-            System.out.println("Do your proposition : ");
+            System.out.println("\tDo your proposition : ");
             try {
                 int proposition = scan.nextInt();
                 String[] digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
@@ -54,18 +53,21 @@ public class HumanPlayer extends Player {
         System.out.println("Please, give the clues for the computer : ");
         String clue;
         String[] clues;
-        //  TODO: a regex to have a strictly combination with only +, -, =
+        boolean b;
         do {
             clue = scan.nextLine();
+
             clues = String.format("%" + config.getDigitsCombination() + "s", clue).split("");
+            b = clue.matches("[+-=]+");
+
 
             if (clues.length > config.getDigitsCombination())
                 System.out.println("Hep hep hep ! Too many symbols in your clues ! Try again !");
-            else if(!(clue.contains("=")) && !(clue.contains("-")) && !(clue.contains("+")))
+            else if (!b) {
                 System.out.println("What was that ? You're afraid to loose or something ! Please enter only real symbols or leave !");
-            else
+            } else
                 break;
-        } while (clues.length > config.getDigitsCombination() || !(clue.contains("=")) && !(clue.contains("-")) && !(clue.contains("+")));
+        } while (clues.length > config.getDigitsCombination() || !b);
 
         System.out.println("My clues are : " + Arrays.toString(clues));
         return clues;

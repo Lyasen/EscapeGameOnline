@@ -9,11 +9,13 @@ import gameMode.DuelMode;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Home {
+public class PlayAgain {
     private int response;
     private ConfigurationGame config;
+    private Object player_1;
+    private Object player_2;
 
-    public Home(ConfigurationGame config) {
+    public PlayAgain(ConfigurationGame config) {
         this.config = config;
     }
 
@@ -22,30 +24,28 @@ public class Home {
     }
 
     /**
-     * Display the different game modes
+     * Display the possibility to replay or not
      * @param scan : the answer of the user
      */
-    public void menu(Scanner scan) {
-        System.out.println("\nPlease choose your game mode :\n1- Challenger\n2- defender\n3- Duel\n4- Bonus mode");
+    public void playOneMore(Scanner scan){
+        System.out.println("\nThe game is now finished !\n1 - You may play again \n2 - You can come back to the menu \n3 - You can go swimming");
+
         do {
             try {
                 response = scan.nextInt();
                 switch (getResponse()) {
                     case 1:
-                        System.out.println("You have choice the game mode : Challenger\nTry to find the secret number !");
+                        System.out.println("You want to play one more ! Good luck !");
                         new ChallengerMode(config, scan).challenge();
-                        break;
-                    case 2:
-                        System.out.println("You have choice the game mode : Defender\nWill the computer regain your secret combination ?");
                         new DefenderMode(config, scan).defender();
+                        new DuelMode(config, scan).duel();
+                        new BonusMode(config,scan).bonus();
+                    case 2:
+                        System.out.println("Return to the menu !");
+                        new Home(config).menu(scan);
                         break;
                     case 3:
-                        System.out.println("You have choice the game mode : Duel\nWho will be faster to find each other’s secret combination ?");
-                        new DuelMode(config, scan).duel();
-                        break;
-                    case 4:
-                        System.out.println("You have choice the game mode : Bonus mode\nChallenge the computer");
-                        new BonusMode(config, scan).bonus();
+                        System.out.println("Thank you to play with us ! See you soon !");
                         break;
                     default:
                         System.out.println("Please have a choice between this four menus : ");
