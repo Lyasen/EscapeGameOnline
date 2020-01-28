@@ -3,11 +3,10 @@ package player;
 import domaine.properties.ConfigurationGame;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class IAPlayer extends Player {
-    public IAPlayer(ConfigurationGame config, Scanner scan) {
-        super(config, scan);
+    public IAPlayer(ConfigurationGame config) {
+        super(config);
     }
 
     /**
@@ -15,7 +14,7 @@ public class IAPlayer extends Player {
      *
      * @return the secret number
      */
-    public int[] random() {
+    public static int[] random() {
         int[] secret = new int[config.getDigitsCombination()];
         Random hazard = new Random();
 
@@ -31,51 +30,44 @@ public class IAPlayer extends Player {
      * @return : A new combination to play
      */
     @Override
-    public int[] dichotomousResearch(int[] IACombination, String[] clues, int[] min, int[] max) {
-        for (int i = config.getMinValue(), len = IACombination.length; i < len; i++) {
+    public int[] research(int[] combination, String[] clues) {
+        int[] min = new int[config.getDigitsCombination()];
+        int[] max = new int[config.getDigitsCombination()];
+
+        for (int i = 0, len = combination.length, mini = config.getMinValue(), maxi = config.getMaxValue(); i < len; i++) {
             switch (clues[i]) {
                 case "+":
-                    min[i] = IACombination[i] + 1;
+                    min[i] = combination[i] + 1 + maxi;
                     break;
                 case "-":
-                    max[i] = IACombination[i] - 1;
+                    max[i] = combination[i] - 1 + mini;
                     break;
                 case "=":
-                    min[i] = IACombination[i];
-                    max[i] = IACombination[i];
+                    min[i] = combination[i];
+                    max[i] = combination[i];
                     break;
             }
-            IACombination[i] = (min[i] + max[i]) / 2;
+            combination[i] = (min[i] + max[i]) / 2;
         }
-        return IACombination;
+        return combination;
     }
 
     /**
      * Compare results between two combinations in order to display clues for the player
      */
     @Override
-    public String[] compare_result(int[] combinationPlayer, int[] combinationAi) {
+    public String[] clues(int[] combinationPlayer_1, int[] combinationPlayer_2) {
         System.out.print("Now let's see ! ");
         String[] symbol = new String[config.getDigitsCombination()];
 
-        for (int i = 0, len = combinationAi.length; i < len; i++) {
-            if (combinationAi[i] > combinationPlayer[i])
+        for (int i = 0, len = combinationPlayer_1.length; i < len; i++) {
+            if (combinationPlayer_1[i] > combinationPlayer_2[i])
                 symbol[i] = "+";
-            else if (combinationAi[i] < combinationPlayer[i])
+            else if (combinationPlayer_1[i] < combinationPlayer_2[i])
                 symbol[i] = "-";
-            else if (combinationAi[i] == combinationPlayer[i])
+            else if (combinationPlayer_1[i] == combinationPlayer_2[i])
                 symbol[i] = "=";
         }
         return symbol;
-    }
-
-    @Override
-    public int[] propositionPlayer() {
-        return null;
-    }
-
-    @Override
-    public String[] clues() {
-        return null;
     }
 }

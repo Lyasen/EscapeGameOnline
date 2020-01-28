@@ -2,7 +2,7 @@ package utils;
 
 public class IsWin {
     /**
-     * If all symbols = are found, you win
+     * If all symbols '=' are found, you win
      *
      * @param comparison : The comparison between symbols
      * @return : If true, you win

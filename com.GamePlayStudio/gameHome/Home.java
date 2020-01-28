@@ -5,6 +5,7 @@ import gameMode.BonusMode;
 import gameMode.ChallengerMode;
 import gameMode.DefenderMode;
 import gameMode.DuelMode;
+import player.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -25,7 +26,7 @@ public class Home {
      * Display the different game modes
      * @param scan : the answer of the user
      */
-    public void menu(Scanner scan) {
+    public void menu(Scanner scan, Player player_1, Player player_2) {
         System.out.println("\nPlease choose your game mode :\n1- Challenger\n2- defender\n3- Duel\n4- Bonus mode");
         do {
             try {
@@ -33,19 +34,19 @@ public class Home {
                 switch (getResponse()) {
                     case 1:
                         System.out.println("You have choice the game mode : Challenger\nTry to find the secret number !");
-                        new ChallengerMode(config, scan).challenge();
+                        new ChallengerMode(config, scan).playWithTwoPlayers(player_1, player_2);
                         break;
                     case 2:
                         System.out.println("You have choice the game mode : Defender\nWill the computer regain your secret combination ?");
-                        new DefenderMode(config, scan).defender();
+                        new DefenderMode(config, scan).playWithTwoPlayers(player_1, player_2);
                         break;
                     case 3:
                         System.out.println("You have choice the game mode : Duel\nWho will be faster to find each other’s secret combination ?");
-                        new DuelMode(config, scan).duel();
+                        new DuelMode(config, scan).playWithTwoPlayers(player_1, player_2);
                         break;
                     case 4:
                         System.out.println("You have choice the game mode : Bonus mode\nChallenge the computer");
-                        new BonusMode(config, scan).bonus();
+                        new BonusMode(config, scan).playWithTwoPlayers(player_1, player_2);
                         break;
                     default:
                         System.out.println("Please have a choice between this four menus : ");

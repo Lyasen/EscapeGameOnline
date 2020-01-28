@@ -2,22 +2,14 @@ package player;
 
 import domaine.properties.ConfigurationGame;
 
-import java.util.Scanner;
-
 public abstract class Player {
-    protected ConfigurationGame config;
-    protected Scanner scan;
+    protected static ConfigurationGame config;
 
-    public Player(ConfigurationGame config, Scanner scan) {
-        this.config = config;
-        this.scan = scan;
+    public Player(ConfigurationGame config) {
+        Player.config = config;
     }
 
-    protected abstract int[] dichotomousResearch(int[] IACombination, String[] clues, int[] min, int[] max);
+    public abstract int[] research(int[] combination, String[] clues);
 
-    protected abstract String[] clues();
-
-    protected abstract String[] compare_result(int[] combinationPlayer, int[] combinationAi);
-
-    public abstract int[] propositionPlayer();
+    public abstract String[] clues(int[] combinationPlayer_1, int[] combinationPlayer_2);
 }

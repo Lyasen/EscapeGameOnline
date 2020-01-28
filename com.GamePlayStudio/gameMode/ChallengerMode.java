@@ -1,7 +1,6 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameHome.PlayAgain;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
@@ -11,7 +10,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class ChallengerMode extends Mode {
-
     public ChallengerMode(ConfigurationGame config, Scanner scan) {
         super(config, scan);
     }
@@ -20,16 +18,19 @@ public class ChallengerMode extends Mode {
      * Player suggest combinations
      * IA give clues in order to help player finding the secret combination
      */
-    public void challenge() {
-        IAPlayer IAPlay = new IAPlayer(config, scan);
-        Player humanPlay = new HumanPlayer(config, scan);
+    @Override
+    public void playWithTwoPlayers(Player player_1, Player player_2) {
+        player_1 = new HumanPlayer(config, scan);
+        player_2 = new IAPlayer(config);
 
         int counter = config.getMaxTries();
-        int[] combinationAi = IAPlay.random();
-        int[] combinationPlayer;
+        int[] IACombination = IAPlayer.random();
+        int[] combinationPlayer = new int[config.getDigitsCombination()];
+        String[] clew = new String[config.getDigitsCombination()];
+
         do {
-            combinationPlayer = humanPlay.propositionPlayer();
-            String[] clew = IAPlay.compare_result(combinationPlayer, combinationAi);
+            combinationPlayer = player_1.research(combinationPlayer, clew);
+            clew = player_2.clues(IACombination, combinationPlayer);
 
             if (counter > 1) {
                 System.out.println("\rThe clues are  : " + Arrays.toString(clew));
@@ -44,12 +45,10 @@ public class ChallengerMode extends Mode {
                 break;
             } else if (counter == 0) {
                 System.out.println("What a pity ! It's lost ! The secret number was : "
-                        + Arrays.toString(combinationAi) + " ! Try next time !");
+                        + Arrays.toString(IACombination) + " ! Try next time !");
             } else {
-                System.out.printf("There are %s tries left", counter);
+                System.out.printf("There are %s tries left ", counter);
             }
-        } while (counter > 0 || combinationAi == combinationPlayer);
-
-        new PlayAgain(config).playOneMore(scan);
+        } while (counter > 0 || IACombination == combinationPlayer);
     }
 }
