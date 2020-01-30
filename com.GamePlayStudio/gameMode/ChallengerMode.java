@@ -1,7 +1,6 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameHome.PlayAgain;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
@@ -52,7 +51,5 @@ public class ChallengerMode extends Mode {
                 System.out.printf("There are %s tries left ", counter);
             }
         } while (counter > 0 || IACombination == combinationPlayer);
-
-        new PlayAgain(config).playOneMore(scan, player_1, player_2);
     }
 }

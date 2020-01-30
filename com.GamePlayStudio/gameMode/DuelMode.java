@@ -1,7 +1,6 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameHome.PlayAgain;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
@@ -86,7 +85,5 @@ public class DuelMode extends Mode {
 
         if (counter == 0 && !Arrays.equals(combinationPlayer, IANumberToFind) && !Arrays.equals(combinationIA, playerNumberToFind))
             System.out.println("\nSorry, no more tries ! IA and Player don't found the each other combination ! Try next time !");
-
-        new PlayAgain(config).playOneMore(scan, player_1, player_2);
     }
 }

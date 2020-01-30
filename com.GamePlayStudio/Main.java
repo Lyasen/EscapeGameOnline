@@ -1,5 +1,6 @@
 import domaine.properties.ConfigurationGame;
 import gameHome.Home;
+import gameHome.PlayAgain;
 import player.Player;
 
 import java.io.FileReader;
@@ -8,13 +9,12 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class Main {
-    private static Player player_1;
     private static Player player_2;
+    private static Player player_1;
 
     /**
      * Used Main to launch the game mode
-     *
-     * @param args : A welcome menu
+     *  @param args : A welcome menu
      */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -30,6 +30,9 @@ public class Main {
 
         Home choice = new Home(config);
         choice.menu(scan, setPlayer_1(player_1), setPlayer_2(player_2));
+
+        PlayAgain playAgain = new PlayAgain(config);
+        playAgain.playOneMore(scan, setPlayer_1(player_1), setPlayer_2(player_2));
     }
 
     public static Player setPlayer_1(Player player_1) {

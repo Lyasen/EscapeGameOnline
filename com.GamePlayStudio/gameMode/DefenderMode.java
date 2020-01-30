@@ -1,7 +1,6 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameHome.PlayAgain;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
@@ -49,7 +48,5 @@ public class DefenderMode extends Mode {
                 System.out.println("It stays " + counter + " tries for the AI");
             }
         } while (counter != 0 || Arrays.equals(IAProposition, combinationPlayer));
-
-        new PlayAgain(config).playOneMore(scan, player_1, player_2);
     }
 }
