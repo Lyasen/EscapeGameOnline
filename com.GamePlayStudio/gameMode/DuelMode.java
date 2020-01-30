@@ -1,6 +1,7 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
+import gameHome.PlayAgain;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
@@ -20,6 +21,7 @@ public class DuelMode extends Mode {
      */
     @Override
     public void playWithTwoPlayers(Player player_1, Player player_2) {
+        System.out.println("You have choice the game mode : Duel\nWho will be faster to find each other’s secret combination ?");
         player_1 = new HumanPlayer(config, scan);
         player_2 = new IAPlayer(config);
 
@@ -54,7 +56,7 @@ public class DuelMode extends Mode {
                     "\nI remember you have chosen the following last combination : " + Arrays.toString(combinationPlayer) +
                     "\nand the last clues from the IA was : " + Arrays.toString(comparePlayerIA));
             combinationPlayer = player_1.research(combinationPlayer, clew);
-            comparePlayerIA = player_2.clues(IARandomProposition, combinationPlayer);
+            comparePlayerIA = player_2.clues(IANumberToFind, combinationPlayer);
             if (counter >= 1) {
                 System.out.println("The clues are  : " + Arrays.toString(comparePlayerIA));
                 scan.nextLine();
@@ -84,5 +86,7 @@ public class DuelMode extends Mode {
 
         if (counter == 0 && !Arrays.equals(combinationPlayer, IANumberToFind) && !Arrays.equals(combinationIA, playerNumberToFind))
             System.out.println("\nSorry, no more tries ! IA and Player don't found the each other combination ! Try next time !");
+
+        new PlayAgain(config).playOneMore(scan, player_1, player_2);
     }
 }

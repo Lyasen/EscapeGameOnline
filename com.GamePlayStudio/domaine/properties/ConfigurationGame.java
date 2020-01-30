@@ -38,7 +38,7 @@ public class ConfigurationGame {
     /**
      * Display after the welcome message to establish the rules in order to play
       */
-    public void configGame(Properties properties) {
+    public void configGame() {
         //  get the property value and print it out
         System.out.println("Here are the rules to play ! Good Luck !");
         System.out.println("Number of digits in the combination : " + getDigitsCombination() +

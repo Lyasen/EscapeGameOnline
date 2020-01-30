@@ -26,7 +26,7 @@ public class Main {
             System.err.println("File not found in classpath");
         }
         ConfigurationGame config = new ConfigurationGame(properties);
-        config.configGame(properties);
+        config.configGame();
 
         Home choice = new Home(config);
         choice.menu(scan, setPlayer_1(player_1), setPlayer_2(player_2));

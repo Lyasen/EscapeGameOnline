@@ -1,6 +1,7 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
+import gameHome.PlayAgain;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
@@ -20,6 +21,7 @@ public class ChallengerMode extends Mode {
      */
     @Override
     public void playWithTwoPlayers(Player player_1, Player player_2) {
+        System.out.println("You have choice the game mode : Challenger\nTry to find the secret number !");
         player_1 = new HumanPlayer(config, scan);
         player_2 = new IAPlayer(config);
 
@@ -50,5 +52,7 @@ public class ChallengerMode extends Mode {
                 System.out.printf("There are %s tries left ", counter);
             }
         } while (counter > 0 || IACombination == combinationPlayer);
+
+        new PlayAgain(config).playOneMore(scan, player_1, player_2);
     }
 }

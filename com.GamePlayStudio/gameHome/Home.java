@@ -1,18 +1,15 @@
 package gameHome;
 
 import domaine.properties.ConfigurationGame;
-import gameMode.BonusMode;
-import gameMode.ChallengerMode;
-import gameMode.DefenderMode;
-import gameMode.DuelMode;
+import gameMode.*;
 import player.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Home {
-    private int response;
-    private ConfigurationGame config;
+    protected int response;
+    protected ConfigurationGame config;
 
     public Home(ConfigurationGame config) {
         this.config = config;
@@ -24,6 +21,7 @@ public class Home {
 
     /**
      * Display the different game modes
+     *
      * @param scan : the answer of the user
      */
     public void menu(Scanner scan, Player player_1, Player player_2) {
@@ -33,19 +31,15 @@ public class Home {
                 response = scan.nextInt();
                 switch (getResponse()) {
                     case 1:
-                        System.out.println("You have choice the game mode : Challenger\nTry to find the secret number !");
                         new ChallengerMode(config, scan).playWithTwoPlayers(player_1, player_2);
                         break;
                     case 2:
-                        System.out.println("You have choice the game mode : Defender\nWill the computer regain your secret combination ?");
                         new DefenderMode(config, scan).playWithTwoPlayers(player_1, player_2);
                         break;
                     case 3:
-                        System.out.println("You have choice the game mode : Duel\nWho will be faster to find each other’s secret combination ?");
                         new DuelMode(config, scan).playWithTwoPlayers(player_1, player_2);
                         break;
                     case 4:
-                        System.out.println("You have choice the game mode : Bonus mode\nChallenge the computer");
                         new BonusMode(config, scan).playWithTwoPlayers(player_1, player_2);
                         break;
                     default:
@@ -53,8 +47,18 @@ public class Home {
                 }
             } catch (InputMismatchException e) {
                 System.err.println("You have won the relaunch of the game ! I find this very funny");
-                break;
             }
         } while (!(1 <= getResponse() && getResponse() <= 3));
+    }
+
+    public void relaunchGame(Scanner scan, Player player_1, Player player_2) {
+        ChallengerMode challenger = new ChallengerMode(config, scan);
+        DefenderMode defender = new DefenderMode(config, scan);
+        DuelMode duel = new DuelMode(config, scan);
+        BonusMode bonus = new BonusMode(config, scan);
+
+        boolean sameGame = false;
+
+        System.out.println("You want to play more ! Good luck !");
     }
 }

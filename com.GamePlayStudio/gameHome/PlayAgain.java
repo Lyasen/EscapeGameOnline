@@ -1,18 +1,14 @@
 package gameHome;
 
 import domaine.properties.ConfigurationGame;
-import gameMode.BonusMode;
-import gameMode.ChallengerMode;
-import gameMode.DefenderMode;
-import gameMode.DuelMode;
 import player.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PlayAgain {
-    private int response;
-    private ConfigurationGame config;
+    protected int response;
+    protected ConfigurationGame config;
 
     public PlayAgain(ConfigurationGame config) {
         this.config = config;
@@ -34,13 +30,10 @@ public class PlayAgain {
                 response = scan.nextInt();
                 switch (getResponse()) {
                     case 1:
-                        System.out.println("You want to play one more ! Good luck !");
-                        new ChallengerMode(config, scan).playWithTwoPlayers(player_1, player_2);
-                        new DefenderMode(config, scan).playWithTwoPlayers(player_1, player_2);
-                        new DuelMode(config, scan).playWithTwoPlayers(player_1, player_2);
-                        new BonusMode(config,scan).playWithTwoPlayers(player_1, player_2);
+                        System.out.println("You want to play more ! Good luck !");
+                        break;
                     case 2:
-                        System.out.println("Return to the menu !");
+                        System.out.println("Back to the menu !");
                         new Home(config).menu(scan, player_1, player_2);
                         break;
                     case 3:
@@ -54,5 +47,7 @@ public class PlayAgain {
                 break;
             }
         } while (!(1 <= getResponse() && getResponse() <= 3));
+
+        System.exit(0);
     }
 }

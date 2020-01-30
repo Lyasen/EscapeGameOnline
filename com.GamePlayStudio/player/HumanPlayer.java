@@ -28,7 +28,7 @@ public class HumanPlayer extends Player {
         do {
             clue = scan.nextLine();
             clues = clue.split("");
-            b = clue.matches("[+-=]+");
+            b = clue.matches("[+-=]+[^a-zA-Z0-9]");
 
 
             if (clues.length > config.getDigitsCombination())
