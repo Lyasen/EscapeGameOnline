@@ -5,6 +5,8 @@ import domaine.properties.ConfigurationGame;
 import java.util.Random;
 
 public class IAPlayer extends Player {
+    public static int[] random;
+
     public IAPlayer(ConfigurationGame config) {
         super(config);
     }
@@ -14,7 +16,7 @@ public class IAPlayer extends Player {
      *
      * @return the secret number
      */
-    public static int[] random() {
+    public int[] random() {
         int[] secret = new int[config.getDigitsCombination()];
         Random hazard = new Random();
 
@@ -30,17 +32,18 @@ public class IAPlayer extends Player {
      * @return : A new combination to play
      */
     @Override
-    public int[] research(int[] combination, String[] clues) {
+    public int[] research(String[] clues) {
         int[] min = new int[config.getDigitsCombination()];
         int[] max = new int[config.getDigitsCombination()];
+        int[] combination = new int[config.getDigitsCombination()];
 
-        for (int i = 0, len = combination.length, mini = config.getMinValue(), maxi = config.getMaxValue(); i < len; i++) {
+        for (int i = 0, len = combination.length; i < len; i++) {
             switch (clues[i]) {
                 case "+":
-                    min[i] = combination[i] + 1 + maxi;
+                    min[i] = combination[i] + 1;
                     break;
                 case "-":
-                    max[i] = combination[i] - 1 + mini;
+                    max[i] = combination[i] - 1;
                     break;
                 case "=":
                     min[i] = combination[i];
@@ -56,16 +59,17 @@ public class IAPlayer extends Player {
      * Compare results between two combinations in order to display clues for the player
      */
     @Override
-    public String[] clues(int[] combinationPlayer_1, int[] combinationPlayer_2) {
+    public String[] clues(int[] combination) {
+        int[] combinationPlayer = new int[config.getDigitsCombination()];
         System.out.print("Now let's see ! ");
         String[] symbol = new String[config.getDigitsCombination()];
 
-        for (int i = 0, len = combinationPlayer_1.length; i < len; i++) {
-            if (combinationPlayer_1[i] > combinationPlayer_2[i])
+        for (int i = 0, len = combination.length; i < len; i++) {
+            if (combinationPlayer[i] > combination[i])
                 symbol[i] = "+";
-            else if (combinationPlayer_1[i] < combinationPlayer_2[i])
+            else if (combinationPlayer[i] < combination[i])
                 symbol[i] = "-";
-            else if (combinationPlayer_1[i] == combinationPlayer_2[i])
+            else if (combinationPlayer[i] == combination[i])
                 symbol[i] = "=";
         }
         return symbol;

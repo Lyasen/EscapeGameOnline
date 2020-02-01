@@ -9,9 +9,11 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class DefenderMode extends Mode {
+    private final Scanner scan;
 
     public DefenderMode(ConfigurationGame config, Scanner scan) {
-        super(config, scan);
+        super(config);
+        this.scan = scan;
     }
 
     /**
@@ -19,24 +21,24 @@ public class DefenderMode extends Mode {
      * IA try to find the secret number
      */
     @Override
-    public void playWithTwoPlayers(Player player_1, Player player_2) {
+    public void playWithTwoPlayers(Player defense, Player attack) {
         System.out.println("You have choice the game mode : Defender\nWill the computer regain your secret combination ?");
-        player_1 = new HumanPlayer(config, scan);
-        player_2 = new IAPlayer(config);
-        int[] combinationPlayer = new int[config.getDigitsCombination()];
-        String[] clew = new String[config.getDigitsCombination()];
+        defense = new HumanPlayer(config, scan);
+        attack = new IAPlayer(config);
+        int[] combinationPlayer;
+        String[] clues = new String[config.getDigitsCombination()];
 
-        combinationPlayer = player_1.research(combinationPlayer, clew);
+        combinationPlayer = defense.research(clues);
         int counter = config.getMaxTries();
         System.out.println("\nIA has " + counter + " tries");
 
-        int[] IAProposition = IAPlayer.random();
+        int[] IAProposition = IAPlayer.random;
         scan.nextLine();
         System.out.println("\nIA's proposition : " + Arrays.toString(IAProposition));
 
         do {
-            clew = player_1.clues(IAProposition, combinationPlayer);
-            IAProposition = player_2.research(IAProposition, clew);
+            clues = defense.clues(combinationPlayer);
+            IAProposition = attack.research(clues);
             System.out.println("\nNew IA's proposition : " + Arrays.toString(IAProposition));
             counter--;
 

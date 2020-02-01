@@ -20,7 +20,7 @@ public class HumanPlayer extends Player {
      * @return clues : The array of clues
      */
     @Override
-    public String[] clues(int[] combinationPlayer_2, int[] combinationPlayer_1) {
+    public String[] clues(int[] combination) {
         System.out.println("Please, give the clues for the computer : ");
         String clue;
         String[] clues;
@@ -28,8 +28,7 @@ public class HumanPlayer extends Player {
         do {
             clue = scan.nextLine();
             clues = clue.split("");
-            b = clue.matches("[+-=]+[^a-zA-Z0-9]");
-
+            b = clue.matches("[+\\-=]+");
 
             if (clues.length > config.getDigitsCombination())
                 System.out.println("Hep hep hep ! Too many symbols in your clues ! Try again !");
@@ -37,7 +36,7 @@ public class HumanPlayer extends Player {
                 System.out.println("What was that ? You're afraid to loose or something ! Please enter only real symbols or leave !");
             else
                 break;
-        } while (clues.length > config.getDigitsCombination() || !b);
+        } while (true);
 
         System.out.println("My clues are : " + Arrays.toString(clues));
         return clues;
@@ -49,17 +48,17 @@ public class HumanPlayer extends Player {
      * @return : proposition of the player
      */
     @Override
-    public int[] research(int[] combination, String[] digits) {
+    public int[] research(String[] clues) {
         do {
             System.out.println("Do your proposition : ");
             try {
                 int proposition = scan.nextInt();
-                digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
+                String[] digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
                 if (digits.length > config.getDigitsCombination()) {
                     System.out.println("Wow !! How many times you count typing on the keyboard");
                 } else {
                     System.out.println("Your answer is : " + Arrays.toString(digits));
-                    combination = new int[config.getDigitsCombination()];
+                    int[] combination = new int[config.getDigitsCombination()];
                     for (int i = 0; i < config.getDigitsCombination(); i++) {
                         combination[i] = Integer.parseInt(String.valueOf(digits[i]));
                     }

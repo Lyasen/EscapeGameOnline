@@ -10,35 +10,37 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class BonusMode extends Mode {
+    private final Scanner scan;
     public BonusMode(ConfigurationGame config, Scanner scan) {
-        super(config, scan);
+        super(config);
+        this.scan = scan;
     }
 
     /**
      * A special mode where player and IA try to find the secret combination of the computer
      */
     @Override
-    public void playWithTwoPlayers(Player player_1, Player player_2) {
+    public void playWithTwoPlayers(Player player1, Player player2) {
         System.out.println("You have choice the game mode : Bonus mode\nChallenge the computer");
-        player_1 = new HumanPlayer(config, scan);
-        player_2 = new IAPlayer(config);
+        player1 = new HumanPlayer(config, scan);
+        player2 = new IAPlayer(config);
         int counter = config.getMaxTries();
 
         System.out.println("Now, computer and human deliver a real fight !\nYou'll have " + config.getMaxTries() + " tries");
-        int[] hazard = IAPlayer.random();
-        int[] combinationPlayer = new int[config.getDigitsCombination()];
+        int[] hazard = IAPlayer.random;
+        int[] combinationPlayer;
         int[] combinationIA;
-        String[] clew = new String[config.getDigitsCombination()];
+        String[] clues = new String[config.getDigitsCombination()];
         do {
             /*
              * Player's proposition
              */
-            combinationPlayer = player_1.research(combinationPlayer, clew);
-            clew = player_2.clues(hazard, combinationPlayer);
+            combinationPlayer = player1.research(clues);
+            clues = player2.clues(combinationPlayer);
             if (counter >= 1)
-                System.out.println("The clues are  : " + Arrays.toString(clew));
+                System.out.println("The clues are  : " + Arrays.toString(clues));
 
-            if (IsWin.winIf(clew)) {
+            if (IsWin.winIf(clues)) {
                 System.out.println("\nWell done ! HUMAN WIN !");
                 break;
             }
@@ -46,15 +48,15 @@ public class BonusMode extends Mode {
             /*
              * AI's proposition
              */
-            combinationIA = player_2.research(combinationPlayer, clew);
+            combinationIA = player2.research(clues);
             System.out.println("\nIA's proposition : " + Arrays.toString(combinationIA));
-            clew = player_2.clues(hazard, combinationIA);
+            clues = player2.clues(combinationIA);
             if (counter >= 1)
-                System.out.println("\rThe clues are  : " + Arrays.toString(clew));
+                System.out.println("\rThe clues are  : " + Arrays.toString(clues));
             counter--;
             System.out.printf("It stays %d tries ", counter);
 
-            if (IsWin.winIf(clew)) {
+            if (IsWin.winIf(clues)) {
                 System.out.println("\nWell done ! IA wins !");
                 break;
             } else if (counter == 0){
