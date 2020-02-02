@@ -10,10 +10,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class BonusMode extends Mode {
-    private final Scanner scan;
     public BonusMode(ConfigurationGame config, Scanner scan) {
-        super(config);
-        this.scan = scan;
+        super(config, scan);
     }
 
     /**
@@ -27,7 +25,8 @@ public class BonusMode extends Mode {
         int counter = config.getMaxTries();
 
         System.out.println("Now, computer and human deliver a real fight !\nYou'll have " + config.getMaxTries() + " tries");
-        int[] hazard = IAPlayer.random;
+        IAPlayer ia = new IAPlayer(config);
+        int[] hazard = ia.random();
         int[] combinationPlayer;
         int[] combinationIA;
         String[] clues = new String[config.getDigitsCombination()];

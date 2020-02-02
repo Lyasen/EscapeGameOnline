@@ -10,10 +10,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class DuelMode extends Mode {
-    private final Scanner scan;
     public DuelMode(ConfigurationGame config, Scanner scan) {
-        super(config);
-        this.scan = scan;
+        super(config, scan);
     }
 
     /**
@@ -35,12 +33,14 @@ public class DuelMode extends Mode {
         System.out.println("Now, let's fight ! You'll have " + config.getMaxTries() + " tries");
 
         //  random number generated to be found by player 1
-        int[] IANumberToFind = IAPlayer.random;
+        IAPlayer ia = new IAPlayer(config);
+        int[] IANumberToFind = ia.random();
 
         System.out.print("\nHere's the secret number that the IA must find ! ");
         playerNumberToFind = player1.research(clues);
         //  First random proposition to begin with
-        int[] IARandomProposition = IAPlayer.random;
+        IAPlayer ib = new IAPlayer(config);
+        int[] IARandomProposition = ib.random();
         scan.nextLine();
         System.out.println("Here's IA's proposition to find your secret combination : " + Arrays.toString(IARandomProposition));
 

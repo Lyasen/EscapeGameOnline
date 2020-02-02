@@ -2,10 +2,14 @@ package player;
 
 import domaine.properties.ConfigurationGame;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class IAPlayer extends Player {
-    public static int[] random;
+    protected int[] combination = new int[config.getDigitsCombination()];
+    protected int[] combinationPlayer = new int[config.getDigitsCombination()];
+    private int[] min = new int[config.getDigitsCombination()];
+    private int[] max = new int[config.getDigitsCombination()];
 
     public IAPlayer(ConfigurationGame config) {
         super(config);
@@ -19,24 +23,19 @@ public class IAPlayer extends Player {
     public int[] random() {
         int[] secret = new int[config.getDigitsCombination()];
         Random hazard = new Random();
-
         for (int i = 0; i < config.getDigitsCombination(); i++) {
             secret[i] = config.getMinValue() + hazard.nextInt(config.getMaxValue() - config.getMinValue() + 1);
         }
-//        System.out.println(Arrays.toString(secret)); Display for test
+        System.out.println(Arrays.toString(secret)); //Display for test
         return secret;
     }
 
     /**
-     * A dichotomous searching for helping the IA to find the good secret number
+     * A dichotomous searching for helping IA to find the good secret number
      * @return : A new combination to play
      */
     @Override
     public int[] research(String[] clues) {
-        int[] min = new int[config.getDigitsCombination()];
-        int[] max = new int[config.getDigitsCombination()];
-        int[] combination = new int[config.getDigitsCombination()];
-
         for (int i = 0, len = combination.length; i < len; i++) {
             switch (clues[i]) {
                 case "+":
@@ -60,7 +59,6 @@ public class IAPlayer extends Player {
      */
     @Override
     public String[] clues(int[] combination) {
-        int[] combinationPlayer = new int[config.getDigitsCombination()];
         System.out.print("Now let's see ! ");
         String[] symbol = new String[config.getDigitsCombination()];
 

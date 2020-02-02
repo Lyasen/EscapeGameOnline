@@ -30,7 +30,7 @@ public class Home {
                 response = scan.nextInt();
                 relaunchGame();
             } catch (InputMismatchException e) {
-                System.err.println("You have won the relaunch of the game ! I find this very funny");
+                System.err.println("You have won to relaunch the game ! I find this very funny");
             }
         } while (!(1 <= response && response <= 3));
 
@@ -52,7 +52,7 @@ public class Home {
                 new BonusMode(config, scan).playWithTwoPlayers(player1, player2);
                 break;
             default:
-                System.out.println("Please have a choice between this four menus : ");
+                System.out.println("Please have a choice between these menus : ");
         }
     }
 

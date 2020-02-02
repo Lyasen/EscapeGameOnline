@@ -9,11 +9,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class ChallengerMode extends Mode {
-    protected final Scanner scan;
-
     public ChallengerMode(ConfigurationGame config, Scanner scan) {
-        super(config);
-        this.scan = scan;
+        super(config, scan);
     }
 
     /**
@@ -25,7 +22,8 @@ public class ChallengerMode extends Mode {
         System.out.println("You have choice the game mode : Challenger\nTry to find the secret number !");
 
         int counter = config.getMaxTries();
-        int[] IACombination = IAPlayer.random;
+        IAPlayer ia = new IAPlayer(config);
+        int[] IACombination = ia.random();
         int[] combinationPlayer;
         String[] clues = new String[config.getDigitsCombination()];
 

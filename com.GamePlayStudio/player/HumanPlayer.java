@@ -22,9 +22,11 @@ public class HumanPlayer extends Player {
     @Override
     public String[] clues(int[] combination) {
         System.out.println("Please, give the clues for the computer : ");
+
         String clue;
         String[] clues;
         boolean b;
+
         do {
             clue = scan.nextLine();
             clues = clue.split("");
@@ -43,7 +45,7 @@ public class HumanPlayer extends Player {
     }
 
     /**
-     * Display a combination suggest by the player
+     * Display a combination suggest by player
      *
      * @return : proposition of the player
      */
@@ -53,14 +55,14 @@ public class HumanPlayer extends Player {
             System.out.println("Do your proposition : ");
             try {
                 int proposition = scan.nextInt();
-                String[] digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
-                if (digits.length > config.getDigitsCombination()) {
+                clues = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
+                if (clues.length > config.getDigitsCombination()) {
                     System.out.println("Wow !! How many times you count typing on the keyboard");
                 } else {
-                    System.out.println("Your answer is : " + Arrays.toString(digits));
+                    System.out.println("Your answer is : " + Arrays.toString(clues));
                     int[] combination = new int[config.getDigitsCombination()];
                     for (int i = 0; i < config.getDigitsCombination(); i++) {
-                        combination[i] = Integer.parseInt(String.valueOf(digits[i]));
+                        combination[i] = Integer.parseInt(String.valueOf(clues[i]));
                     }
                     return combination;
                 }
@@ -69,7 +71,7 @@ public class HumanPlayer extends Player {
                 scan.nextLine(); // dump the variable otherwise infinite loop
             } catch (NumberFormatException n) {
                 System.err.println("OK ! you were so enthusiastic ! Please enter only positive numbers !");
-                scan.nextLine(); // dump the variable otherwise infinite loop
+                scan.nextLine();
             }
         } while (true);
     }

@@ -9,11 +9,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class DefenderMode extends Mode {
-    private final Scanner scan;
-
     public DefenderMode(ConfigurationGame config, Scanner scan) {
-        super(config);
-        this.scan = scan;
+        super(config, scan);
     }
 
     /**
@@ -32,7 +29,8 @@ public class DefenderMode extends Mode {
         int counter = config.getMaxTries();
         System.out.println("\nIA has " + counter + " tries");
 
-        int[] IAProposition = IAPlayer.random;
+        IAPlayer ia = new IAPlayer(config);
+        int[] IAProposition = ia.random();
         scan.nextLine();
         System.out.println("\nIA's proposition : " + Arrays.toString(IAProposition));
 
