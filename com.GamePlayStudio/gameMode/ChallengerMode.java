@@ -20,12 +20,13 @@ public class ChallengerMode extends Mode {
     @Override
     public void playWithTwoPlayers(Player attack, Player defense) {
         System.out.println("You have choice the game mode : Challenger\nTry to find the secret number !");
-
         int counter = config.getMaxTries();
-        IAPlayer ia = new IAPlayer(config);
-        int[] IACombination = ia.random();
-        int[] combinationPlayer;
         String[] clues = new String[config.getDigitsCombination()];
+        int[] combinationPlayer = new int[config.getDigitsCombination()];
+        //  A random combination to find
+        IAPlayer ia = new IAPlayer(config, combinationPlayer, clues);
+        int[] IACombination = ia.random();
+
 
         do {
             combinationPlayer = attack.research(clues);

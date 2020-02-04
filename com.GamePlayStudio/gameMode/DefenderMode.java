@@ -20,23 +20,22 @@ public class DefenderMode extends Mode {
     @Override
     public void playWithTwoPlayers(Player defense, Player attack) {
         System.out.println("You have choice the game mode : Defender\nWill the computer regain your secret combination ?");
-        defense = new HumanPlayer(config, scan);
-        attack = new IAPlayer(config);
-        int[] combinationPlayer;
-        String[] clues = new String[config.getDigitsCombination()];
+        String[] symbols = new String[config.getDigitsCombination()];
+        int[] combinationPlayer = new int[config.getDigitsCombination()];
 
-        combinationPlayer = defense.research(clues);
+        attack = new IAPlayer(config, combinationPlayer, symbols);
+        combinationPlayer = defense.research(symbols);
         int counter = config.getMaxTries();
         System.out.println("\nIA has " + counter + " tries");
 
-        IAPlayer ia = new IAPlayer(config);
+        IAPlayer ia = new IAPlayer(config, combinationPlayer, symbols);
         int[] IAProposition = ia.random();
-        scan.nextLine();
+        defense = new HumanPlayer(config, scan, symbols, IAProposition);
         System.out.println("\nIA's proposition : " + Arrays.toString(IAProposition));
 
         do {
-            clues = defense.clues(combinationPlayer);
-            IAProposition = attack.research(clues);
+            symbols = defense.clues(combinationPlayer);
+            IAProposition = attack.research(symbols);
             System.out.println("\nNew IA's proposition : " + Arrays.toString(IAProposition));
             counter--;
 

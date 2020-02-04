@@ -20,16 +20,17 @@ public class BonusMode extends Mode {
     @Override
     public void playWithTwoPlayers(Player player1, Player player2) {
         System.out.println("You have choice the game mode : Bonus mode\nChallenge the computer");
-        player1 = new HumanPlayer(config, scan);
-        player2 = new IAPlayer(config);
-        int counter = config.getMaxTries();
-
-        System.out.println("Now, computer and human deliver a real fight !\nYou'll have " + config.getMaxTries() + " tries");
-        IAPlayer ia = new IAPlayer(config);
-        int[] hazard = ia.random();
-        int[] combinationPlayer;
-        int[] combinationIA;
+        int[] combinationPlayer = new int[config.getDigitsCombination()];
+        int[] combinationIA = new int[config.getDigitsCombination()];
         String[] clues = new String[config.getDigitsCombination()];
+
+        player1 = new HumanPlayer(config, scan, clues, combinationIA);
+        player2 = new IAPlayer(config, combinationPlayer, clues);
+        int counter = config.getMaxTries();
+        System.out.println("Now, computer and human deliver a real fight !\nYou'll have " + config.getMaxTries() + " tries");
+        IAPlayer ia = new IAPlayer(config, combinationPlayer, clues);
+        int[] hazard = ia.random();
+
         do {
             /*
              * Player's proposition

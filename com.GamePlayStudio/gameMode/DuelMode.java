@@ -21,25 +21,24 @@ public class DuelMode extends Mode {
     @Override
     public void playWithTwoPlayers(Player player1, Player player2) {
         System.out.println("You have choice the game mode : Duel\nWho will be faster to find each other’s secret combination ?");
-        player1 = new HumanPlayer(config, scan);
-        player2 = new IAPlayer(config);
-
         int[] combinationPlayer = new int[config.getDigitsCombination()];
         int[] playerNumberToFind;
         String[] clues = new String[config.getDigitsCombination()];
         String[] comparePlayerIA = new String[config.getDigitsCombination()];
 
+        player1 = new HumanPlayer(config, scan, clues, combinationPlayer);
+        player2 = new IAPlayer(config, combinationPlayer, clues);
         int counter = config.getMaxTries();
         System.out.println("Now, let's fight ! You'll have " + config.getMaxTries() + " tries");
 
         //  random number generated to be found by player 1
-        IAPlayer ia = new IAPlayer(config);
+        IAPlayer ia = new IAPlayer(config, combinationPlayer, clues);
         int[] IANumberToFind = ia.random();
 
         System.out.print("\nHere's the secret number that the IA must find ! ");
         playerNumberToFind = player1.research(clues);
         //  First random proposition to begin with
-        IAPlayer ib = new IAPlayer(config);
+        IAPlayer ib = new IAPlayer(config, combinationPlayer, clues);
         int[] IARandomProposition = ib.random();
         scan.nextLine();
         System.out.println("Here's IA's proposition to find your secret combination : " + Arrays.toString(IARandomProposition));

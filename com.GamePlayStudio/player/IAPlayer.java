@@ -6,13 +6,16 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class IAPlayer extends Player {
-    protected int[] combination = new int[config.getDigitsCombination()];
     protected int[] combinationPlayer = new int[config.getDigitsCombination()];
+    private int[] combination;
+    private String[] symbols;
     private int[] min = new int[config.getDigitsCombination()];
     private int[] max = new int[config.getDigitsCombination()];
 
-    public IAPlayer(ConfigurationGame config) {
+    public IAPlayer(ConfigurationGame config, int[] combination, String[] symbols) {
         super(config);
+        this.combination = combination;
+        this.symbols = symbols;
     }
 
     /**
@@ -60,16 +63,16 @@ public class IAPlayer extends Player {
     @Override
     public String[] clues(int[] combination) {
         System.out.print("Now let's see ! ");
-        String[] symbol = new String[config.getDigitsCombination()];
+
 
         for (int i = 0, len = combination.length; i < len; i++) {
             if (combinationPlayer[i] > combination[i])
-                symbol[i] = "+";
+                symbols[i] = "+";
             else if (combinationPlayer[i] < combination[i])
-                symbol[i] = "-";
+                symbols[i] = "-";
             else if (combinationPlayer[i] == combination[i])
-                symbol[i] = "=";
+                symbols[i] = "=";
         }
-        return symbol;
+        return symbols;
     }
 }
