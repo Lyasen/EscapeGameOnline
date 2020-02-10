@@ -21,7 +21,7 @@ public class Home {
     }
 
     /**
-     * Display the different game modes
+     * Choose between the different game modes
      */
     public void menu() {
         System.out.println("\nPlease choose your game mode :\n1- Challenger\n2- defender\n3- Duel\n4- Bonus mode");
@@ -37,6 +37,9 @@ public class Home {
         playOneMore();
     }
 
+    /**
+     * Relaunch a game mode
+     */
     public void relaunchGame() {
         switch (response) {
             case 1:
@@ -56,9 +59,11 @@ public class Home {
         }
     }
 
+    /**
+     * choice between restarting the game, returning to the menu or quitting the game
+     */
     public void playOneMore(){
         System.out.println("\nThe game is now finished !\n1 - You may play again \n2 - You can come back to the menu \n3 - You can go swimming");
-
         do {
             try {
                 playAgain = scan.nextInt();

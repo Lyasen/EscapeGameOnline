@@ -8,14 +8,10 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player {
     private final Scanner scan;
-    private String[] symbols;
-    private int[] returnedCombination;
 
-    public HumanPlayer(ConfigurationGame config, Scanner scan, String[] symbols, int[] returnedCombination){
+    public HumanPlayer(ConfigurationGame config, Scanner scan){
         super(config);
         this.scan = scan;
-        this.symbols = symbols;
-        this.returnedCombination = returnedCombination;
     }
 
     /**
@@ -26,15 +22,16 @@ public class HumanPlayer extends Player {
     @Override
     public String[] clues(int[] combination) {
         String clue;
+        String[] clues;
         boolean b;
         System.out.println("Please, give the clues for the computer : ");
 
         do {
             clue = scan.nextLine();
-            symbols = clue.split("");
+            clues = clue.split("");
             b = clue.matches("[+\\-=]+");
 
-            if (symbols.length > config.getDigitsCombination())
+            if (clues.length > config.getDigitsCombination())
                 System.out.println("Hep hep hep ! Too many symbols in your clues ! Try again !");
             else if (!b)
                 System.out.println("What was that ? You're afraid to loose or something ! Please enter only real symbols or leave !");
@@ -42,8 +39,8 @@ public class HumanPlayer extends Player {
                 break;
         } while (true);
 
-        System.out.println("My clues are : " + Arrays.toString(symbols));
-        return symbols;
+        System.out.println("My clues are : " + Arrays.toString(clues));
+        return clues;
     }
 
     /**
@@ -62,11 +59,11 @@ public class HumanPlayer extends Player {
                     System.out.println("Wow !! How many times you count typing on the keyboard");
                 } else {
                     System.out.println("Your answer is : " + Arrays.toString(digits));
-                    returnedCombination = new int[config.getDigitsCombination()];
+                    int[] combination = new int[config.getDigitsCombination()];
                     for (int i = 0; i < config.getDigitsCombination(); i++) {
-                        returnedCombination[i] = Integer.parseInt(String.valueOf(digits[i]));
+                        combination[i] = Integer.parseInt(String.valueOf(digits[i]));
                     }
-                    return returnedCombination;
+                    return combination;
                 }
             } catch (InputMismatchException e) {
                 System.err.println("Wow ! What was that ? Please enter a  numbers combination, that's all dude !");

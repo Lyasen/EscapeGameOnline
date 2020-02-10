@@ -6,16 +6,17 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class IAPlayer extends Player {
-    protected int[] combinationPlayer = new int[config.getDigitsCombination()];
-    private int[] combination;
-    private String[] symbols;
     private int[] min = new int[config.getDigitsCombination()];
     private int[] max = new int[config.getDigitsCombination()];
+    //  This variable will be the basis of research in relation to the combination played
+    private int[] combination;
 
-    public IAPlayer(ConfigurationGame config, int[] combination, String[] symbols) {
+    public IAPlayer(ConfigurationGame config) {
         super(config);
-        this.combination = combination;
-        this.symbols = symbols;
+        this.combination = random();
+        //  Configure value minimum and maximum in order to make dichotomous search work
+        Arrays.fill(min, config.getMinValue());
+        Arrays.fill(max, config.getMaxValue());
     }
 
     /**
@@ -39,6 +40,9 @@ public class IAPlayer extends Player {
      */
     @Override
     public int[] research(String[] clues) {
+        if (clues == null)
+            return combination;
+
         for (int i = 0, len = combination.length; i < len; i++) {
             switch (clues[i]) {
                 case "+":
@@ -61,16 +65,15 @@ public class IAPlayer extends Player {
      * Compare results between two combinations in order to display clues for the player
      */
     @Override
-    public String[] clues(int[] combination) {
+    public String[] clues(int[] combinationPlayer) {
         System.out.print("Now let's see ! ");
-
-
+        String[] symbols = new String[config.getDigitsCombination()];
         for (int i = 0, len = combination.length; i < len; i++) {
-            if (combinationPlayer[i] > combination[i])
+            if (combination[i] > combinationPlayer[i])
                 symbols[i] = "+";
-            else if (combinationPlayer[i] < combination[i])
+            else if (combination[i] < combinationPlayer[i])
                 symbols[i] = "-";
-            else if (combinationPlayer[i] == combination[i])
+            else if (combination[i] == combinationPlayer[i])
                 symbols[i] = "=";
         }
         return symbols;
