@@ -12,4 +12,6 @@ public abstract class Player {
     public abstract int[] research(String[] clues);
 
     public abstract String[] clues(int[] combination);
+
+    public abstract int[] initialiseCombination();
 }

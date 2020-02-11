@@ -1,16 +1,13 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import player.HumanPlayer;
-import player.IAPlayer;
 import player.Player;
 import utils.IsWin;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class DuelMode extends Mode {
-    public DuelMode(ConfigurationGame config, Scanner scan) {
+public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Scanner scan) {
         super(config, scan);
     }
 
@@ -21,70 +18,70 @@ public class DuelMode extends Mode {
     @Override
     public void playWithTwoPlayers(Player player1, Player player2) {
         System.out.println("You have choice the game mode : Duel\nWho will be faster to find each other’s secret combination ?");
-        int[] combinationPlayer = new int[config.getDigitsCombination()];
-        int[] playerNumberToFind;
-        String[] clues = new String[config.getDigitsCombination()];
-        String[] comparePlayerIA = new String[config.getDigitsCombination()];
-
-        player1 = new HumanPlayer(config, scan, clues, combinationPlayer);
-        player2 = new IAPlayer(config, combinationPlayer, clues);
         int counter = config.getMaxTries();
-        System.out.println("Now, let's fight ! You'll have " + config.getMaxTries() + " tries");
+        System.out.println("Now, let's fight ! You'll have " + counter + " tries");
 
-        //  random number generated to be found by player 1
-        IAPlayer ia = new IAPlayer(config, combinationPlayer, clues);
-        int[] IANumberToFind = ia.random();
-
-        System.out.print("\nHere's the secret number that the IA must find ! ");
-        playerNumberToFind = player1.research(clues);
-        //  First random proposition to begin with
-        IAPlayer ib = new IAPlayer(config, combinationPlayer, clues);
-        int[] IARandomProposition = ib.random();
+        //  Secret combination from player1
+        System.out.println("\nSecret combination player1");
+        int[] secretCombinationPlayer1 = player1.initialiseCombination();
+        if (config.isDevMode())
+            System.out.println("DevMode: " + Arrays.toString(secretCombinationPlayer1));
+        int[] propositionPlayer2 = player2.initialiseCombination();
+        System.out.println("Proposition from player2 : " + Arrays.toString(propositionPlayer2));
         scan.nextLine();
-        System.out.println("Here's IA's proposition to find your secret combination : " + Arrays.toString(IARandomProposition));
+        String[] answerPlayer1 = player1.clues(propositionPlayer2);
 
-        clues = player1.clues(IARandomProposition);
-        int[] combinationIA = player2.research(clues);
-        System.out.println("IA's proposition : " + Arrays.toString(combinationIA));
-        System.out.println("\nThe human player needs concentration ! Sooooo that's...");
+        //  Secret random combination from player2
+        System.out.println("\nSecret combination player2");
+        int[] secretCombinationPlayer2 = player2.initialiseCombination();
+        if (config.isDevMode())
+            System.out.println("DevMode: " + Arrays.toString(secretCombinationPlayer2));
+        int[] propositionPlayer1 = player1.initialiseCombination();
+        System.out.println("Your answer is " + Arrays.toString(propositionPlayer1));
+        String[] answerPlayer2 = player2.clues(propositionPlayer1);
+        System.out.println("Clues from player2 to player1 : " + Arrays.toString(answerPlayer2));
 
         do {
             /*
-             * Player's proposition
+             * Player2's proposition
              */
-            System.out.println("Player's turn : try to find the IA secret number !" +
-                    "\nI remember you have chosen the following last combination : " + Arrays.toString(combinationPlayer) +
-                    "\nand the last clues from the IA was : " + Arrays.toString(comparePlayerIA));
-            combinationPlayer = player1.research(clues);
-            comparePlayerIA = player2.clues(combinationPlayer);
+            System.out.println("\nPlayer2's turn !\nI remember you have chosen the following last combination : " + Arrays.toString(propositionPlayer2) +
+                    "\nand the last clues was : " + Arrays.toString(answerPlayer1));
+            propositionPlayer2 = player2.research(answerPlayer1);
+            scan.nextLine();
+            System.out.println("Your answer is " + Arrays.toString(propositionPlayer2));
+            answerPlayer1 = player1.clues(propositionPlayer2);
             if (counter >= 1) {
-                System.out.println("The clues are  : " + Arrays.toString(comparePlayerIA));
+                System.out.println("The clues are  : " + Arrays.toString(answerPlayer1));
                 scan.nextLine();
             }
 
-            if (IsWin.winIf(comparePlayerIA)) {
-                System.out.println("\nWell done ! HUMAN WIN !");
+            if (IsWin.winIf(answerPlayer1)) {
+                System.out.println("\nWell done ! Player2 WIN !");
                 break;
             }
 
             /*
-             * IA's proposition
+             * Player1's proposition
              */
-            System.out.println("\nSee the clues for our nice IA !\nI remember you have chosen the following combination : " + Arrays.toString(playerNumberToFind) +
-                    "\nHere's the last combination from the IA : " + Arrays.toString(combinationIA));
-            clues = player1.clues(combinationIA);
-            combinationIA = player2.research(clues);
-            System.out.println("IA's proposition : " + Arrays.toString(combinationIA));
+            System.out.println("\nPlayer1's turn !\nI remember you have chosen the following last combination : " + Arrays.toString(propositionPlayer1) +
+                    "\nand the last clues was : " + Arrays.toString(answerPlayer2));
+            propositionPlayer1 = player1.research(answerPlayer2);
+            answerPlayer2 = player2.clues(propositionPlayer1);
+            if (counter >= 1) {
+                System.out.println("The clues are  : " + Arrays.toString(answerPlayer2));
+                scan.nextLine();
+            }
 
-            if (IsWin.winIf(clues)) {
-                System.out.println("\nWell done ! IA wins !");
+            if (IsWin.winIf(answerPlayer2)) {
+                System.out.println("\nWell done ! Player1 WIN !");
                 break;
             }
             counter--;
             System.out.printf("\nIt stays %d tries\r\n\r\n", counter);
-        } while (counter > 0 || Arrays.equals(combinationPlayer, IANumberToFind) || Arrays.equals(combinationIA, playerNumberToFind));
+        } while (counter > 0 || Arrays.equals(secretCombinationPlayer1, propositionPlayer2) || Arrays.equals(propositionPlayer1, secretCombinationPlayer2));
 
-        if (counter == 0 && !Arrays.equals(combinationPlayer, IANumberToFind) && !Arrays.equals(combinationIA, playerNumberToFind))
+        if (counter == 0 && !Arrays.equals(secretCombinationPlayer1, propositionPlayer2) && !Arrays.equals(propositionPlayer1, secretCombinationPlayer1))
             System.out.println("\nSorry, no more tries ! IA and Player don't found the each other combination ! Try next time !");
     }
 }

@@ -8,7 +8,6 @@ import java.util.Random;
 public class IAPlayer extends Player {
     private int[] min = new int[config.getDigitsCombination()];
     private int[] max = new int[config.getDigitsCombination()];
-    //  This variable will be the basis of research in relation to the combination played
     private int[] combination;
 
     public IAPlayer(ConfigurationGame config) {
@@ -22,7 +21,7 @@ public class IAPlayer extends Player {
     /**
      * A random combination played by the IA
      *
-     * @return the secret number
+     * @return random: a random combination
      */
     public int[] random() {
         int[] secret = new int[config.getDigitsCombination()];
@@ -30,7 +29,7 @@ public class IAPlayer extends Player {
         for (int i = 0; i < config.getDigitsCombination(); i++) {
             secret[i] = config.getMinValue() + hazard.nextInt(config.getMaxValue() - config.getMinValue() + 1);
         }
-        System.out.println(Arrays.toString(secret)); //Display for test
+        //System.out.println(Arrays.toString(secret)); //Display for test
         return secret;
     }
 
@@ -77,5 +76,11 @@ public class IAPlayer extends Player {
                 symbols[i] = "=";
         }
         return symbols;
+    }
+
+    @Override
+    public int[] initialiseCombination() {
+        this.combination = random();
+        return this.combination;
     }
 }

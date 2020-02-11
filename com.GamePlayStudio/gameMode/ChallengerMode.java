@@ -1,7 +1,6 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import player.IAPlayer;
 import player.Player;
 import utils.IsWin;
 
@@ -21,16 +20,15 @@ public class ChallengerMode extends Mode {
     public void playWithTwoPlayers(Player attack, Player defense) {
         System.out.println("You have choice the game mode : Challenger\nTry to find the secret number !");
         int counter = config.getMaxTries();
-        String[] clues = new String[config.getDigitsCombination()];
-        int[] combinationPlayer = new int[config.getDigitsCombination()];
-        //  A random combination to find
-        IAPlayer ia = new IAPlayer(config, combinationPlayer, clues);
-        int[] IACombination = ia.random();
-
+        int[] attackCombination;
+        int[] defenseCombination = defense.initialiseCombination();
+        if (config.isDevMode())
+            System.out.println("DevMode: " + Arrays.toString(defenseCombination));
 
         do {
-            combinationPlayer = attack.research(clues);
-            clues = defense.clues(combinationPlayer);
+            attackCombination = attack.initialiseCombination();
+            System.out.println("Your answer is " + Arrays.toString(attackCombination));
+            String[] clues = defense.clues(attackCombination);
 
             if (counter > 1) {
                 System.out.println("\rThe clues are  : " + Arrays.toString(clues));
@@ -45,10 +43,10 @@ public class ChallengerMode extends Mode {
                 break;
             } else if (counter == 0) {
                 System.out.println("What a pity ! It's lost ! The secret number was : "
-                        + Arrays.toString(IACombination) + " ! Try next time !");
+                        + Arrays.toString(defenseCombination) + " ! Try next time !");
             } else {
                 System.out.printf("There are %s tries left ", counter);
             }
-        } while (counter > 0 || IACombination == combinationPlayer);
+        } while (counter > 0 || defenseCombination == attackCombination);
     }
 }

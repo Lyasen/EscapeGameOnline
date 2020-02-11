@@ -43,6 +43,11 @@ public class HumanPlayer extends Player {
         return clues;
     }
 
+    @Override
+    public int[] initialiseCombination() {
+        return research(null);
+    }
+
     /**
      * Display a combination suggest by player
      *
@@ -58,7 +63,6 @@ public class HumanPlayer extends Player {
                 if (digits.length > config.getDigitsCombination()) {
                     System.out.println("Wow !! How many times you count typing on the keyboard");
                 } else {
-                    System.out.println("Your answer is : " + Arrays.toString(digits));
                     int[] combination = new int[config.getDigitsCombination()];
                     for (int i = 0; i < config.getDigitsCombination(); i++) {
                         combination[i] = Integer.parseInt(String.valueOf(digits[i]));

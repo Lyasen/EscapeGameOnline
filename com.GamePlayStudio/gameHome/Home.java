@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Home {
     private final Player player1, player2;
-    protected int response, playAgain;
+    protected int response;
     protected ConfigurationGame config;
     private final Scanner scan;
 
@@ -33,8 +33,7 @@ public class Home {
                 System.err.println("You have won to relaunch the game ! I find this very funny");
             }
         } while (!(1 <= response && response <= 3));
-
-        playOneMore();
+            playOneMore();
     }
 
     /**
@@ -52,7 +51,7 @@ public class Home {
                 new DuelMode(config, scan).playWithTwoPlayers(player1, player2);
                 break;
             case 4:
-                new BonusMode(config, scan).playWithTwoPlayers(player1, player2);
+                //new BonusMode(config, scan).playWithTwoPlayers(player1, player2);
                 break;
             default:
                 System.out.println("Please have a choice between these menus : ");
@@ -64,16 +63,18 @@ public class Home {
      */
     public void playOneMore(){
         System.out.println("\nThe game is now finished !\n1 - You may play again \n2 - You can come back to the menu \n3 - You can go swimming");
+        int playAgain;
         do {
             try {
                 playAgain = scan.nextInt();
                 switch (playAgain) {
                     case 1:
                         System.out.println("You want to play more ! Good luck !");
+                        relaunchGame();
                         break;
                     case 2:
                         System.out.println("Back to the menu !");
-                        new Home(player1, player2, config, scan).menu();
+                        menu();
                         break;
                     case 3:
                         System.out.println("Thank you to play with us ! See you soon !");
