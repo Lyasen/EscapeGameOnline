@@ -30,6 +30,10 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
         System.out.println("Proposition from player2 : " + Arrays.toString(propositionPlayer2));
         scan.nextLine();
         String[] answerPlayer1 = player1.clues(propositionPlayer2);
+        System.out.println("Clues from player2 to player1 : " + Arrays.toString(answerPlayer1));
+        if (IsWin.winIf(answerPlayer1)) {
+            System.out.println("\nWell done ! Player2 WIN !");
+        }
 
         //  Secret random combination from player2
         System.out.println("\nSecret combination player2");
@@ -40,6 +44,11 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
         System.out.println("Your answer is " + Arrays.toString(propositionPlayer1));
         String[] answerPlayer2 = player2.clues(propositionPlayer1);
         System.out.println("Clues from player2 to player1 : " + Arrays.toString(answerPlayer2));
+        if (IsWin.winIf(answerPlayer2)) {
+            System.out.println("\nWell done ! Player1 WIN !");
+        }
+        counter--;
+        System.out.printf("\nIt stays %d tries\n", counter);
 
         do {
             /*
@@ -53,7 +62,6 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
             answerPlayer1 = player1.clues(propositionPlayer2);
             if (counter >= 1) {
                 System.out.println("The clues are  : " + Arrays.toString(answerPlayer1));
-                scan.nextLine();
             }
 
             if (IsWin.winIf(answerPlayer1)) {
@@ -79,9 +87,9 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
             }
             counter--;
             System.out.printf("\nIt stays %d tries\r\n\r\n", counter);
-        } while (counter > 0 || Arrays.equals(secretCombinationPlayer1, propositionPlayer2) || Arrays.equals(propositionPlayer1, secretCombinationPlayer2));
 
-        if (counter == 0 && !Arrays.equals(secretCombinationPlayer1, propositionPlayer2) && !Arrays.equals(propositionPlayer1, secretCombinationPlayer1))
-            System.out.println("\nSorry, no more tries ! IA and Player don't found the each other combination ! Try next time !");
+            if (counter == 0 && !Arrays.equals(secretCombinationPlayer1, propositionPlayer2) && !Arrays.equals(propositionPlayer1, secretCombinationPlayer1))
+                System.out.println("\nSorry, no more tries ! IA and Player don't found the each other combination ! Try next time !");
+        } while (counter > 0 || Arrays.equals(secretCombinationPlayer1, propositionPlayer2) || Arrays.equals(propositionPlayer1, secretCombinationPlayer2));
     }
 }

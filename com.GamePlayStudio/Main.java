@@ -26,7 +26,7 @@ public class Main {
         ConfigurationGame config = new ConfigurationGame(properties);
         config.configGame();
 
-        Player player1 = new HumanPlayer(config, scan);
+        Player player1 = new HumanPlayer(config,scan);
         Player player2 = new IAPlayer(config);
         Home choice = new Home(player1, player2, config, scan);
         choice.menu();

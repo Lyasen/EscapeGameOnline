@@ -32,7 +32,7 @@ public class Home {
             } catch (InputMismatchException e) {
                 System.err.println("You have won to relaunch the game ! I find this very funny");
             }
-        } while (!(1 <= response && response <= 3));
+        } while (!(1 <= response && response <= 4));
             playOneMore();
     }
 
@@ -51,7 +51,7 @@ public class Home {
                 new DuelMode(config, scan).playWithTwoPlayers(player1, player2);
                 break;
             case 4:
-                //new BonusMode(config, scan).playWithTwoPlayers(player1, player2);
+                new BonusMode(config, scan).playWithTwoPlayers(player1, player2);
                 break;
             default:
                 System.out.println("Please have a choice between these menus : ");
