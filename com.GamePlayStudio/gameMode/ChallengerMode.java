@@ -45,8 +45,8 @@ public class ChallengerMode extends Mode {
                 System.out.println("What a pity ! It's lost ! The secret number was : "
                         + Arrays.toString(defenseCombination) + " ! Try next time !");
             } else {
-                System.out.printf("There are %s tries left ", counter);
+                System.out.printf("There are %s tries left. ", counter);
             }
-        } while (counter > 0 || defenseCombination == attackCombination);
+        } while (counter > 0 || Arrays.equals(defenseCombination, attackCombination));
     }
 }

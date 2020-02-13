@@ -12,8 +12,7 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
     }
 
     /**
-     * Player have a secret number and try to find the IA's secret combination
-     * IA have a secret number too and try to find the player's secret combination. No really ! He does all the same, it's really a copier !
+     * Both player have a secret number and try to find the each other's secret combination
      */
     @Override
     public void playWithTwoPlayers(Player player1, Player player2) {
@@ -30,7 +29,7 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
         System.out.println("Proposition from player2 : " + Arrays.toString(propositionPlayer2));
         scan.nextLine();
         String[] answerPlayer1 = player1.clues(propositionPlayer2);
-        System.out.println("Clues from player2 to player1 : " + Arrays.toString(answerPlayer1));
+        System.out.println("Clues from player1 to player2 : " + Arrays.toString(answerPlayer1));
         if (IsWin.winIf(answerPlayer1)) {
             System.out.println("\nWell done ! Player2 WIN !");
         }
@@ -41,7 +40,7 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
         if (config.isDevMode())
             System.out.println("DevMode: " + Arrays.toString(secretCombinationPlayer2));
         int[] propositionPlayer1 = player1.initialiseCombination();
-        System.out.println("Your answer is " + Arrays.toString(propositionPlayer1));
+        System.out.println("Proposition from player1 " + Arrays.toString(propositionPlayer1));
         String[] answerPlayer2 = player2.clues(propositionPlayer1);
         System.out.println("Clues from player2 to player1 : " + Arrays.toString(answerPlayer2));
         if (IsWin.winIf(answerPlayer2)) {
@@ -75,10 +74,11 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
             System.out.println("\nPlayer1's turn !\nI remember you have chosen the following last combination : " + Arrays.toString(propositionPlayer1) +
                     "\nand the last clues was : " + Arrays.toString(answerPlayer2));
             propositionPlayer1 = player1.research(answerPlayer2);
+            scan.nextLine();
+            System.out.println("Your answer is " + Arrays.toString(propositionPlayer1));
             answerPlayer2 = player2.clues(propositionPlayer1);
             if (counter >= 1) {
                 System.out.println("The clues are  : " + Arrays.toString(answerPlayer2));
-                scan.nextLine();
             }
 
             if (IsWin.winIf(answerPlayer2)) {
@@ -86,7 +86,7 @@ public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Sc
                 break;
             }
             counter--;
-            System.out.printf("\nIt stays %d tries\r\n\r\n", counter);
+            System.out.printf("It stays %d tries\n", counter);
 
             if (counter == 0 && !Arrays.equals(secretCombinationPlayer1, propositionPlayer2) && !Arrays.equals(propositionPlayer1, secretCombinationPlayer1))
                 System.out.println("\nSorry, no more tries ! IA and Player don't found the each other combination ! Try next time !");

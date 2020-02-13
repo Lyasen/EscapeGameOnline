@@ -29,7 +29,7 @@ public class IAPlayer extends Player {
         for (int i = 0; i < config.getDigitsCombination(); i++) {
             secret[i] = config.getMinValue() + hazard.nextInt(config.getMaxValue() - config.getMinValue() + 1);
         }
-        //System.out.println(Arrays.toString(secret)); //Display for test
+        System.out.println(Arrays.toString(secret)); //Display for test
         return secret;
     }
 

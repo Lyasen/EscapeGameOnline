@@ -31,9 +31,11 @@ public class Home {
                 relaunchGame();
             } catch (InputMismatchException e) {
                 System.err.println("You have won to relaunch the game ! I find this very funny");
+                break;
             }
         } while (!(1 <= response && response <= 4));
-            playOneMore();
+
+        playOneMore();
     }
 
     /**
@@ -54,7 +56,7 @@ public class Home {
                 new BonusMode(config, scan).playWithTwoPlayers(player1, player2);
                 break;
             default:
-                System.out.println("Please have a choice between these menus : ");
+                System.out.println("Please have a choice between these menus ! ");
         }
     }
 
@@ -63,8 +65,8 @@ public class Home {
      */
     public void playOneMore(){
         System.out.println("\nThe game is now finished !\n1 - You may play again \n2 - You can come back to the menu \n3 - You can go swimming");
-        int playAgain;
-        do {
+        int playAgain = 0;
+         do {
             try {
                 playAgain = scan.nextInt();
                 switch (playAgain) {
@@ -83,7 +85,7 @@ public class Home {
                         System.out.println("Please have a choice between these menus : ");
                 }
             } catch (InputMismatchException e) {
-                System.err.println("You have won the relaunch of the game ! I find this very funny");
+                System.err.println("Bye Bye !!");
                 break;
             }
         } while (!(1 <= playAgain && playAgain <= 3));

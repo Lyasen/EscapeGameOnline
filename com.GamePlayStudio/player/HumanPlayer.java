@@ -24,7 +24,7 @@ public class HumanPlayer extends Player {
         String clue;
         String[] clues;
         boolean b;
-        System.out.println("Please, give the clues for the computer : ");
+        System.out.println("Please, give clues : ");
 
         do {
             clue = scan.nextLine();
