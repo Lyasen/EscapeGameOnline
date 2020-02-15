@@ -1,13 +1,20 @@
 package gameHome;
 
 import domaine.properties.ConfigurationGame;
-import gameMode.*;
+import gameMessage.MessageError;
+import gameMessage.MessageInfo;
+import gameMode.BonusMode;
+import gameMode.ChallengerMode;
+import gameMode.DefenderMode;
+import gameMode.DuelMode;
 import player.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Home {
+    private MessageInfo mi = new MessageInfo();
+    private MessageError me = new MessageError();
     private final Player player1, player2;
     protected int response;
     protected ConfigurationGame config;
@@ -24,70 +31,74 @@ public class Home {
      * Choose between the different game modes
      */
     public void menu() {
-        System.out.println("\nPlease choose your game mode :\n1- Challenger\n2- defender\n3- Duel\n4- Bonus mode");
+        mi.chooseGameMode();
         do {
             try {
                 response = scan.nextInt();
-                relaunchGame();
+                if (relaunchGame())
+                    return;
             } catch (InputMismatchException e) {
-                System.err.println("You have won to relaunch the game ! I find this very funny");
-                break;
+                me.noLetters();
+                scan.nextLine();
             }
-        } while (!(1 <= response && response <= 4));
-
-        playOneMore();
+        } while (true);
     }
 
     /**
      * Relaunch a game mode
      */
-    public void relaunchGame() {
+    public boolean relaunchGame() {
+        boolean correctResponse = true;
         switch (response) {
             case 1:
-                new ChallengerMode(config, scan).playWithTwoPlayers(player1, player2);
+                new ChallengerMode(config).playWithTwoPlayers(player1, player2);
                 break;
             case 2:
-                new DefenderMode(config, scan).playWithTwoPlayers(player1, player2);
+                new DefenderMode(config).playWithTwoPlayers(player1, player2);
                 break;
             case 3:
-                new DuelMode(config, scan).playWithTwoPlayers(player1, player2);
+                new DuelMode(config).playWithTwoPlayers(player1, player2);
                 break;
             case 4:
-                new BonusMode(config, scan).playWithTwoPlayers(player1, player2);
+                new BonusMode(config).playWithTwoPlayers(player1, player2);
                 break;
             default:
-                System.out.println("Please have a choice between these menus ! ");
+                correctResponse = false;
+                me.wasteMyTime();
         }
-    }
+        if (correctResponse)
+            playOneMore();
+        return correctResponse;
+}
 
     /**
      * choice between restarting the game, returning to the menu or quitting the game
      */
-    public void playOneMore(){
-        System.out.println("\nThe game is now finished !\n1 - You may play again \n2 - You can come back to the menu \n3 - You can go swimming");
-        int playAgain = 0;
-         do {
+    public void playOneMore() {
+        mi.chooseEndGame();
+        int playAgain;
+        do {
             try {
                 playAgain = scan.nextInt();
                 switch (playAgain) {
                     case 1:
-                        System.out.println("You want to play more ! Good luck !");
+                        mi.playSameGame();
                         relaunchGame();
-                        break;
+                        return;
                     case 2:
-                        System.out.println("Back to the menu !");
+                        mi.backMenu();
                         menu();
-                        break;
+                        return;
                     case 3:
-                        System.out.println("Thank you to play with us ! See you soon !");
-                        break;
+                        mi.stopgame();
+                        return;
                     default:
-                        System.out.println("Please have a choice between these menus : ");
+                        me.wiselyChosen();
                 }
             } catch (InputMismatchException e) {
-                System.err.println("Bye Bye !!");
-                break;
+                me.wasteMyTime();
+                scan.nextLine();
             }
-        } while (!(1 <= playAgain && playAgain <= 3));
+        } while (true);
     }
 }

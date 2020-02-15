@@ -1,95 +1,108 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
+import gameMessage.MessageCombination;
+import gameMessage.MessageInfo;
 import player.Player;
 import utils.IsWin;
 
-import java.util.Arrays;
-import java.util.Scanner;
+public class DuelMode extends Mode {
+    private MessageInfo mi = new MessageInfo();
+    private MessageCombination mc = new MessageCombination();
 
-public class DuelMode extends Mode {public DuelMode(ConfigurationGame config, Scanner scan) {
-        super(config, scan);
+    public DuelMode(ConfigurationGame config) {
+        super(config);
     }
 
     /**
-     * Both player have a secret number and try to find the each other's secret combination
+     * Both players have a secret number and try to find the each other's secret combination
      */
     @Override
     public void playWithTwoPlayers(Player player1, Player player2) {
-        System.out.println("You have choice the game mode : Duel\nWho will be faster to find each other’s secret combination ?");
+        mi.choiceGameDuel();
         int counter = config.getMaxTries();
-        System.out.println("Now, let's fight ! You'll have " + counter + " tries");
+        mi.counter(counter);
 
-        //  Secret combination from player1
-        System.out.println("\nSecret combination player1");
+        //  Secrets combinations
+        mi.secretCombinationP1();
         int[] secretCombinationPlayer1 = player1.initialiseCombination();
         if (config.isDevMode())
-            System.out.println("DevMode: " + Arrays.toString(secretCombinationPlayer1));
-        int[] propositionPlayer2 = player2.initialiseCombination();
-        System.out.println("Proposition from player2 : " + Arrays.toString(propositionPlayer2));
-        scan.nextLine();
-        String[] answerPlayer1 = player1.clues(propositionPlayer2);
-        System.out.println("Clues from player1 to player2 : " + Arrays.toString(answerPlayer1));
-        if (IsWin.winIf(answerPlayer1)) {
-            System.out.println("\nWell done ! Player2 WIN !");
-        }
+            mc.devMode(secretCombinationPlayer1);
 
-        //  Secret random combination from player2
-        System.out.println("\nSecret combination player2");
+        mi.secretCombinationP2();
         int[] secretCombinationPlayer2 = player2.initialiseCombination();
         if (config.isDevMode())
-            System.out.println("DevMode: " + Arrays.toString(secretCombinationPlayer2));
-        int[] propositionPlayer1 = player1.initialiseCombination();
-        System.out.println("Proposition from player1 " + Arrays.toString(propositionPlayer1));
-        String[] answerPlayer2 = player2.clues(propositionPlayer1);
-        System.out.println("Clues from player2 to player1 : " + Arrays.toString(answerPlayer2));
-        if (IsWin.winIf(answerPlayer2)) {
-            System.out.println("\nWell done ! Player1 WIN !");
+            mc.devMode(secretCombinationPlayer2);
+
+        //  propositions players
+        int[] propositionPlayer2 = player2.initialiseCombination();
+        mc.propositionPlayer2(propositionPlayer2);
+        String[] answerPlayer1 = player1.clues(propositionPlayer2);
+        mc.cluesPlayer1ToPlayer2(answerPlayer1);
+        if (IsWin.winIf(answerPlayer1)) {
+            mi.player2Win();
+            return;
         }
+
+        int[] propositionPlayer1 = player1.initialiseCombination();
+        mc.propositionPlayer1(propositionPlayer1);
+        String[] answerPlayer2 = player2.clues(propositionPlayer1);
+        mc.cluesPlayer2ToPlayer1(answerPlayer2);
+        if (IsWin.winIf(answerPlayer2)) {
+            mi.player1Win();
+            return;
+        }
+
         counter--;
-        System.out.printf("\nIt stays %d tries\n", counter);
+        mi.counterLess(counter);
 
         do {
             /*
              * Player2's proposition
              */
-            System.out.println("\nPlayer2's turn !\nI remember you have chosen the following last combination : " + Arrays.toString(propositionPlayer2) +
-                    "\nand the last clues was : " + Arrays.toString(answerPlayer1));
+            mc.reminderP2(propositionPlayer2, answerPlayer1);
             propositionPlayer2 = player2.research(answerPlayer1);
-            scan.nextLine();
-            System.out.println("Your answer is " + Arrays.toString(propositionPlayer2));
+            mc.newAnswer(propositionPlayer2);
             answerPlayer1 = player1.clues(propositionPlayer2);
-            if (counter >= 1) {
-                System.out.println("The clues are  : " + Arrays.toString(answerPlayer1));
+
+            if (counter > 1)
+                mc.cluesAre(answerPlayer1);
+            else if (counter == 1) {
+                if (!IsWin.winIf(answerPlayer1))
+                    mi.notGood();
             }
 
-            if (IsWin.winIf(answerPlayer1)) {
-                System.out.println("\nWell done ! Player2 WIN !");
+             if (IsWin.winIf(answerPlayer1)) {
+                mi.player2Win();
                 break;
             }
 
             /*
              * Player1's proposition
              */
-            System.out.println("\nPlayer1's turn !\nI remember you have chosen the following last combination : " + Arrays.toString(propositionPlayer1) +
-                    "\nand the last clues was : " + Arrays.toString(answerPlayer2));
+            mc.reminderP1(propositionPlayer1, answerPlayer2);
             propositionPlayer1 = player1.research(answerPlayer2);
-            scan.nextLine();
-            System.out.println("Your answer is " + Arrays.toString(propositionPlayer1));
+            mc.newAnswer(propositionPlayer1);
             answerPlayer2 = player2.clues(propositionPlayer1);
-            if (counter >= 1) {
-                System.out.println("The clues are  : " + Arrays.toString(answerPlayer2));
+            if (counter > 1)
+                mc.cluesAre(answerPlayer2);
+            else if (counter == 1) {
+                if (!IsWin.winIf(answerPlayer2))
+                    mi.notGood();
             }
 
             if (IsWin.winIf(answerPlayer2)) {
-                System.out.println("\nWell done ! Player1 WIN !");
+                mi.player1Win();
                 break;
             }
-            counter--;
-            System.out.printf("It stays %d tries\n", counter);
 
-            if (counter == 0 && !Arrays.equals(secretCombinationPlayer1, propositionPlayer2) && !Arrays.equals(propositionPlayer1, secretCombinationPlayer1))
-                System.out.println("\nSorry, no more tries ! IA and Player don't found the each other combination ! Try next time !");
-        } while (counter > 0 || Arrays.equals(secretCombinationPlayer1, propositionPlayer2) || Arrays.equals(propositionPlayer1, secretCombinationPlayer2));
+            counter--;
+            mi.counterLess(counter);
+
+            if (counter == 0) {
+                mi.endGameDuel();
+                break;
+            }
+        } while (true);
     }
 }

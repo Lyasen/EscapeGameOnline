@@ -1,48 +1,51 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
+import gameMessage.MessageCombination;
+import gameMessage.MessageInfo;
 import player.Player;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class DefenderMode extends Mode {
+    private MessageInfo mi = new MessageInfo();
+    private MessageCombination mc = new MessageCombination();
     private String[] clues = new String[config.getDigitsCombination()];
 
-    public DefenderMode(ConfigurationGame config, Scanner scan) {
-        super(config, scan);
+    public DefenderMode(ConfigurationGame config) {
+        super(config);
     }
 
     /**
-     * Player suggest a secret combination
-     * IA try to find the secret number
+     * defense suggest a secret combination
+     * attack try to find the secret number
      */
     @Override
     public void playWithTwoPlayers(Player defense, Player attack) {
-        System.out.println("You have choice the game mode : Defender\nWill the computer regain your secret combination ?");
+        mi.choiceGameDefender();
         int counter = config.getMaxTries();
-        System.out.println("\nIA has " + counter + " tries");
-        int[] combinationPlayer = defense.research(clues);
-        System.out.println("Your answer is " + Arrays.toString(combinationPlayer));
+        mi.numberOfTries(counter);
+        int[] combinationDefender = defense.research(clues);
+        mc.newAnswer(combinationDefender);
 
-        int[] IACombination = attack.initialiseCombination();
-        System.out.println("\nIA's proposition : " + Arrays.toString(IACombination));
-        scan.nextLine();
+        int[] combinationAttacker = attack.initialiseCombination();
+        mc.propositionAttacker(combinationAttacker);
 
         do {
-            String[] fink = defense.clues(IACombination);
-            IACombination = attack.research(fink);
-            System.out.println("\nNew IA's proposition : " + Arrays.toString(IACombination));
+            String[] clew = defense.clues(combinationAttacker);
+            combinationAttacker = attack.research(clew);
+            mc.propositionAttacker(combinationAttacker);
             counter--;
 
-            if (Arrays.equals(IACombination, combinationPlayer)) {
-                System.out.println("Ho ho ! IA has found the secret number ! Human is near extinction !");
+            if (Arrays.equals(combinationAttacker, combinationDefender)) {
+                mi.attackerFindSecretNumber();
                 break;
             } else if (counter == 0) {
-                System.out.println("No more tries ! Computer has lost !");
+                mi.attackerLoose();
+                break;
             } else {
-                System.out.println("It stays " + counter + " tries for the AI");
+                mi.counterLess(counter);
             }
-        } while (counter != 0 || Arrays.equals(IACombination, combinationPlayer));
+        } while (true);
     }
 }

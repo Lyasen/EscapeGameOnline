@@ -1,15 +1,17 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
+import gameMessage.MessageCombination;
+import gameMessage.MessageInfo;
 import player.Player;
 import utils.IsWin;
 
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class ChallengerMode extends Mode {
-    public ChallengerMode(ConfigurationGame config, Scanner scan) {
-        super(config, scan);
+    private MessageInfo mi = new MessageInfo();
+    private MessageCombination mc = new MessageCombination();
+
+    public ChallengerMode(ConfigurationGame config) {
+        super(config);
     }
 
     /**
@@ -18,35 +20,35 @@ public class ChallengerMode extends Mode {
      */
     @Override
     public void playWithTwoPlayers(Player attack, Player defense) {
-        System.out.println("You have choice the game mode : Challenger\nTry to find the secret number !");
+        mi.choiceGameChallenger();
         int counter = config.getMaxTries();
         int[] attackCombination;
         int[] defenseCombination = defense.initialiseCombination();
         if (config.isDevMode())
-            System.out.println("DevMode: " + Arrays.toString(defenseCombination));
+            mc.devMode(defenseCombination);
 
         do {
             attackCombination = attack.initialiseCombination();
-            System.out.println("Your answer is " + Arrays.toString(attackCombination));
+            mc.newAnswer(attackCombination);
             String[] clues = defense.clues(attackCombination);
 
             if (counter > 1) {
-                System.out.println("\rThe clues are  : " + Arrays.toString(clues));
+                mc.cluesAre(clues);
                 counter--;
             } else if (counter == 1) {
-                System.out.print("It was the last time to find the secret number, Soooo...");
+                mi.lastTimeToFindCombination();
                 counter--;
             }
 
             if (IsWin.winIf(clues)) {
-                System.out.println("Weeell done ! You're theeee Mastermind !");
-                break;
+                mi.isWin();
+                return;
             } else if (counter == 0) {
-                System.out.println("What a pity ! It's lost ! The secret number was : "
-                        + Arrays.toString(defenseCombination) + " ! Try next time !");
+                mc.finallyRevealSecretCombination(defenseCombination);
+                return;
             } else {
-                System.out.printf("There are %s tries left. ", counter);
+                mi.counterLess(counter);
             }
-        } while (counter > 0 || Arrays.equals(defenseCombination, attackCombination));
+        } while (true);
     }
 }

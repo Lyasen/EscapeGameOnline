@@ -14,4 +14,6 @@ public abstract class Player {
     public abstract String[] clues(int[] combination);
 
     public abstract int[] initialiseCombination();
+
+    public abstract void initialiseCombination(int[] combination);
 }

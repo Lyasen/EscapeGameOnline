@@ -1,13 +1,18 @@
 package player;
 
 import domaine.properties.ConfigurationGame;
+import gameMessage.MessageCombination;
+import gameMessage.MessageError;
+import gameMessage.MessageInfo;
 
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
     private final Scanner scan;
+    private MessageInfo mi = new MessageInfo();
+    private MessageError me = new MessageError();
+    private MessageCombination mc = new MessageCombination();
 
     public HumanPlayer(ConfigurationGame config, Scanner scan){
         super(config);
@@ -24,28 +29,23 @@ public class HumanPlayer extends Player {
         String clue;
         String[] clues;
         boolean b;
-        System.out.println("Please, give clues : ");
+        mi.giveClues();
 
         do {
             clue = scan.nextLine();
             clues = clue.split("");
             b = clue.matches("[+\\-=]+");
 
-            if (clues.length > config.getDigitsCombination())
-                System.out.println("Hep hep hep ! Too many symbols in your clues ! Try again !");
-            else if (!b)
-                System.out.println("What was that ? You're afraid to loose or something ! Please enter only real symbols or leave !");
-            else
+            if (clues.length > config.getDigitsCombination()) {
+                me.tooManySymbols();
+            } else if (!b) {
+                me.realSymbols();
+            } else
                 break;
         } while (true);
 
-        System.out.println("My clues are : " + Arrays.toString(clues));
+        mc.cluesAre(clues);
         return clues;
-    }
-
-    @Override
-    public int[] initialiseCombination() {
-        return research(null);
     }
 
     /**
@@ -56,12 +56,13 @@ public class HumanPlayer extends Player {
     @Override
     public int[] research(String[] clues) {
         do {
-            System.out.println("Do your proposition : ");
+            mi.doProposition();
             try {
                 int proposition = scan.nextInt();
+                scan.nextLine();
                 String[] digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
                 if (digits.length > config.getDigitsCombination()) {
-                    System.out.println("Wow !! How many times you count typing on the keyboard");
+                    me.tooManyTypes();
                 } else {
                     int[] combination = new int[config.getDigitsCombination()];
                     for (int i = 0; i < config.getDigitsCombination(); i++) {
@@ -70,12 +71,22 @@ public class HumanPlayer extends Player {
                     return combination;
                 }
             } catch (InputMismatchException e) {
-                System.err.println("Wow ! What was that ? Please enter a  numbers combination, that's all dude !");
+                me.onlyNumbers();
                 scan.nextLine(); // dump the variable otherwise infinite loop
             } catch (NumberFormatException n) {
-                System.err.println("OK ! you were so enthusiastic ! Please enter only positive numbers !");
+                me.positiveNumbers();
                 scan.nextLine();
             }
         } while (true);
+    }
+
+    @Override
+    public int[] initialiseCombination() {
+        return research(null);
+    }
+
+    @Override
+    public void initialiseCombination(int[] combination) {
+
     }
 }

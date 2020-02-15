@@ -1,5 +1,7 @@
 import domaine.properties.ConfigurationGame;
 import gameHome.Home;
+import gameMessage.MessageError;
+import gameMessage.MessageInfo;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
@@ -16,12 +18,14 @@ public class Main {
      */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Welcome to Escape Game Online");
+        MessageInfo mi = new MessageInfo();
+        mi.welcomeInGame();
         Properties properties = new Properties();
         try {
             properties.load(new FileReader("config.properties"));
         } catch (IOException e) {
-            System.err.println("File not found in classpath");
+            MessageError me = new MessageError();
+            me.errorLoadFile();
         }
         ConfigurationGame config = new ConfigurationGame(properties);
         config.configGame();

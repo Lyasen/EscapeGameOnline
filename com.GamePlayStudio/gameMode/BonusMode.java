@@ -1,16 +1,18 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
+import gameMessage.MessageCombination;
+import gameMessage.MessageInfo;
 import player.IAPlayer;
 import player.Player;
 import utils.IsWin;
 
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class BonusMode extends Mode {
-    public BonusMode(ConfigurationGame config, Scanner scan) {
-        super(config, scan);
+    private MessageInfo mi = new MessageInfo();
+    private MessageCombination mc = new MessageCombination();
+
+    public BonusMode(ConfigurationGame config) {
+        super(config);
     }
 
     /**
@@ -21,53 +23,52 @@ public class BonusMode extends Mode {
         int[] combinationPlayer2;
         int counter = config.getMaxTries();
 
-        System.out.println("You have choice the game mode : Bonus mode\nChallenge the computer\nNow, computer and human deliver a real fight !\nYou'll have " +
-                counter + " tries\n");
+        mi.choiceGameBonus(counter);
         //  initialize a random number that both players will try to find
         IAPlayer ia = new IAPlayer(config);
         int[] defenseCombination = ia.initialiseCombination();
         if (config.isDevMode())
-            System.out.println("DevMode: " + Arrays.toString(defenseCombination));
+            mc.devMode(defenseCombination);
 
 
         //  Proposition player1
-        System.out.println("Proposition Player1");
+        mi.propositionP1();
         int[] combinationPlayer1 = player1.initialiseCombination();
-        System.out.println("Your answer is " + Arrays.toString(combinationPlayer1));
+        mc.newAnswer(combinationPlayer1);
         String[] clues = ia.clues(combinationPlayer1);
         if (IsWin.winIf(clues)) {
-            System.out.println("Weeell done Player1 ! You're theeee Mastermind !");
+            mi.victory();
         }
-        System.out.println("\rThe clues are  : " + Arrays.toString(clues));
+        mc.cluesAre(clues);
 
         do {
             //  Proposition player2
-            System.out.println("\nProposition Player2");
+            mi.propositionP2();
             combinationPlayer2 = player2.research(clues);
-            System.out.println("Your answer is " + Arrays.toString(combinationPlayer2));
+            mc.newAnswer(combinationPlayer2);
             clues = ia.clues(combinationPlayer2);
             if (IsWin.winIf(clues)) {
-                System.out.println("Weeell done Player2 ! You're theeee Mastermind !");
+                mi.victory();
                 break;
             }
-            System.out.println("\rThe clues are  : " + Arrays.toString(clues));
+            mc.cluesAre(clues);
 
             //  Proposition player1
-            System.out.println("\nProposition Player1");
+            mi.propositionP1();
             combinationPlayer1 = player1.research(clues);
-            System.out.println("Your answer is " + Arrays.toString(combinationPlayer1));
+            mc.newAnswer(combinationPlayer1);
             clues = ia.clues(combinationPlayer1);
             counter--;
             if (IsWin.winIf(clues)) {
-                System.out.println("Weeell done Player1 ! You're theeee Mastermind !");
+                mi.victory();
                 break;
             } else if (counter > 1) {
-                System.out.println("\rThe clues are  : " + Arrays.toString(clues));
+                mc.cluesAre(clues);
             } else if (counter == 1) {
-                System.out.print("It was the last time to find the secret number, Soooo...");
+                mi.lastTimeToFindCombination();
             } else {
-                System.out.printf("There are %s tries left\n", counter);
+                mi.counterLess(counter);
             }
-        } while (counter > 0 || Arrays.equals(defenseCombination, combinationPlayer1) || Arrays.equals(defenseCombination, combinationPlayer2));
+        } while (true);
     }
 }

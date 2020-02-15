@@ -7,6 +7,7 @@ public class ConfigurationGame {
     private int minValue, maxValue;
     private final boolean devMode;
 
+
     public ConfigurationGame(Properties properties) {
         digitsCombination = Integer.parseInt(properties.getProperty("digitsCombination", "4"));
         maxTries = Integer.parseInt(properties.getProperty("maxTries", "10"));

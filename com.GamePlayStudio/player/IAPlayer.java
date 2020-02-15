@@ -1,11 +1,15 @@
 package player;
 
 import domaine.properties.ConfigurationGame;
+import gameMessage.MessageCombination;
+import gameMessage.MessageInfo;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class IAPlayer extends Player {
+    private MessageCombination mc = new MessageCombination();
+    private MessageInfo mi = new MessageInfo();
     private int[] min = new int[config.getDigitsCombination()];
     private int[] max = new int[config.getDigitsCombination()];
     private int[] combination;
@@ -29,7 +33,7 @@ public class IAPlayer extends Player {
         for (int i = 0; i < config.getDigitsCombination(); i++) {
             secret[i] = config.getMinValue() + hazard.nextInt(config.getMaxValue() - config.getMinValue() + 1);
         }
-        System.out.println(Arrays.toString(secret)); //Display for test
+        mc.seeRandom(secret);
         return secret;
     }
 
@@ -65,7 +69,7 @@ public class IAPlayer extends Player {
      */
     @Override
     public String[] clues(int[] combinationPlayer) {
-        System.out.print("Now let's see ! ");
+        mi.seeClues();
         String[] symbols = new String[config.getDigitsCombination()];
         for (int i = 0, len = combination.length; i < len; i++) {
             if (combination[i] > combinationPlayer[i])
@@ -82,5 +86,10 @@ public class IAPlayer extends Player {
     public int[] initialiseCombination() {
         this.combination = random();
         return this.combination;
+    }
+
+    @Override
+    public void initialiseCombination(int[] combination) {
+        this.combination = combination;
     }
 }
