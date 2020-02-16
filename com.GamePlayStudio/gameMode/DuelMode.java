@@ -1,15 +1,12 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MessageCombination;
-import gameMessage.MessageInfo;
+import gameMessage.MsgCombination;
+import gameMessage.MsgInfo;
 import player.Player;
 import utils.IsWin;
 
-public class DuelMode extends Mode {
-    private MessageInfo mi = new MessageInfo();
-    private MessageCombination mc = new MessageCombination();
-
+public class DuelMode extends Mode implements MsgCombination, MsgInfo {
     public DuelMode(ConfigurationGame config) {
         super(config);
     }
@@ -19,90 +16,90 @@ public class DuelMode extends Mode {
      */
     @Override
     public void playWithTwoPlayers(Player player1, Player player2) {
-        mi.choiceGameDuel();
+        choiceGameDuel();
         int counter = config.getMaxTries();
-        mi.counter(counter);
+        counter(counter);
 
         //  Secrets combinations
-        mi.player1();
-        mi.secretCombinationPlayer();
+        player1();
+        secretCombinationPlayer();
         int[] secretCombinationPlayer1 = player1.initialiseCombination();
         if (config.isDevMode())
-            mc.devMode(secretCombinationPlayer1);
+            devMode(secretCombinationPlayer1);
 
-        mi.player2();
-        mi.secretCombinationPlayer();
+        player2();
+        secretCombinationPlayer();
         int[] secretCombinationPlayer2 = player2.initialiseCombination();
         if (config.isDevMode())
-            mc.devMode(secretCombinationPlayer2);
+            devMode(secretCombinationPlayer2);
 
         //  propositions players
-        mi.player2();
+        player2();
         int[] propositionPlayer2 = player2.initialiseCombination();
-        mc.propositionPlayer(propositionPlayer2);
+        propositionPlayer(propositionPlayer2);
         String[] answerPlayer1 = player1.clues(propositionPlayer2);
         if (IsWin.winIf(answerPlayer1)) {
-            mi.playerWin();
+            playerWin();
             return;
         }
 
-        mi.player1();
+        player1();
         int[] propositionPlayer1 = player1.initialiseCombination();
-        mc.propositionPlayer(propositionPlayer1);
+        propositionPlayer(propositionPlayer1);
         String[] answerPlayer2 = player2.clues(propositionPlayer1);
-        mc.cluesAre(answerPlayer2);
+        cluesAre(answerPlayer2);
         if (IsWin.winIf(answerPlayer2)) {
-            mi.playerWin();
+            playerWin();
             return;
         }
 
         counter--;
-        mi.counterLess(counter);
+        counterLess(counter);
 
         do {
             /*
              * Player2's proposition
              */
-            mi.player2();
-            mc.reminderPlayer(propositionPlayer2, answerPlayer1);
+            player2();
+            reminderPlayer(propositionPlayer2, answerPlayer1);
             propositionPlayer2 = player2.research(answerPlayer1);
-            mc.newAnswer(propositionPlayer2);
+            newAnswer(propositionPlayer2);
             answerPlayer1 = player1.clues(propositionPlayer2);
 
             if (counter == 1) {
                 if (!IsWin.winIf(answerPlayer1))
-                    mi.notGood();
+                    notGood();
             }
 
              if (IsWin.winIf(answerPlayer1)) {
-                mi.playerWin();
+                playerWin();
                 break;
             }
 
             /*
              * Player1's proposition
              */
-            mi.player1();
-            mc.reminderPlayer(propositionPlayer1, answerPlayer2);
+            player1();
+            reminderPlayer(propositionPlayer1, answerPlayer2);
             propositionPlayer1 = player1.research(answerPlayer2);
-            mc.newAnswer(propositionPlayer1);
+            newAnswer(propositionPlayer1);
             answerPlayer2 = player2.clues(propositionPlayer1);
-            mc.cluesAre(answerPlayer2);
+            cluesAre(answerPlayer2);
             if (counter == 1) {
                 if (!IsWin.winIf(answerPlayer2))
-                    mi.notGood();
+                    notGood();
             }
 
             if (IsWin.winIf(answerPlayer2)) {
-                mi.playerWin();
+                playerWin();
                 break;
             }
 
             counter--;
-            mi.counterLess(counter);
+            counterLess(counter);
 
             if (counter == 0) {
-                mi.endGameDuel();
+                endGameDuel();
                 break;
             }
         } while (true);

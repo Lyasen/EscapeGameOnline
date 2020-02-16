@@ -1,15 +1,13 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MessageCombination;
-import gameMessage.MessageInfo;
+import gameMessage.MsgCombination;
+import gameMessage.MsgInfo;
 import player.Player;
 
 import java.util.Arrays;
 
-public class DefenderMode extends Mode {
-    private MessageInfo mi = new MessageInfo();
-    private MessageCombination mc = new MessageCombination();
+public class DefenderMode extends Mode implements MsgCombination, MsgInfo {
     private String[] clues = new String[config.getDigitsCombination()];
 
     public DefenderMode(ConfigurationGame config) {
@@ -22,29 +20,29 @@ public class DefenderMode extends Mode {
      */
     @Override
     public void playWithTwoPlayers(Player defense, Player attack) {
-        mi.choiceGameDefender();
+        choiceGameDefender();
         int counter = config.getMaxTries();
-        mi.counter(counter);
+        counter(counter);
         int[] combinationDefender = defense.research(clues);
-        mc.newAnswer(combinationDefender);
+        newAnswer(combinationDefender);
 
         int[] combinationAttacker = attack.initialiseCombination();
-        mc.propositionOpponent(combinationAttacker);
+        propositionOpponent(combinationAttacker);
 
         do {
             String[] clew = defense.clues(combinationAttacker);
             combinationAttacker = attack.research(clew);
-            mc.propositionOpponent(combinationAttacker);
+            propositionOpponent(combinationAttacker);
             counter--;
 
             if (Arrays.equals(combinationAttacker, combinationDefender)) {
-                mi.attackerFindSecretNumber();
+                attackerFindSecretNumber();
                 break;
             } else if (counter == 0) {
-                mi.attackerLoose();
+               attackerLoose();
                 break;
             } else {
-                mi.counterLess(counter);
+                counterLess(counter);
             }
         } while (true);
     }

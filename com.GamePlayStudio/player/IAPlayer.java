@@ -1,15 +1,13 @@
 package player;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MessageCombination;
-import gameMessage.MessageInfo;
+import gameMessage.MsgCombination;
+import gameMessage.MsgInfo;
 
 import java.util.Arrays;
 import java.util.Random;
 
-public class IAPlayer extends Player {
-    private MessageCombination mc = new MessageCombination();
-    private MessageInfo mi = new MessageInfo();
+public class IAPlayer extends Player implements MsgCombination, MsgInfo {
     private int[] min = new int[config.getDigitsCombination()];
     private int[] max = new int[config.getDigitsCombination()];
     private int[] combination;
@@ -33,7 +31,7 @@ public class IAPlayer extends Player {
         for (int i = 0; i < config.getDigitsCombination(); i++) {
             secret[i] = config.getMinValue() + hazard.nextInt(config.getMaxValue() - config.getMinValue() + 1);
         }
-        mc.seeRandom(secret);
+        seeRandom(secret);
         return secret;
     }
 
@@ -69,7 +67,7 @@ public class IAPlayer extends Player {
      */
     @Override
     public String[] clues(int[] combinationPlayer) {
-        mi.seeClues();
+        seeClues();
         String[] symbols = new String[config.getDigitsCombination()];
         for (int i = 0, len = combination.length; i < len; i++) {
             if (combination[i] > combinationPlayer[i])

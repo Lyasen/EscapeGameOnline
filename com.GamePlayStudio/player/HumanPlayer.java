@@ -1,18 +1,15 @@
 package player;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MessageCombination;
-import gameMessage.MessageError;
-import gameMessage.MessageInfo;
+import gameMessage.MsgCombination;
+import gameMessage.MsgError;
+import gameMessage.MsgInfo;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class HumanPlayer extends Player {
+public class HumanPlayer extends Player implements MsgCombination, MsgError, MsgInfo {
     private final Scanner scan;
-    private MessageInfo mi = new MessageInfo();
-    private MessageError me = new MessageError();
-    private MessageCombination mc = new MessageCombination();
 
     public HumanPlayer(ConfigurationGame config, Scanner scan){
         super(config);
@@ -29,7 +26,7 @@ public class HumanPlayer extends Player {
         String clue;
         String[] clues;
         boolean b;
-        mi.giveClues();
+        giveClues();
 
         do {
             clue = scan.nextLine();
@@ -37,14 +34,14 @@ public class HumanPlayer extends Player {
             b = clue.matches("[+\\-=]+");
 
             if (clues.length > config.getDigitsCombination()) {
-                me.tooManySymbols();
+                tooManySymbols();
             } else if (!b) {
-                me.realSymbols();
+                realSymbols();
             } else
                 break;
         } while (true);
 
-        mc.cluesAre(clues);
+        cluesAre(clues);
         return clues;
     }
 
@@ -56,13 +53,13 @@ public class HumanPlayer extends Player {
     @Override
     public int[] research(String[] clues) {
         do {
-            mi.doProposition();
+            doProposition();
             try {
                 int proposition = scan.nextInt();
                 scan.nextLine();
                 String[] digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
                 if (digits.length > config.getDigitsCombination()) {
-                    me.tooManyTypes();
+                    tooManyTypes();
                 } else {
                     int[] combination = new int[config.getDigitsCombination()];
                     for (int i = 0; i < config.getDigitsCombination(); i++) {
@@ -71,10 +68,10 @@ public class HumanPlayer extends Player {
                     return combination;
                 }
             } catch (InputMismatchException e) {
-                me.onlyNumbers();
+                onlyNumbers();
                 scan.nextLine(); // dump the variable otherwise infinite loop
             } catch (NumberFormatException n) {
-                me.positiveNumbers();
+                positiveNumbers();
                 scan.nextLine();
             }
         } while (true);

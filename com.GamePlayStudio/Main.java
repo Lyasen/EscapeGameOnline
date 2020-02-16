@@ -1,7 +1,7 @@
 import domaine.properties.ConfigurationGame;
 import gameHome.Home;
-import gameMessage.MessageError;
-import gameMessage.MessageInfo;
+import gameMessage.MsgError;
+import gameMessage.MsgInfo;
 import player.HumanPlayer;
 import player.IAPlayer;
 import player.Player;
@@ -11,21 +11,19 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class Main {
+public class Main implements MsgError, MsgInfo {
     /**
      * Used Main to launch the game mode
      *  @param args : A welcome menu
      */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        MessageInfo mi = new MessageInfo();
-        mi.welcomeInGame();
+        MsgInfo.welcomeInGame();
         Properties properties = new Properties();
         try {
             properties.load(new FileReader("config.properties"));
         } catch (IOException e) {
-            MessageError me = new MessageError();
-            me.errorLoadFile();
+            MsgError.errorLoadFile();
         }
         ConfigurationGame config = new ConfigurationGame(properties);
         config.configGame();
