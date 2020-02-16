@@ -32,8 +32,4 @@ public class MessageError {
     public void wasteMyTime(){
         System.out.println("Why don't you choose between these menus, you're wasting my time !");
     }
-
-    public void wiselyChosen(){
-        System.out.println("Please have a choice between these menus : ");
-    }
 }

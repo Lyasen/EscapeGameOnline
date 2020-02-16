@@ -24,17 +24,17 @@ public class DefenderMode extends Mode {
     public void playWithTwoPlayers(Player defense, Player attack) {
         mi.choiceGameDefender();
         int counter = config.getMaxTries();
-        mi.numberOfTries(counter);
+        mi.counter(counter);
         int[] combinationDefender = defense.research(clues);
         mc.newAnswer(combinationDefender);
 
         int[] combinationAttacker = attack.initialiseCombination();
-        mc.propositionAttacker(combinationAttacker);
+        mc.propositionOpponent(combinationAttacker);
 
         do {
             String[] clew = defense.clues(combinationAttacker);
             combinationAttacker = attack.research(clew);
-            mc.propositionAttacker(combinationAttacker);
+            mc.propositionOpponent(combinationAttacker);
             counter--;
 
             if (Arrays.equals(combinationAttacker, combinationDefender)) {

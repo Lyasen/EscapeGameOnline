@@ -24,32 +24,35 @@ public class DuelMode extends Mode {
         mi.counter(counter);
 
         //  Secrets combinations
-        mi.secretCombinationP1();
+        mi.player1();
+        mi.secretCombinationPlayer();
         int[] secretCombinationPlayer1 = player1.initialiseCombination();
         if (config.isDevMode())
             mc.devMode(secretCombinationPlayer1);
 
-        mi.secretCombinationP2();
+        mi.player2();
+        mi.secretCombinationPlayer();
         int[] secretCombinationPlayer2 = player2.initialiseCombination();
         if (config.isDevMode())
             mc.devMode(secretCombinationPlayer2);
 
         //  propositions players
+        mi.player2();
         int[] propositionPlayer2 = player2.initialiseCombination();
-        mc.propositionPlayer2(propositionPlayer2);
+        mc.propositionPlayer(propositionPlayer2);
         String[] answerPlayer1 = player1.clues(propositionPlayer2);
-        mc.cluesPlayer1ToPlayer2(answerPlayer1);
         if (IsWin.winIf(answerPlayer1)) {
-            mi.player2Win();
+            mi.playerWin();
             return;
         }
 
+        mi.player1();
         int[] propositionPlayer1 = player1.initialiseCombination();
-        mc.propositionPlayer1(propositionPlayer1);
+        mc.propositionPlayer(propositionPlayer1);
         String[] answerPlayer2 = player2.clues(propositionPlayer1);
-        mc.cluesPlayer2ToPlayer1(answerPlayer2);
+        mc.cluesAre(answerPlayer2);
         if (IsWin.winIf(answerPlayer2)) {
-            mi.player1Win();
+            mi.playerWin();
             return;
         }
 
@@ -60,39 +63,38 @@ public class DuelMode extends Mode {
             /*
              * Player2's proposition
              */
-            mc.reminderP2(propositionPlayer2, answerPlayer1);
+            mi.player2();
+            mc.reminderPlayer(propositionPlayer2, answerPlayer1);
             propositionPlayer2 = player2.research(answerPlayer1);
             mc.newAnswer(propositionPlayer2);
             answerPlayer1 = player1.clues(propositionPlayer2);
 
-            if (counter > 1)
-                mc.cluesAre(answerPlayer1);
-            else if (counter == 1) {
+            if (counter == 1) {
                 if (!IsWin.winIf(answerPlayer1))
                     mi.notGood();
             }
 
              if (IsWin.winIf(answerPlayer1)) {
-                mi.player2Win();
+                mi.playerWin();
                 break;
             }
 
             /*
              * Player1's proposition
              */
-            mc.reminderP1(propositionPlayer1, answerPlayer2);
+            mi.player1();
+            mc.reminderPlayer(propositionPlayer1, answerPlayer2);
             propositionPlayer1 = player1.research(answerPlayer2);
             mc.newAnswer(propositionPlayer1);
             answerPlayer2 = player2.clues(propositionPlayer1);
-            if (counter > 1)
-                mc.cluesAre(answerPlayer2);
-            else if (counter == 1) {
+            mc.cluesAre(answerPlayer2);
+            if (counter == 1) {
                 if (!IsWin.winIf(answerPlayer2))
                     mi.notGood();
             }
 
             if (IsWin.winIf(answerPlayer2)) {
-                mi.player1Win();
+                mi.playerWin();
                 break;
             }
 

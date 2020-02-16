@@ -38,25 +38,27 @@ public class MessageInfo {
         System.out.println("Back to the menu !");
     }
 
-    public void stopgame(){
+    public void stopGame(){
         System.out.println("Thank you to play with us ! See you soon !");
     }
 
+    public void player1(){
+        System.out.println("\nPlayer1 ! ");
+    }
+
+    public void player2(){
+        System.out.println("\nPlayer2 ! ");
+    }
+
     public void counter(int counter){
-        System.out.println("Now, let's fight ! You'll have " + counter + " tries");
+        System.out.println("Now, let's fight ! You have " + counter + " tries");
     }
 
     public void counterLess(int counter){
         System.out.printf("\nIt stays %d tries\n", counter);
     }
 
-    public void numberOfTries(int counter){
-        System.out.println("\nAttacker has " + counter + " tries\n");
-    }
-
-    public void seeClues(){
-        System.out.print("Now let's see ! ");
-    }
+    public void seeClues(){ System.out.print("Now let's see ! "); }
 
     public void giveClues(){
         System.out.println("Please, give clues : ");
@@ -66,28 +68,12 @@ public class MessageInfo {
         System.out.println("Do your proposition : ");
     }
 
-    public void secretCombinationP1(){
-        System.out.println("\nSecret combination player1");
+    public void secretCombinationPlayer(){
+        System.out.println("Choose your secret combination");
     }
 
-    public void secretCombinationP2(){
-        System.out.println("\nSecret combination player2\n\nNow let's play !");
-    }
-
-    public void propositionP1(){
-        System.out.println("Proposition Player1");
-    }
-
-    public void propositionP2(){
-        System.out.println("Proposition Player2");
-    }
-
-    public void player2Win(){
-        System.out.println("\nWell done ! Player2 WIN !");
-    }
-
-    public void player1Win(){
-        System.out.println("\nWell done ! Player1 WIN !");
+    public void playerWin(){
+        System.out.println("\nWell done ! You WIN !");
     }
 
     public void notGood(){
@@ -95,7 +81,7 @@ public class MessageInfo {
     }
 
     public void endGameDuel(){
-        System.out.println("\nSorry, no more tries ! Both players don't found any combination !\nyou really are not good ! Try next time !");
+        System.out.println("\nSorry, no more tries ! Both players don't found any combination !\nyou are really not good ! Try next time !");
     }
 
     public void attackerFindSecretNumber(){
@@ -103,7 +89,7 @@ public class MessageInfo {
     }
 
     public void attackerLoose(){
-        System.out.println("No more tries ! Attacker has lost ! \nNot even able to find a simple combination of 4 digits ! What misery !");
+        System.out.println("No more tries ! Attacker has lost ! \nNot even able to find a simple combination of digits ! What misery !");
     }
 
     public void lastTimeToFindCombination(){
@@ -112,9 +98,5 @@ public class MessageInfo {
 
     public void isWin(){
         System.out.println("Well done ! You're the very best Mastermind i've never seen in my life... No, i'm kidding !");
-    }
-
-    public void victory(){
-        System.out.println("Weeell done Player1 ! You're theeee Mastermind !");
     }
 }

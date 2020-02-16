@@ -90,10 +90,10 @@ public class Home {
                         menu();
                         return;
                     case 3:
-                        mi.stopgame();
+                        mi.stopGame();
                         return;
                     default:
-                        me.wiselyChosen();
+                        me.wasteMyTime();
                 }
             } catch (InputMismatchException e) {
                 me.wasteMyTime();

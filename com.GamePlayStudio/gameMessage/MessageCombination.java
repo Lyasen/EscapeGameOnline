@@ -3,13 +3,8 @@ package gameMessage;
 import java.util.Arrays;
 
 public class MessageCombination {
-    public void reminderP2(int[] propositionPlayer, String[] answerPlayer){
-        System.out.println("\nPlayer2's turn !\nI remember you have chosen the following last combination : " + Arrays.toString(propositionPlayer) +
-                "\nand the last clues was : " + Arrays.toString(answerPlayer));
-    }
-
-    public void reminderP1(int[] propositionPlayer, String[] answerPlayer){
-        System.out.println("\nPlayer1's turn !\nI remember you have chosen the following last combination : " + Arrays.toString(propositionPlayer) +
+    public void reminderPlayer(int[] propositionPlayer, String[] answerPlayer){
+        System.out.println("I remember you have chosen the following last combination : " + Arrays.toString(propositionPlayer) +
                 "\nand the last clues was : " + Arrays.toString(answerPlayer));
     }
 
@@ -25,24 +20,12 @@ public class MessageCombination {
         System.out.println("DevMode: " + Arrays.toString(secretCombination));
     }
 
-    public void propositionPlayer2(int[] proposition){
-        System.out.println("Proposition from player2 : " + Arrays.toString(proposition));
+    public void propositionPlayer(int[] proposition){
+        System.out.println("Your Proposition : " + Arrays.toString(proposition));
     }
 
-    public void propositionPlayer1(int[] proposition){
-        System.out.println("Proposition from player1 : " + Arrays.toString(proposition));
-    }
-
-    public void propositionAttacker(int[] combinationAttacker){
-        System.out.println("\nAttacker's proposition : " + Arrays.toString(combinationAttacker));
-    }
-
-    public void cluesPlayer1ToPlayer2(String[] answerPlayer1){
-        System.out.println("Clues from player1 to player2 : " + Arrays.toString(answerPlayer1));
-    }
-
-    public void cluesPlayer2ToPlayer1(String[] answerPlayer2){
-        System.out.println("Clues from player2 to player1 : " + Arrays.toString(answerPlayer2));
+    public void propositionOpponent(int[] proposition){
+        System.out.println("\nProposal of your opponent : " + Arrays.toString(proposition));
     }
 
     public void newAnswer(int[] propositionPlayer){
