@@ -19,8 +19,9 @@ public class BonusMode extends Mode implements MsgCombination, MsgInfo {
     public void playWithTwoPlayers(Player player1, Player player2) {
         int[] combinationPlayer2;
         int counter = config.getMaxTries();
+        counter(counter);
 
-        choiceGameBonus(counter);
+        choiceGameBonus();
         //  initialize a random number that both players will try to find
         IAPlayer ia = new IAPlayer(config);
         int[] defenseCombination = ia.initialiseCombination();

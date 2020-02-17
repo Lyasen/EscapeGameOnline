@@ -16,7 +16,7 @@ public interface MsgError {
     }
 
     default void onlyNumbers(){
-        System.err.println("Wow ! What was that ? Please enter a  numbers combination, that's all dude !");
+        System.err.println("Wow ! Please enter a  numbers combination, that's all dude !");
     }
 
     default void positiveNumbers(){
