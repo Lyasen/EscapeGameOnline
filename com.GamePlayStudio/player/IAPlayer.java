@@ -31,7 +31,7 @@ public class IAPlayer extends Player implements MsgCombination, MsgInfo {
         for (int i = 0; i < config.getDigitsCombination(); i++) {
             secret[i] = config.getMinValue() + hazard.nextInt(config.getMaxValue() - config.getMinValue() + 1);
         }
-        seeRandom(secret);
+        //seeRandom(secret);
         return secret;
     }
 

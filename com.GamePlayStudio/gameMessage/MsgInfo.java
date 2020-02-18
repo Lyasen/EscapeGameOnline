@@ -26,7 +26,7 @@ public interface MsgInfo {
     }
 
     default void choiceGameBonus(){
-        System.out.println("You have choice the game mode : Bonus mode\nChallenge the computer\nNow, computer and human deliver a real fight !");
+        System.out.println("You have choice the game mode : Bonus mode\nChallenge the computer\nNow, deliver a real fight !");
     }
 
     default void playSameGame(){ System.out.println("You want to play more ! Good luck !"); }

@@ -20,20 +20,14 @@ public class DuelMode extends Mode implements MsgCombination, MsgInfo {
         int counter = config.getMaxTries();
         counter(counter);
 
-        //  Secrets combinations
+        //  Secret combination Player1
         player1();
         secretCombinationPlayer();
         int[] secretCombinationPlayer1 = player1.initialiseCombination();
         if (config.isDevMode())
             devMode(secretCombinationPlayer1);
 
-        player2();
-        secretCombinationPlayer();
-        int[] secretCombinationPlayer2 = player2.initialiseCombination();
-        if (config.isDevMode())
-            devMode(secretCombinationPlayer2);
-
-        //  propositions players
+        //  Proposition Player2
         player2();
         int[] propositionPlayer2 = player2.initialiseCombination();
         propositionPlayer(propositionPlayer2);
@@ -43,6 +37,14 @@ public class DuelMode extends Mode implements MsgCombination, MsgInfo {
             return;
         }
 
+        //  Secret combination Player2
+        player2();
+        secretCombinationPlayer();
+        int[] secretCombinationPlayer2 = player2.initialiseCombination();
+        if (config.isDevMode())
+            devMode(secretCombinationPlayer2);
+
+        //  proposition player1
         player1();
         int[] propositionPlayer1 = player1.initialiseCombination();
         propositionPlayer(propositionPlayer1);

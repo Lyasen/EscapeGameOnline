@@ -8,8 +8,6 @@ import player.Player;
 import java.util.Arrays;
 
 public class DefenderMode extends Mode implements MsgCombination, MsgInfo {
-    private String[] clues = new String[config.getDigitsCombination()];
-
     public DefenderMode(ConfigurationGame config) {
         super(config);
     }
@@ -23,7 +21,7 @@ public class DefenderMode extends Mode implements MsgCombination, MsgInfo {
         choiceGameDefender();
         int counter = config.getMaxTries();
         counter(counter);
-        int[] combinationDefender = defense.research(clues);
+        int[] combinationDefender = defense.initialiseCombination();
         newAnswer(combinationDefender);
 
         int[] combinationAttacker = attack.initialiseCombination();
@@ -31,6 +29,7 @@ public class DefenderMode extends Mode implements MsgCombination, MsgInfo {
 
         do {
             String[] clew = defense.clues(combinationAttacker);
+            cluesAre(clew);
             combinationAttacker = attack.research(clew);
             propositionOpponent(combinationAttacker);
             counter--;
