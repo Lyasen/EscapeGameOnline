@@ -10,13 +10,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Main implements MsgError, MsgInfo {
+    static final Logger log = Logger.getLogger("log4j.properties");
     /**
      * Used Main to launch the game mode
      *  @param args : A welcome menu
      */
     public static void main(String[] args) {
+        log.info("Message de test");
         Scanner scan = new Scanner(System.in);
         MsgInfo.welcomeInGame();
         Properties properties = new Properties();
