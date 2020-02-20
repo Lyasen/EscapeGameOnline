@@ -1,10 +1,10 @@
-package gameMode;
+package com.GamePlayStudio.gameMode;
 
-import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgInfo;
-import player.Player;
-import utils.IsWin;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.gameMessage.MsgCombination;
+import com.GamePlayStudio.gameMessage.MsgInfo;
+import com.GamePlayStudio.player.Player;
+import com.GamePlayStudio.utils.IsWin;
 
 public class DuelMode extends Mode implements MsgCombination, MsgInfo {
     public DuelMode(ConfigurationGame config) {
@@ -29,9 +29,10 @@ public class DuelMode extends Mode implements MsgCombination, MsgInfo {
 
         //  Proposition Player2
         player2();
-        int[] propositionPlayer2 = player2.initialiseCombination();
+        int[] propositionPlayer2 = player2.research(null);
         propositionPlayer(propositionPlayer2);
         String[] answerPlayer1 = player1.clues(propositionPlayer2);
+        cluesAre(answerPlayer1);
         if (IsWin.winIf(answerPlayer1)) {
             playerWin();
             return;
@@ -46,7 +47,7 @@ public class DuelMode extends Mode implements MsgCombination, MsgInfo {
 
         //  proposition player1
         player1();
-        int[] propositionPlayer1 = player1.initialiseCombination();
+        int[] propositionPlayer1 = player1.research(null);
         propositionPlayer(propositionPlayer1);
         String[] answerPlayer2 = player2.clues(propositionPlayer1);
         cluesAre(answerPlayer2);
@@ -67,13 +68,14 @@ public class DuelMode extends Mode implements MsgCombination, MsgInfo {
             propositionPlayer2 = player2.research(answerPlayer1);
             newAnswer(propositionPlayer2);
             answerPlayer1 = player1.clues(propositionPlayer2);
+            cluesAre(answerPlayer1);
 
             if (counter == 1) {
                 if (!IsWin.winIf(answerPlayer1))
                     notGood();
             }
 
-             if (IsWin.winIf(answerPlayer1)) {
+            if (IsWin.winIf(answerPlayer1)) {
                 playerWin();
                 break;
             }

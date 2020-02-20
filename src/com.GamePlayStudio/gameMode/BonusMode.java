@@ -1,11 +1,11 @@
-package gameMode;
+package com.GamePlayStudio.gameMode;
 
-import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgInfo;
-import player.IAPlayer;
-import player.Player;
-import utils.IsWin;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.gameMessage.MsgCombination;
+import com.GamePlayStudio.gameMessage.MsgInfo;
+import com.GamePlayStudio.player.IAPlayer;
+import com.GamePlayStudio.player.Player;
+import com.GamePlayStudio.utils.IsWin;
 
 public class BonusMode extends Mode implements MsgCombination, MsgInfo {
     public BonusMode(ConfigurationGame config) {

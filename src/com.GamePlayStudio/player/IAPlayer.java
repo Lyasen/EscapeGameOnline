@@ -1,8 +1,8 @@
-package player;
+package com.GamePlayStudio.player;
 
-import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgInfo;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.gameMessage.MsgCombination;
+import com.GamePlayStudio.gameMessage.MsgInfo;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -11,10 +11,16 @@ public class IAPlayer extends Player implements MsgCombination, MsgInfo {
     private int[] min = new int[config.getDigitsCombination()];
     private int[] max = new int[config.getDigitsCombination()];
     private int[] combination;
+    private int[] proposition;
 
     public IAPlayer(ConfigurationGame config) {
         super(config);
         this.combination = random();
+        initialize();
+    }
+
+    private void initialize() {
+        this.proposition = random();
         //  Configure value minimum and maximum in order to make dichotomous search work
         Arrays.fill(min, config.getMinValue());
         Arrays.fill(max, config.getMaxValue());
@@ -37,29 +43,32 @@ public class IAPlayer extends Player implements MsgCombination, MsgInfo {
 
     /**
      * A dichotomous searching for helping IA to find the good secret number
+     *
      * @return : A new combination to play
      */
     @Override
     public int[] research(String[] clues) {
-        if (clues == null)
-            return combination;
+        if (clues == null) {
+            initialize();
+            return proposition;
+        }
 
-        for (int i = 0, len = combination.length; i < len; i++) {
+        for (int i = 0, len = proposition.length; i < len; i++) {
             switch (clues[i]) {
                 case "+":
-                    min[i] = combination[i] + 1;
+                    min[i] = proposition[i] + 1;
                     break;
                 case "-":
-                    max[i] = combination[i] - 1;
+                    max[i] = proposition[i] - 1;
                     break;
                 case "=":
-                    min[i] = combination[i];
-                    max[i] = combination[i];
+                    min[i] = proposition[i];
+                    max[i] = proposition[i];
                     break;
             }
-            combination[i] = (min[i] + max[i]) / 2;
+            proposition[i] = (min[i] + max[i]) / 2;
         }
-        return combination;
+        return proposition;
     }
 
     /**

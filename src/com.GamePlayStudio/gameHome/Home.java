@@ -1,13 +1,13 @@
-package gameHome;
+package com.GamePlayStudio.gameHome;
 
-import domaine.properties.ConfigurationGame;
-import gameMessage.MsgError;
-import gameMessage.MsgInfo;
-import gameMode.BonusMode;
-import gameMode.ChallengerMode;
-import gameMode.DefenderMode;
-import gameMode.DuelMode;
-import player.Player;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.gameMessage.MsgError;
+import com.GamePlayStudio.gameMessage.MsgInfo;
+import com.GamePlayStudio.gameMode.BonusMode;
+import com.GamePlayStudio.gameMode.ChallengerMode;
+import com.GamePlayStudio.gameMode.DefenderMode;
+import com.GamePlayStudio.gameMode.DuelMode;
+import com.GamePlayStudio.player.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -66,7 +66,7 @@ public class Home implements MsgError, MsgInfo {
         if (correctResponse)
             playOneMore();
         return correctResponse;
-}
+    }
 
     /**
      * choice between restarting the game, returning to the menu or quitting the game

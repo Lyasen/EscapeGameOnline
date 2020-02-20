@@ -1,9 +1,9 @@
-package player;
+package com.GamePlayStudio.player;
 
-import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgError;
-import gameMessage.MsgInfo;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.gameMessage.MsgCombination;
+import com.GamePlayStudio.gameMessage.MsgError;
+import com.GamePlayStudio.gameMessage.MsgInfo;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -41,7 +41,6 @@ public class HumanPlayer extends Player implements MsgCombination, MsgError, Msg
                 break;
         } while (true);
 
-        cluesAre(clues);
         return clues;
     }
 

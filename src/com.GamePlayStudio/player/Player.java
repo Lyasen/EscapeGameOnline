@@ -1,6 +1,6 @@
-package player;
+package com.GamePlayStudio.player;
 
-import domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
 
 public abstract class Player {
     protected ConfigurationGame config;

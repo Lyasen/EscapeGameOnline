@@ -1,4 +1,4 @@
-package gameMessage;
+package com.GamePlayStudio.gameMessage;
 
 import java.util.Arrays;
 

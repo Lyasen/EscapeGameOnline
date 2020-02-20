@@ -1,4 +1,9 @@
-package domaine.properties;
+package com.GamePlayStudio.domaine.properties;
+
+import com.GamePlayStudio.gameMessage.MsgCombination;
+import com.GamePlayStudio.gameMessage.MsgError;
+import com.GamePlayStudio.gameMessage.MsgGameEN;
+import com.GamePlayStudio.gameMessage.MsgInfo;
 
 import java.util.Properties;
 
@@ -6,6 +11,10 @@ public class ConfigurationGame {
     private final int digitsCombination, maxTries;
     private int minValue, maxValue;
     private final boolean devMode;
+
+    private final MsgCombination msgCombination = new MsgGameEN();
+    private final MsgInfo msgInfo = new MsgGameEN();
+    private final MsgError msgError = new MsgGameEN();
 
 
     public ConfigurationGame(Properties properties) {
@@ -38,7 +47,7 @@ public class ConfigurationGame {
 
     /**
      * Display after the welcome message to establish the rules in order to play
-      */
+     */
     public void configGame() {
         //  get the property value and print it out
         System.out.println("Here are the rules to play ! Good Luck !");
@@ -46,5 +55,17 @@ public class ConfigurationGame {
                 "\nEach number in combination is between " + getMinValue() + " and " + getMaxValue() +
                 "\nNumber of tries for a game : " + getMaxTries() +
                 "\nDeveloper mode active : " + isDevMode());
+    }
+
+    public MsgCombination getMsgCombination() {
+        return msgCombination;
+    }
+
+    public MsgInfo getMsgInfo() {
+        return msgInfo;
+    }
+
+    public MsgError getMsgError() {
+        return msgError;
     }
 }
