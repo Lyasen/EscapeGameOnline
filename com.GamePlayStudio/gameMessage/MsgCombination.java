@@ -24,10 +24,6 @@ public interface MsgCombination {
         System.out.println("Your Proposition : " + Arrays.toString(proposition));
     }
 
-    default void propositionOpponent(int[] proposition){
-        System.out.println("\nProposal of your opponent : " + Arrays.toString(proposition));
-    }
-
     default void newAnswer(int[] propositionPlayer){
         System.out.println("Your answer is " + Arrays.toString(propositionPlayer));
     }

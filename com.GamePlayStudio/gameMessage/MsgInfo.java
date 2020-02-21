@@ -47,6 +47,10 @@ public interface MsgInfo {
         System.out.println("\nPlayer2 ! ");
     }
 
+    default void computer() {
+        System.out.println("\nHoooo Great computer, initialize your secret combination");
+    }
+
     default void counter(int counter){
         System.out.println("Now, let's fight ! You have " + counter + " tries");
     }
@@ -70,7 +74,7 @@ public interface MsgInfo {
     }
 
     default void playerWin(){
-        System.out.println("\nWell done ! You WIN !");
+        System.out.println("Well done ! You WIN !");
     }
 
     default void notGood(){
@@ -90,7 +94,7 @@ public interface MsgInfo {
     }
 
     default void lastTimeToFindCombination(){
-        System.out.print("It was the last time to find the secret number, Soooo...");
+        System.out.print("It was the last time to find the secret number, Soooo...\n");
     }
 
     default void isWin(){

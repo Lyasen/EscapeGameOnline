@@ -7,6 +7,8 @@ import player.IAPlayer;
 import player.Player;
 import utils.IsWin;
 
+import java.util.Arrays;
+
 public class BonusMode extends Mode implements MsgCombination, MsgInfo {
     public BonusMode(ConfigurationGame config) {
         super(config);
@@ -17,7 +19,7 @@ public class BonusMode extends Mode implements MsgCombination, MsgInfo {
      */
     @Override
     public void playWithTwoPlayers(Player player1, Player player2) {
-        int[] combinationPlayer2;
+        int[] combinationPlayer;
         int counter = config.getMaxTries();
         counter(counter);
 
@@ -27,51 +29,70 @@ public class BonusMode extends Mode implements MsgCombination, MsgInfo {
         int[] defenseCombination = ia.initialiseCombination();
         if (config.isDevMode())
             devMode(defenseCombination);
-
+        computer();
 
         //  Proposition player1
         player1();
-        int[] combinationPlayer1 = player1.initialiseCombination();
-        newAnswer(combinationPlayer1);
-        String[] clues = ia.clues(combinationPlayer1);
+        combinationPlayer = player1.research(null);
+        newAnswer(combinationPlayer);
+        String[] clues = ia.clues(combinationPlayer);
         if (IsWin.winIf(clues)) {
             isWin();
+            return;
+        } else if (counter > 1) {
+            cluesAre(clues);
         }
-        cluesAre(clues);
 
-        //  TODO: Problème de tours au niveau du compteur => Player1 joue 2 fois
+        //  Proposition player2
+        player2();
+        combinationPlayer = player1.research(clues);
+        newAnswer(combinationPlayer);
+        clues = ia.clues(combinationPlayer);
+        if (IsWin.winIf(clues)) {
+            isWin();
+            return;
+        } else if (counter > 1) {
+            cluesAre(clues);
+        }
+
+        counter--;
+        counterLess(counter);
 
         do {
-            //  Proposition player2
-            player2();
-            combinationPlayer2 = player2.research(clues);
-            newAnswer(combinationPlayer2);
-            clues = ia.clues(combinationPlayer2);
-            if (IsWin.winIf(clues)) {
-                isWin();
-                break;
-            }
-            cluesAre(clues);
-
             //  Proposition player1
             player1();
-            combinationPlayer1 = player1.research(clues);
-            newAnswer(combinationPlayer1);
-            clues = ia.clues(combinationPlayer1);
-
+            combinationPlayer = player1.research(clues);
+            newAnswer(combinationPlayer);
+            clues = ia.clues(combinationPlayer);
             if (IsWin.winIf(clues)) {
                 isWin();
-                break;
+                return;
             } else if (counter > 1) {
                 cluesAre(clues);
             } else if (counter == 1) {
-                lastTimeToFindCombination();
+                if (!Arrays.equals(combinationPlayer, defenseCombination))
+                    notGood();
+            }
+
+            //  Proposition player2
+            player2();
+            combinationPlayer = player1.research(clues);
+            newAnswer(combinationPlayer);
+            clues = ia.clues(combinationPlayer);
+            if (IsWin.winIf(clues)) {
+                isWin();
+                return;
+            } else if (counter > 1) {
+                cluesAre(clues);
+            } else if (counter == 1) {
+                if (!Arrays.equals(combinationPlayer, defenseCombination))
+                    notGood();
             }
 
             counter--;
-            counterLess(counter);
-
-            if (counter == 0) {
+            if (counter >= 1)
+                counterLess(counter);
+            else {
                 endGameDuel();
                 break;
             }

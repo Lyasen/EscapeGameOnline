@@ -20,32 +20,47 @@ public class ChallengerMode extends Mode implements MsgCombination, MsgInfo {
         choiceGameChallenger();
         int counter = config.getMaxTries();
         int[] attackCombination;
+        player1();
+        secretCombinationPlayer();
         int[] defenseCombination = defense.initialiseCombination();
         if (config.isDevMode())
             devMode(defenseCombination);
 
-        do {
-            attackCombination = attack.initialiseCombination();
-            newAnswer(attackCombination);
-            String[] clues = defense.clues(attackCombination);
+        player2();
+        attackCombination = attack.research(null);
+        newAnswer(attackCombination);
+        String[] clues = defense.clues(attackCombination);
+        cluesAre(clues);
+        if (IsWin.winIf(clues)) {
+            isWin();
+            return;
+        }
+        counter--;
+        counterLess(counter);
 
-            if (counter > 1) {
-                cluesAre(clues);
-                counter--;
-            } else if (counter == 1) {
-                lastTimeToFindCombination();
-                counter--;
-            }
+        do {
+            player2();
+            attackCombination = attack.research(clues);
+            newAnswer(attackCombination);
+            clues = defense.clues(attackCombination);
 
             if (IsWin.winIf(clues)) {
                 isWin();
                 return;
+            }
+
+            if (counter > 1) {
+                cluesAre(clues);
+                counter--;
+                counterLess(counter);
+            } else if (counter == 1) {
+                lastTimeToFindCombination();
+                counter--;
             } else if (counter == 0) {
                 finallyRevealSecretCombination(defenseCombination);
                 return;
-            } else {
-                counterLess(counter);
             }
+
         } while (true);
     }
 }

@@ -41,7 +41,6 @@ public class HumanPlayer extends Player implements MsgCombination, MsgError, Msg
                 break;
         } while (true);
 
-        cluesAre(clues);
         return clues;
     }
 

@@ -21,27 +21,41 @@ public class DefenderMode extends Mode implements MsgCombination, MsgInfo {
         choiceGameDefender();
         int counter = config.getMaxTries();
         counter(counter);
+
+        player1();
         int[] combinationDefender = defense.initialiseCombination();
         newAnswer(combinationDefender);
 
-        int[] combinationAttacker = attack.initialiseCombination();
-        propositionOpponent(combinationAttacker);
+        player2();
+        int[] combinationAttacker = attack.research(null);
+        propositionPlayer(combinationAttacker);
+        String[] clues = defense.clues(combinationAttacker);
+        cluesAre(clues);
+        counter--;
+        counterLess(counter);
 
         do {
-            String[] clew = defense.clues(combinationAttacker);
-            cluesAre(clew);
-            combinationAttacker = attack.research(clew);
-            propositionOpponent(combinationAttacker);
-            counter--;
+            player2();
+            combinationAttacker = attack.research(clues);
+            propositionPlayer(combinationAttacker);
+
 
             if (Arrays.equals(combinationAttacker, combinationDefender)) {
                 attackerFindSecretNumber();
-                break;
-            } else if (counter == 0) {
-               attackerLoose();
-                break;
-            } else {
+                return;
+            }
+
+            if (counter > 1) {
+                clues = defense.clues(combinationAttacker);
+                cluesAre(clues);
+                counter--;
                 counterLess(counter);
+            } else if (counter == 1) {
+                lastTimeToFindCombination();
+                counter--;
+            } else if (counter == 0) {
+                attackerLoose();
+                return;
             }
         } while (true);
     }
