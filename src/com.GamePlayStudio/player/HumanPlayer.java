@@ -1,6 +1,6 @@
-package player;
+package com.GamePlayStudio.player;
 
-import domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
