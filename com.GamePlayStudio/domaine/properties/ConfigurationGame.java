@@ -1,11 +1,20 @@
 package domaine.properties;
 
+import gameMessage.Messages;
+import gameMessage.MsgCombination;
+import gameMessage.MsgError;
+import gameMessage.MsgInfo;
+
 import java.util.Properties;
 
 public class ConfigurationGame {
     private final int digitsCombination, maxTries;
     private int minValue, maxValue;
     private final boolean devMode;
+
+    private final MsgInfo msgInfo = new Messages();
+    private final MsgCombination msgCombination = new Messages();
+    private final MsgError msgError = new Messages();
 
 
     public ConfigurationGame(Properties properties) {
@@ -46,5 +55,17 @@ public class ConfigurationGame {
                 "\nEach number in combination is between " + getMinValue() + " and " + getMaxValue() +
                 "\nNumber of tries for a game : " + getMaxTries() +
                 "\nDeveloper mode active : " + isDevMode());
+    }
+
+    public MsgInfo getMsgInfo() {
+        return msgInfo;
+    }
+
+    public MsgCombination getMsgCombination() {
+        return msgCombination;
+    }
+
+    public MsgError getMsgError() {
+        return msgError;
     }
 }

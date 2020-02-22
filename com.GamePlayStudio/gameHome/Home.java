@@ -1,8 +1,6 @@
 package gameHome;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MsgError;
-import gameMessage.MsgInfo;
 import gameMode.BonusMode;
 import gameMode.ChallengerMode;
 import gameMode.DefenderMode;
@@ -12,7 +10,7 @@ import player.Player;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Home implements MsgError, MsgInfo {
+public class Home {
     private final Player player1, player2;
     protected int response;
     protected ConfigurationGame config;
@@ -29,14 +27,14 @@ public class Home implements MsgError, MsgInfo {
      * Choose between the different game modes
      */
     public void menu() {
-        chooseGameMode();
+        config.getMsgInfo().chooseGameMode();
         do {
             try {
                 response = scan.nextInt();
                 if (relaunchGame())
                     return;
             } catch (InputMismatchException e) {
-                noLetters();
+                config.getMsgError().noLetters();
             }
         } while (true);
     }
@@ -61,7 +59,7 @@ public class Home implements MsgError, MsgInfo {
                 break;
             default:
                 correctResponse = false;
-                wasteMyTime();
+                config.getMsgError().wasteMyTime();
         }
         if (correctResponse)
             playOneMore();
@@ -72,28 +70,28 @@ public class Home implements MsgError, MsgInfo {
      * choice between restarting the game, returning to the menu or quitting the game
      */
     public void playOneMore() {
-        chooseEndGame();
+        config.getMsgInfo().chooseEndGame();
         int playAgain;
         do {
             try {
                 playAgain = scan.nextInt();
                 switch (playAgain) {
                     case 1:
-                        playSameGame();
+                        config.getMsgInfo().playSameGame();
                         relaunchGame();
                         return;
                     case 2:
-                        backMenu();
+                        config.getMsgInfo().backMenu();
                         menu();
                         return;
                     case 3:
-                        stopGame();
+                        config.getMsgInfo().stopGame();
                         return;
                     default:
-                        wasteMyTime();
+                        config.getMsgError().wasteMyTime();
                 }
             } catch (InputMismatchException e) {
-                wasteMyTime();
+                config.getMsgError().wasteMyTime();
                 scan.nextLine();
             }
         } while (true);

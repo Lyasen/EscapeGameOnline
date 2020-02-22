@@ -2,8 +2,6 @@ import domaine.properties.ConfigurationGame;
 import gameHome.Home;
 import gameMessage.MsgError;
 import gameMessage.MsgInfo;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import player.IAPlayer;
 import player.Player;
 
@@ -12,8 +10,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class Main implements MsgError, MsgInfo {
-    static final Logger log = LogManager.getLogger();
+public class Main {
     /**
      * Used Main to launch the game mode
      *  @param args : A welcome menu

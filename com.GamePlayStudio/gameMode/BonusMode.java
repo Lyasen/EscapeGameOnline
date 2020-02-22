@@ -1,15 +1,13 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgInfo;
 import player.IAPlayer;
 import player.Player;
 import utils.IsWin;
 
 import java.util.Arrays;
 
-public class BonusMode extends Mode implements MsgCombination, MsgInfo {
+public class BonusMode extends Mode {
     public BonusMode(ConfigurationGame config) {
         super(config);
     }
@@ -21,79 +19,79 @@ public class BonusMode extends Mode implements MsgCombination, MsgInfo {
     public void playWithTwoPlayers(Player player1, Player player2) {
         int[] combinationPlayer;
         int counter = config.getMaxTries();
-        counter(counter);
+        config.getMsgInfo().counter(counter);
 
-        choiceGameBonus();
+        config.getMsgInfo().choiceGameBonus();
         //  initialize a random number that both players will try to find
         IAPlayer ia = new IAPlayer(config);
         int[] defenseCombination = ia.initialiseCombination();
         if (config.isDevMode())
-            devMode(defenseCombination);
-        computer();
+            config.getMsgCombination().devMode(defenseCombination);
+        config.getMsgInfo().computer();
 
         //  Proposition player1
-        player1();
+        config.getMsgInfo().player1();
         combinationPlayer = player1.research(null);
-        newAnswer(combinationPlayer);
+        config.getMsgCombination().newAnswer(combinationPlayer);
         String[] clues = ia.clues(combinationPlayer);
         if (IsWin.winIf(clues)) {
-            isWin();
+            config.getMsgInfo().isWin();
             return;
         } else if (counter > 1) {
-            cluesAre(clues);
+            config.getMsgCombination().cluesAre(clues);
         }
 
         //  Proposition player2
-        player2();
+        config.getMsgInfo().player2();
         combinationPlayer = player1.research(clues);
-        newAnswer(combinationPlayer);
+        config.getMsgCombination().newAnswer(combinationPlayer);
         clues = ia.clues(combinationPlayer);
         if (IsWin.winIf(clues)) {
-            isWin();
+            config.getMsgInfo().isWin();
             return;
         } else if (counter > 1) {
-            cluesAre(clues);
+            config.getMsgCombination().cluesAre(clues);
         }
 
         counter--;
-        counterLess(counter);
+        config.getMsgInfo().counterLess(counter);
 
         do {
             //  Proposition player1
-            player1();
+            config.getMsgInfo().player1();
             combinationPlayer = player1.research(clues);
-            newAnswer(combinationPlayer);
+            config.getMsgCombination().newAnswer(combinationPlayer);
             clues = ia.clues(combinationPlayer);
             if (IsWin.winIf(clues)) {
-                isWin();
+                config.getMsgInfo().isWin();
                 return;
             } else if (counter > 1) {
-                cluesAre(clues);
+                config.getMsgCombination().cluesAre(clues);
             } else if (counter == 1) {
                 if (!Arrays.equals(combinationPlayer, defenseCombination))
-                    notGood();
+                    config.getMsgInfo().notGood();
             }
 
             //  Proposition player2
-            player2();
+            config.getMsgInfo().player2();
             combinationPlayer = player1.research(clues);
-            newAnswer(combinationPlayer);
+            config.getMsgCombination().newAnswer(combinationPlayer);
             clues = ia.clues(combinationPlayer);
             if (IsWin.winIf(clues)) {
-                isWin();
+                config.getMsgInfo().isWin();
                 return;
             } else if (counter > 1) {
-                cluesAre(clues);
+                config.getMsgCombination().cluesAre(clues);
             } else if (counter == 1) {
                 if (!Arrays.equals(combinationPlayer, defenseCombination))
-                    notGood();
+                    config.getMsgInfo().notGood();
             }
 
             counter--;
             if (counter >= 1)
-                counterLess(counter);
+                config.getMsgInfo().counterLess(counter);
             else {
-                endGameDuel();
+                config.getMsgInfo().endGameDuel();
                 break;
             }
         } while (true);

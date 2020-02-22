@@ -1,12 +1,10 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgInfo;
 import player.Player;
 import utils.IsWin;
 
-public class ChallengerMode extends Mode implements MsgCombination, MsgInfo {
+public class ChallengerMode extends Mode {
     public ChallengerMode(ConfigurationGame config) {
         super(config);
     }
@@ -17,47 +15,47 @@ public class ChallengerMode extends Mode implements MsgCombination, MsgInfo {
      */
     @Override
     public void playWithTwoPlayers(Player attack, Player defense) {
-        choiceGameChallenger();
+        config.getMsgInfo().choiceGameChallenger();
         int counter = config.getMaxTries();
         int[] attackCombination;
-        player1();
-        secretCombinationPlayer();
+        config.getMsgInfo().player1();
+        config.getMsgInfo().secretCombinationPlayer();
         int[] defenseCombination = defense.initialiseCombination();
         if (config.isDevMode())
-            devMode(defenseCombination);
+            config.getMsgCombination().devMode(defenseCombination);
 
-        player2();
+        config.getMsgInfo().player2();
         attackCombination = attack.research(null);
-        newAnswer(attackCombination);
+        config.getMsgCombination().newAnswer(attackCombination);
         String[] clues = defense.clues(attackCombination);
-        cluesAre(clues);
+        config.getMsgCombination().cluesAre(clues);
         if (IsWin.winIf(clues)) {
-            isWin();
+            config.getMsgInfo().isWin();
             return;
         }
         counter--;
-        counterLess(counter);
+        config.getMsgInfo().counterLess(counter);
 
         do {
-            player2();
+            config.getMsgInfo().player2();
             attackCombination = attack.research(clues);
-            newAnswer(attackCombination);
+            config.getMsgCombination().newAnswer(attackCombination);
             clues = defense.clues(attackCombination);
 
             if (IsWin.winIf(clues)) {
-                isWin();
+                config.getMsgInfo().isWin();
                 return;
             }
 
             if (counter > 1) {
-                cluesAre(clues);
+                config.getMsgCombination().cluesAre(clues);
                 counter--;
-                counterLess(counter);
+                config.getMsgInfo().counterLess(counter);
             } else if (counter == 1) {
-                lastTimeToFindCombination();
+                config.getMsgInfo().lastTimeToFindCombination();
                 counter--;
             } else if (counter == 0) {
-                finallyRevealSecretCombination(defenseCombination);
+                config.getMsgCombination().finallyRevealSecretCombination(defenseCombination);
                 return;
             }
 

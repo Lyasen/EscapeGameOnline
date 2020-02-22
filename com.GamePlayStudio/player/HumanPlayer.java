@@ -1,14 +1,11 @@
 package player;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgError;
-import gameMessage.MsgInfo;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class HumanPlayer extends Player implements MsgCombination, MsgError, MsgInfo {
+public class HumanPlayer extends Player {
     private final Scanner scan;
 
     public HumanPlayer(ConfigurationGame config, Scanner scan){
@@ -26,7 +23,7 @@ public class HumanPlayer extends Player implements MsgCombination, MsgError, Msg
         String clue;
         String[] clues;
         boolean b;
-        giveClues();
+        config.getMsgInfo().giveClues();
 
         do {
             clue = scan.nextLine();
@@ -34,9 +31,9 @@ public class HumanPlayer extends Player implements MsgCombination, MsgError, Msg
             b = clue.matches("[+\\-=]+");
 
             if (clues.length > config.getDigitsCombination()) {
-                tooManySymbols();
+                config.getMsgError().tooManySymbols();
             } else if (!b) {
-                realSymbols();
+                config.getMsgError().realSymbols();
             } else
                 break;
         } while (true);
@@ -52,13 +49,13 @@ public class HumanPlayer extends Player implements MsgCombination, MsgError, Msg
     @Override
     public int[] research(String[] clues) {
         do {
-            doProposition();
+            config.getMsgInfo().doProposition();
             try {
                 int proposition = scan.nextInt();
                 scan.nextLine();
                 String[] digits = String.format("%0" + config.getDigitsCombination() + "d", proposition).split("");
                 if (digits.length > config.getDigitsCombination()) {
-                    tooManyTypes();
+                    config.getMsgError().tooManyTypes();
                 } else {
                     int[] combination = new int[config.getDigitsCombination()];
                     for (int i = 0; i < config.getDigitsCombination(); i++) {
@@ -67,10 +64,10 @@ public class HumanPlayer extends Player implements MsgCombination, MsgError, Msg
                     return combination;
                 }
             } catch (InputMismatchException e) {
-                onlyNumbers();
+                config.getMsgError().onlyNumbers();
                 scan.nextLine(); // dump the variable otherwise infinite loop
             } catch (NumberFormatException n) {
-                positiveNumbers();
+                config.getMsgError().positiveNumbers();
                 scan.nextLine();
             }
         } while (true);
@@ -79,10 +76,5 @@ public class HumanPlayer extends Player implements MsgCombination, MsgError, Msg
     @Override
     public int[] initialiseCombination() {
         return research(null);
-    }
-
-    @Override
-    public void initialiseCombination(int[] combination) {
-
     }
 }

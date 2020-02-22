@@ -1,13 +1,11 @@
 package player;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgInfo;
 
 import java.util.Arrays;
 import java.util.Random;
 
-public class IAPlayer extends Player implements MsgCombination, MsgInfo {
+public class IAPlayer extends Player {
     private int[] min = new int[config.getDigitsCombination()];
     private int[] max = new int[config.getDigitsCombination()];
     private int[] combination;
@@ -91,10 +89,5 @@ public class IAPlayer extends Player implements MsgCombination, MsgInfo {
     public int[] initialiseCombination() {
         this.combination = random();
         return this.combination;
-    }
-
-    @Override
-    public void initialiseCombination(int[] combination) {
-        this.combination = combination;
     }
 }

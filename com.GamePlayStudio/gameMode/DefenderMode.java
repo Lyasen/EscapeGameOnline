@@ -1,13 +1,11 @@
 package gameMode;
 
 import domaine.properties.ConfigurationGame;
-import gameMessage.MsgCombination;
-import gameMessage.MsgInfo;
 import player.Player;
 
 import java.util.Arrays;
 
-public class DefenderMode extends Mode implements MsgCombination, MsgInfo {
+public class DefenderMode extends Mode {
     public DefenderMode(ConfigurationGame config) {
         super(config);
     }
@@ -18,43 +16,43 @@ public class DefenderMode extends Mode implements MsgCombination, MsgInfo {
      */
     @Override
     public void playWithTwoPlayers(Player defense, Player attack) {
-        choiceGameDefender();
+        config.getMsgInfo().choiceGameDefender();
         int counter = config.getMaxTries();
-        counter(counter);
+        config.getMsgInfo().counter(counter);
 
-        player1();
+        config.getMsgInfo().player1();
         int[] combinationDefender = defense.initialiseCombination();
-        newAnswer(combinationDefender);
+        config.getMsgCombination().newAnswer(combinationDefender);
 
-        player2();
+        config.getMsgInfo().player2();
         int[] combinationAttacker = attack.research(null);
-        propositionPlayer(combinationAttacker);
+        config.getMsgCombination().propositionPlayer(combinationAttacker);
         String[] clues = defense.clues(combinationAttacker);
-        cluesAre(clues);
+        config.getMsgCombination().cluesAre(clues);
         counter--;
-        counterLess(counter);
+        config.getMsgInfo().counterLess(counter);
 
         do {
-            player2();
+            config.getMsgInfo().player2();
             combinationAttacker = attack.research(clues);
-            propositionPlayer(combinationAttacker);
+            config.getMsgCombination().propositionPlayer(combinationAttacker);
 
 
             if (Arrays.equals(combinationAttacker, combinationDefender)) {
-                attackerFindSecretNumber();
+                config.getMsgInfo().attackerFindSecretNumber();
                 return;
             }
 
             if (counter > 1) {
                 clues = defense.clues(combinationAttacker);
-                cluesAre(clues);
+                config.getMsgCombination().cluesAre(clues);
                 counter--;
-                counterLess(counter);
+                config.getMsgInfo().counterLess(counter);
             } else if (counter == 1) {
-                lastTimeToFindCombination();
+                config.getMsgInfo().lastTimeToFindCombination();
                 counter--;
             } else if (counter == 0) {
-                attackerLoose();
+                config.getMsgInfo().attackerLoose();
                 return;
             }
         } while (true);
