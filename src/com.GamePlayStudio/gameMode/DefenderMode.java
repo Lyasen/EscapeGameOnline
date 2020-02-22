@@ -1,7 +1,7 @@
-package gameMode;
+package com.GamePlayStudio.gameMode;
 
-import domaine.properties.ConfigurationGame;
-import player.Player;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.player.Player;
 
 import java.util.Arrays;
 

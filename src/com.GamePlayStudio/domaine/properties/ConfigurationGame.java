@@ -1,9 +1,9 @@
-package domaine.properties;
+package com.GamePlayStudio.domaine.properties;
 
-import gameMessage.Messages;
-import gameMessage.MsgCombination;
-import gameMessage.MsgError;
-import gameMessage.MsgInfo;
+import com.GamePlayStudio.gameMessage.Messages;
+import com.GamePlayStudio.gameMessage.MsgCombination;
+import com.GamePlayStudio.gameMessage.MsgError;
+import com.GamePlayStudio.gameMessage.MsgInfo;
 
 import java.util.Properties;
 

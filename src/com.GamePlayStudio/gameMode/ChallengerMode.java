@@ -1,8 +1,8 @@
-package gameMode;
+package com.GamePlayStudio.gameMode;
 
-import domaine.properties.ConfigurationGame;
-import player.Player;
-import utils.IsWin;
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.player.Player;
+import com.GamePlayStudio.utils.IsWin;
 
 public class ChallengerMode extends Mode {
     public ChallengerMode(ConfigurationGame config) {

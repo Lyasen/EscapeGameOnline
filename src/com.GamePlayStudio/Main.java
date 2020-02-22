@@ -1,9 +1,11 @@
-import domaine.properties.ConfigurationGame;
-import gameHome.Home;
-import gameMessage.MsgError;
-import gameMessage.MsgInfo;
-import player.IAPlayer;
-import player.Player;
+package com.GamePlayStudio;
+
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
+import com.GamePlayStudio.gameHome.Home;
+import com.GamePlayStudio.gameMessage.MsgError;
+import com.GamePlayStudio.gameMessage.MsgInfo;
+import com.GamePlayStudio.player.IAPlayer;
+import com.GamePlayStudio.player.Player;
 
 import java.io.FileReader;
 import java.io.IOException;
