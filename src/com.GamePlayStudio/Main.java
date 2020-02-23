@@ -4,6 +4,7 @@ import com.GamePlayStudio.domaine.properties.ConfigurationGame;
 import com.GamePlayStudio.gameHome.Home;
 import com.GamePlayStudio.gameMessage.MsgError;
 import com.GamePlayStudio.gameMessage.MsgInfo;
+import com.GamePlayStudio.player.HumanPlayer;
 import com.GamePlayStudio.player.IAPlayer;
 import com.GamePlayStudio.player.Player;
 
@@ -29,7 +30,7 @@ public class Main {
         ConfigurationGame config = new ConfigurationGame(properties);
         config.configGame();
 
-        Player player1 = new IAPlayer(config);
+        Player player1 = new HumanPlayer(config, scan);
         Player player2 = new IAPlayer(config);
         Home choice = new Home(player1, player2, config, scan);
         choice.menu();
