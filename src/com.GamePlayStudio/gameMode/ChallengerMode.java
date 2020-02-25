@@ -4,6 +4,8 @@ import com.GamePlayStudio.domaine.properties.ConfigurationGame;
 import com.GamePlayStudio.player.Player;
 import com.GamePlayStudio.utils.IsWin;
 
+import java.util.Arrays;
+
 public class ChallengerMode extends Mode {
     public ChallengerMode(ConfigurationGame config) {
         super(config);
@@ -18,6 +20,7 @@ public class ChallengerMode extends Mode {
         config.getMsgInfo().choiceGameChallenger();
         int counter = config.getMaxTries();
         int[] attackCombination;
+
         config.getMsgInfo().player1();
         config.getMsgInfo().secretCombinationPlayer();
         int[] defenseCombination = defense.initialiseCombination();
@@ -52,13 +55,12 @@ public class ChallengerMode extends Mode {
                 counter--;
                 config.getMsgInfo().counterLess(counter);
             } else if (counter == 1) {
-                config.getMsgInfo().lastTimeToFindCombination();
-                counter--;
-            } else if (counter == 0) {
-                config.getMsgCombination().finallyRevealSecretCombination(defenseCombination);
-                return;
+                if(!Arrays.equals(defenseCombination, attackCombination)) {
+                    config.getMsgInfo().attackerLoose();
+                    config.getMsgCombination().finallyRevealSecretCombination(defenseCombination);
+                }
+                break;
             }
-
         } while (true);
     }
 }

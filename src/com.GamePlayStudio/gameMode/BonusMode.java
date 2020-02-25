@@ -19,9 +19,9 @@ public class BonusMode extends Mode {
     public void playWithTwoPlayers(Player player1, Player player2) {
         int[] combinationPlayer;
         int counter = config.getMaxTries();
+        config.getMsgInfo().choiceGameBonus();
         config.getMsgInfo().counter(counter);
 
-        config.getMsgInfo().choiceGameBonus();
         //  initialize a random number that both players will try to find
         IAPlayer ia = new IAPlayer(config);
         int[] defenseCombination = ia.initialiseCombination();
@@ -37,21 +37,19 @@ public class BonusMode extends Mode {
         if (IsWin.winIf(clues)) {
             config.getMsgInfo().isWin();
             return;
-        } else if (counter > 1) {
-            config.getMsgCombination().cluesAre(clues);
         }
+        config.getMsgCombination().cluesAre(clues);
 
         //  Proposition player2
         config.getMsgInfo().player2();
-        combinationPlayer = player1.research(clues);
+        combinationPlayer = player2.research(null);
         config.getMsgCombination().newAnswer(combinationPlayer);
-        clues = ia.clues(combinationPlayer);
-        if (IsWin.winIf(clues)) {
+        String[] clews = ia.clues(combinationPlayer);
+        if (IsWin.winIf(clews)) {
             config.getMsgInfo().isWin();
             return;
-        } else if (counter > 1) {
-            config.getMsgCombination().cluesAre(clues);
         }
+        config.getMsgCombination().cluesAre(clews);
 
         counter--;
         config.getMsgInfo().counterLess(counter);
@@ -74,14 +72,14 @@ public class BonusMode extends Mode {
 
             //  Proposition player2
             config.getMsgInfo().player2();
-            combinationPlayer = player1.research(clues);
+            combinationPlayer = player2.research(clews);
             config.getMsgCombination().newAnswer(combinationPlayer);
-            clues = ia.clues(combinationPlayer);
-            if (IsWin.winIf(clues)) {
+            clews = ia.clues(combinationPlayer);
+            if (IsWin.winIf(clews)) {
                 config.getMsgInfo().isWin();
                 return;
             } else if (counter > 1) {
-                config.getMsgCombination().cluesAre(clues);
+                config.getMsgCombination().cluesAre(clews);
             } else if (counter == 1) {
                 if (!Arrays.equals(combinationPlayer, defenseCombination))
                     config.getMsgInfo().notGood();
@@ -92,6 +90,7 @@ public class BonusMode extends Mode {
                 config.getMsgInfo().counterLess(counter);
             else {
                 config.getMsgInfo().endGameDuel();
+                config.getMsgCombination().finallyRevealSecretCombination(defenseCombination);
                 break;
             }
         } while (true);

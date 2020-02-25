@@ -21,8 +21,8 @@ public class DefenderMode extends Mode {
         config.getMsgInfo().counter(counter);
 
         config.getMsgInfo().player1();
+        config.getMsgInfo().secretCombinationPlayer();
         int[] combinationDefender = defense.initialiseCombination();
-        config.getMsgCombination().newAnswer(combinationDefender);
 
         config.getMsgInfo().player2();
         int[] combinationAttacker = attack.research(null);
@@ -49,12 +49,12 @@ public class DefenderMode extends Mode {
                 counter--;
                 config.getMsgInfo().counterLess(counter);
             } else if (counter == 1) {
-                config.getMsgInfo().lastTimeToFindCombination();
-                counter--;
-            } else if (counter == 0) {
-                config.getMsgInfo().attackerLoose();
-                return;
-            }
+                if(!Arrays.equals(combinationDefender, combinationAttacker)) {
+                    config.getMsgInfo().attackerLoose();
+                    config.getMsgCombination().finallyRevealSecretCombination(combinationDefender);
+                }
+                break;
+           }
         } while (true);
     }
 }

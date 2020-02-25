@@ -103,6 +103,10 @@ public class DuelMode extends Mode {
                 config.getMsgInfo().counterLess(counter);
             else {
                 config.getMsgInfo().endGameDuel();
+                config.getMsgInfo().player1();
+                config.getMsgCombination().finallyRevealSecretCombination(secretCombinationPlayer2);
+                config.getMsgInfo().player2();
+                config.getMsgCombination().finallyRevealSecretCombination(secretCombinationPlayer1);
                 break;
             }
         } while (true);

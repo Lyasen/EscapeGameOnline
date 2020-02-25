@@ -15,7 +15,7 @@ public interface MsgInfo {
     }
 
     default void chooseEndGame(){
-        log.info("\nThe game is now finished !\n1 - You may play again \n2 - You can come back to the menu \n3 - You can go swimming");
+        log.info("\n\nThe game is now finished !\n1 - You may play again \n2 - You can come back to the menu \n3 - You can go swimming");
     }
 
     default void choiceGameDuel(){
@@ -85,7 +85,7 @@ public interface MsgInfo {
     }
 
     default void endGameDuel(){
-        log.info("\nSorry, no more tries ! Both players don't found any combination !\nyou are really not good ! Try next time !");
+        log.info("\n\nSorry, no more tries ! Both players don't found any combination !\nyou are really not good !");
     }
 
     default void attackerFindSecretNumber(){
@@ -94,10 +94,6 @@ public interface MsgInfo {
 
     default void attackerLoose(){
         log.info("No more tries ! Attacker has lost ! \nNot even able to find a simple combination of digits ! What misery !");
-    }
-
-    default void lastTimeToFindCombination(){
-        log.info("It was the last time to find the secret number, Soooo...\n");
     }
 
     default void isWin(){

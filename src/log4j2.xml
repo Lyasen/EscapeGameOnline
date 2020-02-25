@@ -2,19 +2,19 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n"/>
+            <PatternLayout pattern="[%-5p} %d{dd-MM-YYYY HH:mm:ss} [%t]  - %m%n"/>
         </Console>
         <Console name="messages" target="SYSTEM_OUT">
-            <PatternLayout pattern=">> %msg%n"/>
+            <PatternLayout pattern=">> %m%n"/>
         </Console>
         <Console name="messages_info" target="SYSTEM_OUT">
-            <PatternLayout pattern="=> %msg --!!%n"/>
+            <PatternLayout pattern="----- %m "/>
         </Console>
         <Console name="messages_combination" target="SYSTEM_OUT">
-            <PatternLayout pattern="<=>> %msg --!!%n"/>
+            <PatternLayout pattern=">>> %m%n"/>
         </Console>
         <Console name="messages_error" target="SYSTEM_OUT">
-            <PatternLayout pattern="!!-- %msg --!!%n"/>
+            <PatternLayout pattern="!!!--- %m ---!!!%n"/>
         </Console>
     </Appenders>
     <Loggers>

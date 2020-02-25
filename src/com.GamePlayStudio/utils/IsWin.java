@@ -4,7 +4,7 @@ public class IsWin {
     /**
      * If all symbols '=' are found, you win
      *
-     * @param comparison : The comparison between symbols
+     * @param comparison : Comparison between symbols
      * @return : If true, you win
      */
     public static boolean winIf(String[] comparison) {

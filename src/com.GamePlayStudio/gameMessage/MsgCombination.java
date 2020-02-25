@@ -13,10 +13,6 @@ public interface MsgCombination {
                 "\nand the last clues was : " + Arrays.toString(answerPlayer));
     }
 
-    default void seeRandom(int[] secret){
-        log.info(Arrays.toString(secret));
-    }
-
     default void cluesAre(String[] clues){
         log.info("Clues are : " + Arrays.toString(clues));
     }
@@ -34,7 +30,6 @@ public interface MsgCombination {
     }
 
     default void finallyRevealSecretCombination(int[] defenseCombination){
-        log.info("What a pity ! It's lost ! The secret number was : "
-                + Arrays.toString(defenseCombination) + " ! Try next time !");
+        log.info("The secret number was : " + Arrays.toString(defenseCombination) + " ! Try next time !");
     }
 }
