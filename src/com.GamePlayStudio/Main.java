@@ -3,7 +3,6 @@ package com.GamePlayStudio;
 import com.GamePlayStudio.domaine.properties.ConfigurationGame;
 import com.GamePlayStudio.gameHome.Home;
 import com.GamePlayStudio.gameMessage.MsgError;
-import com.GamePlayStudio.gameMessage.MsgInfo;
 import com.GamePlayStudio.player.HumanPlayer;
 import com.GamePlayStudio.player.IAPlayer;
 import com.GamePlayStudio.player.Player;
@@ -20,7 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        MsgInfo.welcomeInGame();
+
         Properties properties = new Properties();
         try {
             properties.load(new FileReader("config.properties"));
@@ -28,6 +27,7 @@ public class Main {
             MsgError.errorLoadFile();
         }
         ConfigurationGame config = new ConfigurationGame(properties);
+        config.getMsgInfo().welcomeInGame();
         config.configGame();
 
         Player player1 = new HumanPlayer(config, scan);

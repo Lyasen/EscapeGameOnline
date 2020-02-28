@@ -1,13 +1,21 @@
 package com.GamePlayStudio.gameMessage;
 
+import com.GamePlayStudio.domaine.properties.ConfigurationGame;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public interface MsgInfo {
     Logger log = LogManager.getLogger(MsgInfo.class);
 
-    static void welcomeInGame(){
-        System.out.println("Welcome to Escape Game Online");
+    default void welcomeInGame(){
+        log.info("Welcome to Escape Game Online");
+    }
+
+    default void rules(ConfigurationGame config){
+        log.info("Here are the rules to play ! Good Luck !\nNumber of digits in combination : " + config.getDigitsCombination() +
+                "\nEach number in combination is between " + config.getMinValue() + " and " + config.getMaxValue() +
+                "\nNumber of tries for a game : " + config.getMaxTries() +
+                "\nDeveloper mode active : " + config.isDevMode());
     }
 
     default void chooseGameMode(){

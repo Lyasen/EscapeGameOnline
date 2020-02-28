@@ -50,11 +50,7 @@ public class ConfigurationGame {
       */
     public void configGame() {
         //  get the property value and print it out
-        System.out.println("Here are the rules to play ! Good Luck !");
-        System.out.println("Number of digits in combination : " + getDigitsCombination() +
-                "\nEach number in combination is between " + getMinValue() + " and " + getMaxValue() +
-                "\nNumber of tries for a game : " + getMaxTries() +
-                "\nDeveloper mode active : " + isDevMode());
+        getMsgInfo().rules(this);
     }
 
     public MsgInfo getMsgInfo() {
